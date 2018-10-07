@@ -70,7 +70,7 @@ fbapiCall=(item,category)=>{
     Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
     fetch(url)
     .then(response=>response.json())
-    .then(data=> return data)
+    .then(data=> console.log(data))
    }
 //add page object to categoryArray in state
 addPage=(id,category)=>{
