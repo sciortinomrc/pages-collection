@@ -1,5 +1,5 @@
 import React from 'react';
-import './Style/Top.css';
+import './Top.css';
 //conditional rendering small responsive
 const loggedSmall=(logged,onPageChange)=>{
 	if(logged){return (

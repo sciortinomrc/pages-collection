@@ -3,7 +3,7 @@ import Top from '../Components/Top/Top';
 import Scroller from '../Components/Home/Scroller';
 import Bottom from '../Components/Bottom';
 import Add from '../Components/Add/Add';
-import './Style/App.css';
+import './App.css';
 
 class App extends Component {
 // electron.js..

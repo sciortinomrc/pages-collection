@@ -1,7 +1,7 @@
 import React from 'react';
 import PagesList from '../Main/PagesList';
 import _ from 'lodash';
-import "./Style/Scroller.css";
+import "./Scroller.css";
 const Scroller=({at,categories,pages,cross, apiCall})=>{
 	const filteredPages= _.uniqBy(categories, 'category');
 	const filteredCategories= filteredPages.map(category=>category.category)
