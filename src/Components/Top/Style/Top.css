@@ -1,0 +1,32 @@
+.header{
+	background-color: #4267b2;
+	color: white;
+}
+.container{
+	max-width:100%;
+}
+.h{
+	height:32px;
+}
+.bg-light{
+	opacity:0.8;
+}
+#logo{
+	width: 150px;
+	height: 150px;
+	margin: -50px 15px;
+	font-weight: bold;
+	font-size: 6em;
+	background-color: #4267b2;
+}
+.b{
+	border: 1px solid black;
+}
+.search{
+	background-color: rgba( 200,200,200,0.9 );
+	color: white;
+}
+.btn{
+	border-bottom-right-radius: 0px;
+	border-bottom-left-radius: 0px;
+}

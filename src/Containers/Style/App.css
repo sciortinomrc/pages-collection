@@ -1,0 +1,12 @@
+body,html{
+	font-family: 'Titillium Web', sans-serif;
+}
+.App {
+	height: calc(100vh - 200px);
+	text-align: center;
+}
+.pt{
+	height: calc(100vh - 150px);
+	margin-top: 45px;
+	}
+
