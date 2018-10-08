@@ -41,9 +41,9 @@ constructor(){
       },
 */
       ],
-      data:[],
-      size: [window.innerWidth, window.innerHeight]
-        }
+      cards:[],
+      size: [window.innerWidth, window.innerHeight],
+      }
       ) 
     }
   
@@ -52,6 +52,14 @@ componentWillMount(){
    window.FB.getLoginStatus((response)=>{
       this.setState({accessToken: response.authResponse.accessToken});
     })
+    const {open, accessToken, cards, categoryArray}=this.state;
+    setTimeout(()=>{
+      categoryArray.map(item=>{
+          this.fbapiCall(item)
+        })
+      },500)
+    setTimeout(()=>console.log(this.state),1000)
+
 }
 componentDidMount(){
   window.addEventListener('resize',()=>{
@@ -62,15 +70,28 @@ componentDidMount(){
 changePage=(page)=>{
   this.setState({open: page})
 }
+//async fetch pages
+getPages=(url,category)=>{
+  let objPush;
+  fetch(url)
+  .then(resp=> resp.json())
+  .then(data=> {objPush={
+      name: data.name,
+      id: data.id,
+      picture: data.picture,
+      link: data.link,
+      likes: data.fan_count,
+      category: category
+  }})
+  setTimeout(()=>{this.state.cards.push(objPush)},200)
+}
+
 //api call
-fbapiCall=(item,category)=>{
-    let objPush;
+fbapiCall=(item)=>{
     let url = new URL(`https://graph.facebook.com/${item.id}`),
-    params = {access_token: this.state.accessToken, fields:'id,name,picture,fan_count,link'}
+    params = {access_token: this.state.accessToken, fields:'id,name,link,fan_count,picture'}
     Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
-    fetch(url)
-    .then(response=>response.json())
-    .then(data=> console.log(data))
+    this.getPages(url,item.category);
    }
 //add page object to categoryArray in state
 addPage=(id,category)=>{
@@ -81,15 +102,14 @@ addPage=(id,category)=>{
 }
 //renders the page based on the state
 returnSwitch=()=>{
-  const {open, accessToken, data, categoryArray}=this.state;
-
-
+  const {open,accessToken,categoryArray, cards}=this.state;
     switch(open){
-        case 'home':  return ( <Scroller key='categories'  at={accessToken} apiCall={this.fbapiCall} pages={data} categories={categoryArray} /> );
+        case 'home':  return ( <Scroller key='categories'  at={accessToken} cards={cards} categories={categoryArray} />);
         case 'add': return( <Add onAddPage={this.addPage} at={accessToken}/>)
         default: return( <p> Homepage</p>);
       }
-}
+  }
+
 //render method
   render() {
     const {open, logged}=this.state;
