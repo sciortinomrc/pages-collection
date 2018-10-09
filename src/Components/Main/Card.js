@@ -1,6 +1,6 @@
 import React from 'react';
 import './Style/Card.css';
-const Card=({name,fan_count,picture,link})=>{
+const Card=({name,fan_count,picture,link,favourites})=>{
 	return(
 
 			
@@ -15,7 +15,7 @@ const Card=({name,fan_count,picture,link})=>{
 			</div>
 			<div className="likes">
 			 <span className="mr-2"><img alt="" src="https://www.freistellen.de/wp-content/uploads/2017/03/Fotolia_142201188_S.jpg" width="30px" height="auto" />{fan_count}</span>
-			 <span className="mr-2 ml-2"><img alt="" src="https://cdn1.iconfinder.com/data/icons/utilities-part-1/64/bookmark_1-512.png" width="25px" height="auto" /> 0 </span>
+			 <span className="mr-2 ml-2"><img alt="" src="https://cdn1.iconfinder.com/data/icons/utilities-part-1/64/bookmark_1-512.png" width="25px" height="auto" /> {favourites} </span>
 			</div>
 		</div>
 		)

@@ -1,26 +1,29 @@
 import React, {Component} from 'react';
 import Card from './Card';
 
-const PagesList=({category, cards, categories})=>{
-	const test=categories.filter(item=>{
-					return item.category===category
-				})
+const PagesList=({category, cards,db})=>{
+	const array=cards;
+	console.log('array',cards)
 	if(cards.length){
 		return(
 			<div className="d-inline-flex height" key={this.category}>
-			{	
-				cards.map(card=>{
-					console.log(card)
-					return(
-						<Card
-							name={card.name}
-							key={card.id}
-							category={card.category}
-							picture={card.picture}
-							link={card.link}
-							fan_count={card.likes}
-						/>)
-				})
+			{	cards.map(card=>{
+					const recordMatch=db.filter(record=>{
+						if(record.id.includes(card.id) && category===record.category){
+							return record
+						}
+					})
+				if(recordMatch.length){
+					return(<Card
+						key={card.id}
+						name={card.name}
+						fan_count={card.fan_count}
+						picture={card.picture.data.url}
+						link={card.link}
+						favourites={recordMatch[0].favourite}
+					/>)
+				}
+			})
 			}		
 			 </div>
 			)

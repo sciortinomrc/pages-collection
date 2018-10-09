@@ -23,8 +23,8 @@ stateCheck=(f)=>{
 	document.getElementById('category').value="";
 	const {pageId, category}=this.state;
 	if(pageId.length && category.length){
-		f(pageId, category)
-		this.setState({message: "The page has been added"})
+			f({id: this.state.pageId, category: this.state.category})
+			setTimeout(()=>this.setState({message: this.props.readMessage()}),200)
 	}else{this.setState({message: "There's been an error please enter the page again"})
 	}
 
@@ -65,10 +65,9 @@ return(
 						<input id="category" type="text" className="rounded-left text-center" placeholder="Category" onChange={this.onInputsChange}/>
 					</div>
 					<div className="h-auto w-15">
-						<input type="button" className="h-100 w-100 btn btn-primary" value="Add" onClick={()=>this.stateCheck(this.props.onAddPage)}/>
+						<input type="button" className="h-100 w-100 btn btn-primary" value="Add" onClick={()=>this.stateCheck(this.props.addPage)}/>
 					</div>
 				</div>
-
 					<p className="mt-2">{this.state.message}</p>
 			</div>
 		</div>
