@@ -51,7 +51,7 @@ return(
 				</p>
 				<ul className="text-left">
 					<li>Copy the Facebook Page URL</li>
-					<li>Go to <a href="https://findmyfbid.com/" target="_blank">https://findmyfbid.com/</a> and paste your URL</li>
+					<li>Go to <a href="https://findmyfbid.com/" target="_blank" rel="noopener noreferrer">https://findmyfbid.com/</a> and paste your URL</li>
 					<li>Here's your Facebook Page ID. Paste it below, insert a Category and simply click Add Page</li>
 				</ul>
 				<hr/>

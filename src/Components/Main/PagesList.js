@@ -1,9 +1,7 @@
-import React, {Component} from 'react';
+import React from 'react';
 import Card from './Card';
 
 const PagesList=({category, cards,db})=>{
-	const array=cards;
-	console.log('array',cards)
 	if(cards.length){
 		return(
 			<div className="d-inline-flex height" key={this.category}>
@@ -12,6 +10,7 @@ const PagesList=({category, cards,db})=>{
 						if(record.id.includes(card.id) && category===record.category){
 							return record
 						}
+						else return undefined
 					})
 				if(recordMatch.length){
 					return(<Card
@@ -23,6 +22,7 @@ const PagesList=({category, cards,db})=>{
 						favourites={recordMatch[0].favourite}
 					/>)
 				}
+				else return undefined
 			})
 			}		
 			 </div>

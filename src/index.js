@@ -1,8 +1,21 @@
 import React from 'react';
+import { Provider } from 'react-redux';
+import {createStore,applyMiddleware ,combineReducers} from 'redux';
+import {createLogger} from 'redux-logger';
+import {onLogin, fbApiCall , fbLogin} from './State/reducer.js';
+import thunkMiddleware from 'redux-thunk';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './Containers/App';
 import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const logger=createLogger();
+const rootReducer=combineReducers({onLogin, fbApiCall, fbLogin})
+const store=createStore(rootReducer,applyMiddleware(thunkMiddleware, logger));
+
+
+ReactDOM.render(
+	<Provider store={store}>
+		<App />
+	</Provider>, document.getElementById('root'));
 registerServiceWorker();
