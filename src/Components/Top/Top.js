@@ -62,7 +62,7 @@ const showXL=(logged,onPageChange,onLoginChange)=>{
 }
 //responsive function
 const loggedin=(w,logged,onPageChange,onLoginChange)=>{
-	if(w<850){
+	if(w<1000){
 		return (
 			<div className=" dropdown w-100 d-flex justify-content-end align-content-right navbar-light  p-0 h align-self-end " >
 			  <input type="search" className=" border mb-0  w-50 rounded-left search text-center h" placeholder="search page"/>
@@ -80,9 +80,8 @@ const loggedin=(w,logged,onPageChange,onLoginChange)=>{
 const Top=({width,logged,onPageChange,onLoginChange})=>{
 		return(
 			<div className="container header pt-5">
-				<div className="row">
+				<div className="d-inline-flex w-100">
 					<div id="logo" className="shadow">P</div>
-					{logged? (<p className="w-75 h m-0 p-0 d-flex justify-content-end">Welcome, User</p>) : (<p></p>)}
 					{loggedin(width,logged,onPageChange,onLoginChange)}
 				</div>
 			</div>

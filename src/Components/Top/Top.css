@@ -12,6 +12,7 @@
 	opacity:0.8;
 }
 #logo{
+	position:absolute;
 	width: 150px;
 	height: 150px;
 	margin: -50px 15px;
@@ -29,4 +30,7 @@
 .btn{
 	border-bottom-right-radius: 0px;
 	border-bottom-left-radius: 0px;
+}
+.minustop{
+	margin-top: -50px;
 }
