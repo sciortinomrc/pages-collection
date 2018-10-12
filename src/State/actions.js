@@ -3,7 +3,9 @@ import {SET_LOGIN_STATE,
 		REQUEST_PAGE_SUCCESS,
 		REQUEST_PAGE_FAILED,
 		GET_ACCESS_FAILED,
-		GET_ACCESS_SUCCESS
+		GET_ACCESS_SUCCESS,
+		WINDOW_RESIZE,
+		CHANGE_PAGE
 		} from './constants';
 export const setLoginState = (loggedIn) => ({
 	type: SET_LOGIN_STATE,
@@ -32,3 +34,7 @@ export const getPageFromAPI = (url) => (dispatch) => {
 		)
 	.catch(error=> dispatch({ type: REQUEST_PAGE_FAILED, payload: error}))
 }
+
+export const windowResize = (windowSize) => ({type: WINDOW_RESIZE, payload: windowSize})
+
+export const changePage = (page)=>({type: CHANGE_PAGE, payload: page})

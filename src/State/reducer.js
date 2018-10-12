@@ -3,7 +3,9 @@ import {SET_LOGIN_STATE,
 		REQUEST_PAGE_SUCCESS,
 		REQUEST_PAGE_FAILED,
 		GET_ACCESS_FAILED,
-		GET_ACCESS_SUCCESS
+		GET_ACCESS_SUCCESS,
+		WINDOW_RESIZE,
+		CHANGE_PAGE
 		} from './constants';
 
 //login reducer
@@ -62,6 +64,32 @@ import {SET_LOGIN_STATE,
 					...state,
 					accessToken: action.payload
 				}
+			default: return state;
+		}
+	}
+//window resize
+	const initialWindowSize={
+		size: [window.innerWidth,window.innerHeight]
+	}
+	export const onWindowResize=(state=initialWindowSize, action={})=>{
+		switch(action.type){
+			case WINDOW_RESIZE:
+				return {
+					size: action.payload
+				};
+			default: return state
+
+		}
+	}
+// change page
+	const initialPageState={
+		open: 'home'
+	}
+	export const onPageChange=(state=initialPageState, action={})=>{
+		switch(action.type){
+			case CHANGE_PAGE:{
+				return {open: action.payload}
+				};
 			default: return state;
 		}
 	}

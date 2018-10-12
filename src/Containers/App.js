@@ -5,7 +5,7 @@ import Scroller from '../Components/Home/Scroller';
 import Bottom from '../Components/Bottom';
 import Add from '../Components/Add/Add';
 import './App.css';
-import {setLoginState, getPageFromAPI, getAccessToken} from  '../State/actions.js'
+import {setLoginState, getPageFromAPI, getAccessToken, windowResize, changePage} from  '../State/actions.js'
 
 const mapStateToProps= state=>{
   return {
@@ -14,7 +14,9 @@ const mapStateToProps= state=>{
     isPending: state.fbApiCall.isPending,
     message: state.fbApiCall.message,
     error: state.fbLogin.error,
-    accessToken: state.fbLogin.accessToken
+    accessToken: state.fbLogin.accessToken,
+    size: state.onWindowResize.size,
+    open: state.onPageChange.open
   }
  }
 const mapDispatchToProps = (dispatch) =>{
@@ -23,7 +25,9 @@ const mapDispatchToProps = (dispatch) =>{
      dispatch (setLoginState(loginStatusChange));
   },
    onApiCall: (url) => dispatch(getPageFromAPI(url)),
-   getAccessToken: ()=> dispatch(getAccessToken())
+   getAccessToken: ()=> dispatch(getAccessToken()),
+   onWindowResize: (size)=>dispatch(windowResize(size)),
+   onPageChange: (page)=>dispatch(changePage(page))
   }
 }
 
@@ -64,7 +68,6 @@ constructor(){
           favourite: 0
         },*/
       ],
-      size: [window.innerWidth, window.innerHeight],
       }
       ) 
     }
@@ -84,7 +87,7 @@ componentDidMount(){
 
   //resize event listener
     window.addEventListener('resize',()=>{
-      this.setState({size:[window.innerWidth, window.innerHeight]})
+      this.props.onWindowResize([window.innerWidth, window.innerHeight])
     })/*
   //display home
     setTimeout(()=>{this.setState({open: 'home'})},2000)*/
@@ -96,17 +99,13 @@ componentDidMount(){
       Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
       this.props.onApiCall(url);
   }
-//change state open to navigate around the pages
-  changePage=(page)=>{
-    this.setState({open: page})
-  }
 //read message
   readStateMessage=()=>{
     return this.state.message
   }
 //renders the page based on the state
   returnSwitch=()=>{
-      switch(this.state.open){
+      switch(this.props.open){
           case 'home':  return ( <Scroller key='categories' at={this.props.accessToken} cards={this.props.cards} db={this.state.database} />);
           case 'add': return( <Add addPage={this.addPage} readMessage={this.readStateMessage}/>)
           default: return( <h1> ... The page is Loading ...</h1> )
@@ -118,11 +117,14 @@ componentDidMount(){
     const {logged, onLoginChange, cards }=this.props;
       return(
           <div className="App d-block w-100 m-0 p-0">
-            <Top width={this.state.size[0]} logged={logged} onLoginChange={onLoginChange} onPageChange={this.changePage} />
+          {console.log(this.props.size[0])}
+            <Top width={this.props.size[0]} logged={logged} onLoginChange={onLoginChange} onPageChange={this.props.onPageChange} />
               <div className="d-flex flex-column justify-content-end pt">
                   {this.returnSwitch()}
-                  <Bottom height={this.state.size[1]} />
+                  <Bottom height={this.props.size[1]} />
               </div>
+          }
+          }
           </div>
         )
   }
