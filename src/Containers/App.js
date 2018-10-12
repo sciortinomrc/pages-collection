@@ -4,6 +4,7 @@ import Top from '../Components/Top/Top';
 import Scroller from '../Components/Home/Scroller';
 import Bottom from '../Components/Bottom';
 import Add from '../Components/Add/Add';
+import Categories from '../Components/Categories/Categories'
 import './App.css';
 import {setLoginState, getPageFromAPI, getAccessToken, windowResize, changePage} from  '../State/actions.js'
 
@@ -23,13 +24,13 @@ const mapDispatchToProps = (dispatch) =>{
   return{
    onLoginChange: (loginStatusChange) =>{
      dispatch (setLoginState(loginStatusChange));
-  },
+    },
    onApiCall: (url) => dispatch(getPageFromAPI(url)),
    getAccessToken: ()=> dispatch(getAccessToken()),
    onWindowResize: (size)=>dispatch(windowResize(size)),
    onPageChange: (page)=>dispatch(changePage(page))
+    }
   }
-}
 class App extends Component {
 constructor(){
   super()
@@ -81,15 +82,12 @@ componentDidMount(){
                    this.props.onApiCall(url)
                    return record
                    })
-    },350)
-
-  //resize event listener
-    window.addEventListener('resize',()=>{
+    },1000)
+//resize event listener
+  window.addEventListener('resize',()=>{
       this.props.onWindowResize([window.innerWidth, window.innerHeight])
-    })/*
-  //display home
-    setTimeout(()=>{this.setState({open: 'home'})},2000)*/
- }
+    })
+  }
 //add new Page
   addPage=(obj)=>{
     let url = new URL(`https://graph.facebook.com/${obj.id}`),
@@ -97,15 +95,12 @@ componentDidMount(){
       Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
       this.props.onApiCall(url);
   }
-//read message
-  readStateMessage=()=>{
-    return this.state.message
-  }
 //renders the page based on the state
   returnSwitch=()=>{
       switch(this.props.open){
           case 'home':  return ( <Scroller key='categories' at={this.props.accessToken} cards={this.props.cards} db={this.state.database} />);
           case 'add': return( <Add addPage={this.addPage} readMessage={this.readStateMessage}/>)
+          case 'categories': return( <Categories categories={this.state.database} />);
           default: return( <h1> ... The page is Loading ...</h1> )
       }
   }

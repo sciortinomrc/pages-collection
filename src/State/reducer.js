@@ -83,7 +83,7 @@ import {SET_LOGIN_STATE,
 	}
 // change page
 	const initialPageState={
-		open: 'home'
+		open: 'categories'
 	}
 	export const onPageChange=(state=initialPageState, action={})=>{
 		switch(action.type){
