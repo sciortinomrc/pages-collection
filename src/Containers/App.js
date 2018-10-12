@@ -30,12 +30,10 @@ const mapDispatchToProps = (dispatch) =>{
    onPageChange: (page)=>dispatch(changePage(page))
   }
 }
-
 class App extends Component {
 constructor(){
   super()
     this.state=({
-      open: 'home',
       database:[
         {
           id: '1868643320130834',
@@ -46,7 +44,7 @@ constructor(){
           id: '718361521697095',
           category: 'natura',
           favourite: 0
-        }/*,
+        },
         {
           id: '1169644526470881',
           category: 'fantasia',
@@ -66,7 +64,7 @@ constructor(){
           id: '354760301630118',
           category: 'ignoranza',
           favourite: 0
-        },*/
+        },
       ],
       }
       ) 
@@ -74,7 +72,6 @@ constructor(){
 componentDidMount(){ 
     //load accessToken
     this.props.getAccessToken();
-    console.log(this.props.accessToken)
     //delayed api call and cards load + set message
     setTimeout(()=>{
       this.state.database.map(record=>{
@@ -82,8 +79,9 @@ componentDidMount(){
                       params = {access_token: this.props.accessToken, fields:'id,name,picture,fan_count,link'}
                    Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
                    this.props.onApiCall(url)
+                   return record
                    })
-    },2000)
+    },350)
 
   //resize event listener
     window.addEventListener('resize',()=>{
@@ -113,12 +111,10 @@ componentDidMount(){
   }
 //render method
   render() {
-    const {accessToken, open, database}=this.state;
-    const {logged, onLoginChange, cards }=this.props;
+    const {logged, onLoginChange, onPageChange }=this.props;
       return(
           <div className="App d-block w-100 m-0 p-0">
-          {console.log(this.props.size[0])}
-            <Top width={this.props.size[0]} logged={logged} onLoginChange={onLoginChange} onPageChange={this.props.onPageChange} />
+            <Top width={this.props.size[0]} logged={logged} onLoginChange={onLoginChange} onPageChange={onPageChange} />
               <div className="d-flex flex-column justify-content-end pt">
                   {this.returnSwitch()}
                   <Bottom height={this.props.size[1]} />

@@ -87,9 +87,7 @@ import {SET_LOGIN_STATE,
 	}
 	export const onPageChange=(state=initialPageState, action={})=>{
 		switch(action.type){
-			case CHANGE_PAGE:{
-				return {open: action.payload}
-				};
+			case CHANGE_PAGE: return {open: action.payload};
 			default: return state;
 		}
 	}

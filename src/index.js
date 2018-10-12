@@ -6,7 +6,7 @@ import {onLogin, fbApiCall , fbLogin, onWindowResize, onPageChange} from './Stat
 import thunkMiddleware from 'redux-thunk';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './Containers/App';
+import WindowFB from './Containers/WindowFB';
 import registerServiceWorker from './registerServiceWorker';
 
 const logger=createLogger();
@@ -16,6 +16,6 @@ const store=createStore(rootReducer,applyMiddleware(thunkMiddleware, logger));
 
 ReactDOM.render(
 	<Provider store={store}>
-		<App />
+		<WindowFB />
 	</Provider>, document.getElementById('root'));
 registerServiceWorker();
