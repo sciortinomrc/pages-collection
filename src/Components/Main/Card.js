@@ -1,10 +1,11 @@
 import React from 'react';
 import './Style/Card.css';
-const Card=({name,fan_count,picture,link,favourites})=>{
+const Card=({name,fan_count,picture,link,favourites,category})=>{
+	console.log(category)
 	return(
 
 			
-		<div className="wrapper d-flex flex-column mt-1 ml-2 mr-3 rounded">
+		<div className="wrapper d-flex flex-column mt-1 ml-2 mr-3 rounded" data-toggle="tooltip" data-placement="top" title={category}>
 			<div className="background1">
 				<div className='top d-flex '>
 				<p className=" mr-1 w-100 word-wrap p-1"><a href={link} className="no-deco" target='_blank'>{name}</a></p>

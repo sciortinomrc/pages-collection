@@ -4,9 +4,10 @@ import Card from './Card';
 const PagesList=({category, cards,db})=>{
 	if(cards.length){
 		return(
-			<div className="d-inline-flex height" key={this.category}>
+			<div className="d-flex flex-wrap justify-content-baseline height m-auto" key={this.category}>
 			{	cards.map(card=>{
 					const recordMatch=db.filter(record=>{
+						if(category==='all' && record.id.includes(card.id)) return record
 						if(record.id.includes(card.id) && category===record.category){
 							return record
 						}
@@ -20,6 +21,7 @@ const PagesList=({category, cards,db})=>{
 						picture={card.picture.data.url}
 						link={card.link}
 						favourites={recordMatch[0].favourite}
+						category={recordMatch[0].category}
 					/>)
 				}
 				else return undefined

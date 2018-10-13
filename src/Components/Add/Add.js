@@ -63,6 +63,20 @@ return(
 					<div className="d-flex flex-column border w-100">
 						<input id="id" type="text" className="rounded-left text-center" placeholder="Page ID" onChange={this.onInputsChange}/>
 						<input id="category" type="text" className="rounded-left text-center" placeholder="Category" onChange={this.onInputsChange}/>
+						<div className="bfh-selectbox bfh-countries" data-country="US" data-flags="true">
+						  <input type="hidden" value="" />
+						  <a className="bfh-selectbox-toggle" role="button" data-toggle="bfh-selectbox" href="#">
+						    <span className="bfh-selectbox-option input-medium" data-option=""></span>
+						    <b className="caret"></b>
+						  </a>
+						  <div className="bfh-selectbox-options">
+						    <input type="text" className="bfh-selectbox-filter" />
+						    <div role="listbox">
+						    <ul role="option">
+						    </ul>
+						    </div>
+						  </div>
+						</div>
 					</div>
 					<div className="h-auto w-15">
 						<input type="button" className="h-100 w-100 btn btn-primary" value="Add" onClick={()=>this.stateCheck(this.props.addPage)}/>

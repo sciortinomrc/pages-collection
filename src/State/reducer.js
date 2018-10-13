@@ -5,7 +5,8 @@ import {SET_LOGIN_STATE,
 		GET_ACCESS_FAILED,
 		GET_ACCESS_SUCCESS,
 		WINDOW_RESIZE,
-		CHANGE_PAGE
+		CHANGE_PAGE,
+		CATEGORY_CHOICE
 		} from './constants';
 
 //login reducer
@@ -81,13 +82,15 @@ import {SET_LOGIN_STATE,
 
 		}
 	}
-// change page
+//change page
 	const initialPageState={
-		open: 'categories'
+		open: 'home',
+		chosen_category: ''
 	}
 	export const onPageChange=(state=initialPageState, action={})=>{
 		switch(action.type){
-			case CHANGE_PAGE: return {open: action.payload};
+			case CHANGE_PAGE: return { ...state, open: action.payload};
+			case CATEGORY_CHOICE: return { open: action.payload.page, chosen_category: action.payload.chosen_category};
 			default: return state;
 		}
 	}

@@ -42,7 +42,7 @@ const show=(logged,onPageChange,onLoginChange)=>{
 		<div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
 	 		    <p className="dropdown-item" onClick={()=>onPageChange('home')}>Home</p>
 	 		    <p className="dropdown-item" onClick={()=>onPageChange('categories')}>Categories</p>
-	 		    <p className="dropdown-item">All Pages</p>
+	 		    <p className="dropdown-item" onClick={()=>onPageChange('display-all','all')}>All Pages</p>
 	 		    <div className="dropdown-divider"></div>
 	 		    { loggedSmall(logged,onPageChange,onLoginChange)}
 		</div>		
@@ -52,9 +52,9 @@ const show=(logged,onPageChange,onLoginChange)=>{
 const showXL=(logged,onPageChange,onLoginChange)=>{
 	return(
 		<div className="d-flex col pt-3 p-0 nav justify-content-end">	
-			<p className=" btn border mb-0 rounded-top " onClick={()=>onPageChange('home')}>Home</p>
-			<p className=" btn border mb-0 rounded-top " onClick={()=>onPageChange('categories')}>Categories</p>
-			<p className=" btn border mb-0 rounded-top">All Pages</p>
+			<p className=" btn border mb-0 rounded-top" onClick={()=>onPageChange('home')}>Home</p>
+			<p className=" btn border mb-0 rounded-top" onClick={()=>onPageChange('categories')}>Categories</p>
+			<p className=" btn border mb-0 rounded-top" onClick={()=>onPageChange('display-all','all')}>All Pages</p>
 			{loggedXL(logged,onPageChange,onLoginChange)}
 			<input type="search" className=" border mb-0 rounded-top search text-center" placeholder="search page"/>
 		</div>

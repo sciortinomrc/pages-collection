@@ -4,9 +4,13 @@ import Top from '../Components/Top/Top';
 import Scroller from '../Components/Home/Scroller';
 import Bottom from '../Components/Bottom';
 import Add from '../Components/Add/Add';
+import Home from '../Components/Home/Home';
+import PagesList from '../Components/Main/PagesList';
 import Categories from '../Components/Categories/Categories'
 import './App.css';
-import {setLoginState, getPageFromAPI, getAccessToken, windowResize, changePage} from  '../State/actions.js'
+import {setLoginState, getPageFromAPI, 
+  getAccessToken, windowResize, 
+  changePage} from  '../State/actions.js'
 
 const mapStateToProps= state=>{
   return {
@@ -17,7 +21,8 @@ const mapStateToProps= state=>{
     error: state.fbLogin.error,
     accessToken: state.fbLogin.accessToken,
     size: state.onWindowResize.size,
-    open: state.onPageChange.open
+    open: state.onPageChange.open,
+    category: state.onPageChange.chosen_category
   }
  }
 const mapDispatchToProps = (dispatch) =>{
@@ -28,7 +33,7 @@ const mapDispatchToProps = (dispatch) =>{
    onApiCall: (url) => dispatch(getPageFromAPI(url)),
    getAccessToken: ()=> dispatch(getAccessToken()),
    onWindowResize: (size)=>dispatch(windowResize(size)),
-   onPageChange: (page)=>dispatch(changePage(page))
+   onPageChange: (page,category)=>dispatch(changePage(page,category))
     }
   }
 class App extends Component {
@@ -72,7 +77,7 @@ constructor(){
     }
 componentDidMount(){ 
     //load accessToken
-    this.props.getAccessToken();
+    setTimeout(()=>this.props.getAccessToken(),200);
     //delayed api call and cards load + set message
     setTimeout(()=>{
       this.state.database.map(record=>{
@@ -95,12 +100,15 @@ componentDidMount(){
       Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
       this.props.onApiCall(url);
   }
+//select category
 //renders the page based on the state
   returnSwitch=()=>{
       switch(this.props.open){
-          case 'home':  return ( <Scroller key='categories' at={this.props.accessToken} cards={this.props.cards} db={this.state.database} />);
+          case 'home':  return ( <Home key='categories' at={this.props.accessToken} cards={this.props.cards} db={this.state.database} />);
           case 'add': return( <Add addPage={this.addPage} readMessage={this.readStateMessage}/>)
-          case 'categories': return( <Categories categories={this.state.database} />);
+          case 'categories': return( <Categories categories={this.state.database} onPageChange={this.props.onPageChange}/>);
+          case 'display-all': return ( <PagesList category='all' cards={this.props.cards} db={this.state.database}/> )
+          case 'display-category': return (<PagesList category={this.props.category} cards={this.props.cards} db={this.state.database}/>)
           default: return( <h1> ... The page is Loading ...</h1> )
       }
   }
@@ -110,8 +118,10 @@ componentDidMount(){
       return(
           <div className="App d-block w-100 m-0 p-0">
             <Top width={this.props.size[0]} logged={logged} onLoginChange={onLoginChange} onPageChange={onPageChange} />
-              <div className="d-flex flex-column justify-content-end pt">
-                  {this.returnSwitch()}
+              <div className="d-flex flex-column pt">
+                  <Scroller>
+                    {this.returnSwitch()}
+                  </Scroller>
                   <Bottom height={this.props.size[1]} />
               </div>
           }

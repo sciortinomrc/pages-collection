@@ -14,28 +14,35 @@ class WindowFB extends Component{
 	componentDidMount(){
 		window.fbAsyncInit = function() {
       //apptest
-      /*window.FB.init({
+      window.FB.init({
         appId: '493486697820891',
         appSecret: 'facc5d5c9bef95c160cf627b5ca76e76',
         cookie: true,
         version: 'v3.1'
-      });*/
+      });
       //app
-     window.FB.init({
+    /* window.FB.init({
         appId: '899425356926402',
         appSecret: 'bd3418470ead59bf077838b510f19d64',
         cookie: true,
         version: 'v3.1'
-      });
+      });*/
     };
+
     (function(d, s, id){
-       var js, fjs = d.getElementsByTagName(s)[0];
-       if (d.getElementById(id)) {return;}
-       js = d.createElement(s); js.id = id;
-       js.src = "https://connect.facebook.net/en_US/sdk.js";
-       fjs.parentNode.insertBefore(js, fjs);
-     }(document, 'script', 'facebook-jssdk'));	
-    setTimeout(()=>this.setState({fbOk: true}),150)
+         var js, fjs = d.getElementsByTagName(s)[0];
+         if (d.getElementById(id)) {return;}
+         js = d.createElement(s); js.id = id;
+         js.src = "https://connect.facebook.net/en_US/sdk.js";
+         fjs.parentNode.insertBefore(js, fjs);
+         if(window.FB){
+          console.log('fb ok')
+          this.setState({fbOk:true})
+        }
+        else{
+          setTimeout(()=>this.setState({fbOk: true}),50)
+        }
+     }.bind(this)(document, 'script', 'facebook-jssdk'));
 }
 
 	render(){

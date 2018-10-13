@@ -4,19 +4,18 @@ import {SET_LOGIN_STATE,
 		REQUEST_PAGE_FAILED,
 		GET_ACCESS_SUCCESS,
 		WINDOW_RESIZE,
-		CHANGE_PAGE
+		CHANGE_PAGE,
+		CATEGORY_CHOICE
 		} from './constants';
 export const setLoginState = (loggedIn) => ({
 	type: SET_LOGIN_STATE,
 	payload: loggedIn
 })
-
 export const getAccessToken = (at) => (dispatch) =>{
 	window.FB.getLoginStatus((response)=>{
      dispatch({type: GET_ACCESS_SUCCESS, payload: response.authResponse.accessToken});
     })
 }
-
 export const getPageFromAPI = (url) => (dispatch) => {
 	dispatch({ type: REQUEST_PAGE_PENDING, payload: url});
 	fetch(url)
@@ -33,7 +32,20 @@ export const getPageFromAPI = (url) => (dispatch) => {
 		)
 	.catch(error=> dispatch({ type: REQUEST_PAGE_FAILED, payload: error}))
 }
-
 export const windowResize = (windowSize) => ({type: WINDOW_RESIZE, payload: windowSize})
+export const changePage = (page,chosen_category="")=> {
+		if(chosen_category.length){
+			return{
+				type: CATEGORY_CHOICE,
+				payload: {page,chosen_category}	
+			}
+		}else{
+			return{
+			type: CHANGE_PAGE,
+			payload: page
+			}
+		}
+	
+}
 
-export const changePage = (page)=>({type: CHANGE_PAGE, payload: page})
+	

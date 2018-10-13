@@ -8,6 +8,9 @@
 .scroll{
 	overflow-x: scroll;
 }
+.scrolly{
+	overflow-y: scroll;
+}
 .padding{
 	padding:20px;
 }
