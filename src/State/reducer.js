@@ -1,7 +1,7 @@
 import {SET_LOGIN_STATE, REQUEST_PAGE_PENDING, REQUEST_PAGE_SUCCESS,
 		REQUEST_PAGE_FAILED, GET_ACCESS_FAILED, GET_ACCESS_SUCCESS,
 		WINDOW_RESIZE, CHANGE_PAGE, CATEGORY_CHOICE,
-		ADD_PAGE_FAILED, ADD_PAGE_SUCCESS } from './constants';
+		ADD_PAGE_FAILED, ADD_PAGE_SUCCESS, ACCESS_TOKEN } from './constants';
 
 //login reducer
 	const initialLoginState={
@@ -43,20 +43,13 @@ import {SET_LOGIN_STATE, REQUEST_PAGE_PENDING, REQUEST_PAGE_SUCCESS,
 	}
 //facebook Login
 	const initialFBState={
-		accessToken: '',
-		error: ''
+		accessToken: ACCESS_TOKEN
 	}
 
 	export const fbLogin=(state=initialFBState, action={})=>{
 		switch(action.type){
-			case GET_ACCESS_FAILED:
-				return {
-					...state,
-					error: 'Unable to connect'
-				}
 			case GET_ACCESS_SUCCESS:
 				return {
-					...state,
 					accessToken: action.payload
 				}
 			default: return state;

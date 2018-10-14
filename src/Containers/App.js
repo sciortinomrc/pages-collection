@@ -28,26 +28,34 @@ const mapDispatchToProps = (dispatch) =>{
   return{
    onApiCall: (url) => dispatch(getPageFromAPI(url)),
    getAccessToken: ()=> dispatch(getAccessToken()),
-   onPageChange: (page,category)=>dispatch(changePage(page,category))
+   onPageChange: (page,category)=>dispatch(changePage(page,category)),
+   onWindowResize: (size)=>dispatch(windowResize(size))
     }
   }
 class App extends Component {
 constructor(){
   super()
+  this.state=({
+    test: {}
+  })
 }
 componentDidMount(){ 
     //load accessToken    
      this.props.getAccessToken();
+
+     console.log(this.props.accessToken)
       //delayed api call and cards load + set message
-   setTimeout(()=>{
-    this.props.database.map(record=>{
+   this.props.database.map(record=>{
+    this.props.onApiCall(record)
+    return record
+   })/*
      let url = new URL(`https://graph.facebook.com/${record.id}`),
         params = {access_token: this.props.accessToken, fields:'id,name,picture,fan_count,link'}
      Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
      this.props.onApiCall(url)
      return record
      })
-   },2000)
+   },2000)*/
    
 //resize event listener
   window.addEventListener('resize',()=>{
@@ -73,9 +81,18 @@ componentDidMount(){
           default: return( <h1> ... The page is Loading ...</h1> )
       }
   }
+ //  window.FB.api('/1868643320130834',(response)=>{
+  apiTest=()=>{
+    window.FB.api('/me',(response)=>{
+      this.setState({test:response})
+      console.log(this.state)
+    }
+  )
+  }
 //render method
   render() {
-    const { accessToken }=this.props;
+      
+      const { accessToken }=this.props;
       return(
         accessToken? (
           <div className="App d-block w-100 m-0 p-0">
