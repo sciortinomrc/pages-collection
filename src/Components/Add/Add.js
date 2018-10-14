@@ -1,14 +1,34 @@
 import React, {Component} from 'react';
+import {connect } from 'react-redux';
+import {newPage, getPageFromAPI} from '../../State/actions.js';
+import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-country-region-selector';
 import "./Add.css";
+
+const mapStateToProps=state=>{
+	return{
+		database: state.addNewPage.database,
+		message: state.addNewPage.message,
+		apiMessage: state.fbApiCall.message
+	}
+}
+const mapDispatchToProps=dispatch=>{
+	return{
+		addNewPage: (id,category,country,message)=> dispatch(newPage(id,category,country,message))
+	}
+}
 
 class Add extends Component {
 constructor(props){
 	super(props)
 	this.state={
+		country: '', 
 		pageId: '',
-		category: '',
-		message: ''
+		category: ''
 	}
+}
+
+deliverMessage=()=>{
+	return this.props.message;
 }
 
 onInputsChange=(event)=>{
@@ -21,16 +41,26 @@ onInputsChange=(event)=>{
 stateCheck=(f)=>{
 	document.getElementById('id').value="";
 	document.getElementById('category').value="";
-	const {pageId, category}=this.state;
-	if(pageId.length && category.length){
-			f({id: this.state.pageId, category: this.state.category})
-			setTimeout(()=>this.setState({message: this.props.readMessage()}),200)
-	}else{this.setState({message: "There's been an error please enter the page again"})
+	const {pageId, category, country}=this.state;
+	if(pageId.length && category.length && country.length){
+			f({id: pageId, category: category, country: country})
+			setTimeout(()=>{
+				if(this.props.apiMessage.length<40 && this.props.apiMessage.length>38){
+					this.props.addNewPage(pageId,category,country,this.props.apiMessage);
+				}
+				else this.props.addNewPage(undefined,undefined,undefined,this.props.apiMessage)
+			},500)
+	}else{this.props.addNewPage(undefined,undefined,undefined,'You need to complete the form.')
 	}
+	this.setState({country: '', pageId: '', category: ''})
 
 }
+	selectCountry (val) {
+	this.setState({ country: val });
+	}
 
 render(){
+	const {country}=this.state;
 return(
 	<div className="full-screen">
 		<div className="d-flex flex-column m-auto w-75 border">
@@ -63,26 +93,15 @@ return(
 					<div className="d-flex flex-column border w-100">
 						<input id="id" type="text" className="rounded-left text-center" placeholder="Page ID" onChange={this.onInputsChange}/>
 						<input id="category" type="text" className="rounded-left text-center" placeholder="Category" onChange={this.onInputsChange}/>
-						<div className="bfh-selectbox bfh-countries" data-country="US" data-flags="true">
-						  <input type="hidden" value="" />
-						  <a className="bfh-selectbox-toggle" role="button" data-toggle="bfh-selectbox" href="#">
-						    <span className="bfh-selectbox-option input-medium" data-option=""></span>
-						    <b className="caret"></b>
-						  </a>
-						  <div className="bfh-selectbox-options">
-						    <input type="text" className="bfh-selectbox-filter" />
-						    <div role="listbox">
-						    <ul role="option">
-						    </ul>
-						    </div>
-						  </div>
-						</div>
+				        <CountryDropdown
+				          value={country}
+				          onChange={(val) => this.selectCountry(val)} />
 					</div>
 					<div className="h-auto w-15">
 						<input type="button" className="h-100 w-100 btn btn-primary" value="Add" onClick={()=>this.stateCheck(this.props.addPage)}/>
 					</div>
 				</div>
-					<p className="mt-2">{this.state.message}</p>
+					<p className="mt-2">{this.props.message}</p>
 			</div>
 		</div>
 				
@@ -92,4 +111,4 @@ return(
 }
 }
 
-export default Add;
+export default connect(mapStateToProps,mapDispatchToProps)(Add);

@@ -1,13 +1,7 @@
-import {SET_LOGIN_STATE,
-		REQUEST_PAGE_PENDING,
-		REQUEST_PAGE_SUCCESS,
-		REQUEST_PAGE_FAILED,
-		GET_ACCESS_FAILED,
-		GET_ACCESS_SUCCESS,
-		WINDOW_RESIZE,
-		CHANGE_PAGE,
-		CATEGORY_CHOICE
-		} from './constants';
+import {SET_LOGIN_STATE, REQUEST_PAGE_PENDING, REQUEST_PAGE_SUCCESS,
+		REQUEST_PAGE_FAILED, GET_ACCESS_FAILED, GET_ACCESS_SUCCESS,
+		WINDOW_RESIZE, CHANGE_PAGE, CATEGORY_CHOICE,
+		ADD_PAGE_FAILED, ADD_PAGE_SUCCESS } from './constants';
 
 //login reducer
 	const initialLoginState={
@@ -92,5 +86,27 @@ import {SET_LOGIN_STATE,
 			case CHANGE_PAGE: return { ...state, open: action.payload};
 			case CATEGORY_CHOICE: return { open: action.payload.page, chosen_category: action.payload.chosen_category};
 			default: return state;
+		}
+	}
+//add new page
+
+	const initialDBState={
+		database:[ 
+        {id: '1868643320130834', category: 'natura', favourite: 0, country: 'Italy'},
+        {id: '718361521697095', category: 'natura', favourite: 0, country: 'Italy'},
+        {id: '1169644526470881', category: 'fantasia', favourite: 0, country: 'Italy'},
+        {id: '137492556866190', category: 'trasformismo', favourite: 0, country: 'Italy'},
+        {id: '1683822428328710', category: 'trasformismo', favourite: 0, country: 'Italy'},
+        {id: '354760301630118', category: 'ignoranza', favourite: 0, country: 'Italy'},
+      ],
+      message:''
+	}
+	export const addNewPage=(state=initialDBState, action={})=>{
+		switch(action.type){
+			case ADD_PAGE_FAILED:
+				return {...state, message:action.payload}
+			case ADD_PAGE_SUCCESS:
+				return { database:[...state.database, {id: action.payload.id, category: action.payload.category, country: action.payload.country}], message:action.payload.message}
+			default: return state
 		}
 	}

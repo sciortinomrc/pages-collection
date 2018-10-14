@@ -18,3 +18,7 @@ hr {
 .w-15{
 	width: 15%;
 }
+select {
+	text-indent: 48%;
+	background-color: white;
+}

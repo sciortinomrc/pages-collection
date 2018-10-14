@@ -12,6 +12,7 @@ class WindowFB extends Component{
 	}
 
 	componentDidMount(){
+
 		window.fbAsyncInit = function() {
       //apptest
       window.FB.init({
@@ -30,25 +31,19 @@ class WindowFB extends Component{
     };
 
     (function(d, s, id){
-         var js, fjs = d.getElementsByTagName(s)[0];
-         if (d.getElementById(id)) {return;}
-         js = d.createElement(s); js.id = id;
-         js.src = "https://connect.facebook.net/en_US/sdk.js";
-         fjs.parentNode.insertBefore(js, fjs);
-         if(window.FB){
-          console.log('fb ok')
-          this.setState({fbOk:true})
-        }
-        else{
-          setTimeout(()=>this.setState({fbOk: true}),50)
-        }
+       var js, fjs = d.getElementsByTagName(s)[0];
+       if (d.getElementById(id)) {return;}
+       js = d.createElement(s); js.id = id;
+       js.src = "https://connect.facebook.net/en_US/sdk.js";
+       fjs.parentNode.insertBefore(js, fjs);
+       setTimeout(()=>this.setState({fbOk: true}),1000)
      }.bind(this)(document, 'script', 'facebook-jssdk'));
 }
 
-	render(){
-		return(
-			this.state.fbOk?<App />:<div className="d-flex justify-content-center m-auto"><p>..... LOADING DEPENDENCIES FROM FACEBOOK.COM .....</p></div>
-			)
-		}
+  	render(){
+     return(
+      !this.state.fbOk?<h1 className="text-center mt-5">...LOADING THE APP...</h1>:<App />
+      )
+  }
 }
 export default WindowFB;

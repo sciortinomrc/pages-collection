@@ -1,7 +1,6 @@
 import React from 'react';
 import './Style/Card.css';
 const Card=({name,fan_count,picture,link,favourites,category})=>{
-	console.log(category)
 	return(
 
 			

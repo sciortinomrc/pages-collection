@@ -8,13 +8,12 @@ import Home from '../Components/Home/Home';
 import PagesList from '../Components/Main/PagesList';
 import Categories from '../Components/Categories/Categories'
 import './App.css';
-import {setLoginState, getPageFromAPI, 
-  getAccessToken, windowResize, 
-  changePage} from  '../State/actions.js'
+import {getPageFromAPI, getAccessToken,
+  windowResize, changePage, newPage} from  '../State/actions.js'
 
 const mapStateToProps= state=>{
   return {
-    logged: state.onLogin.logged,
+    database: state.addNewPage.database,
     cards: state.fbApiCall.cards,
     isPending: state.fbApiCall.isPending,
     message: state.fbApiCall.message,
@@ -27,67 +26,29 @@ const mapStateToProps= state=>{
  }
 const mapDispatchToProps = (dispatch) =>{
   return{
-   onLoginChange: (loginStatusChange) =>{
-     dispatch (setLoginState(loginStatusChange));
-    },
    onApiCall: (url) => dispatch(getPageFromAPI(url)),
    getAccessToken: ()=> dispatch(getAccessToken()),
-   onWindowResize: (size)=>dispatch(windowResize(size)),
    onPageChange: (page,category)=>dispatch(changePage(page,category))
     }
   }
 class App extends Component {
 constructor(){
   super()
-    this.state=({
-      database:[
-        {
-          id: '1868643320130834',
-          category: 'natura',
-          favourite: 0
-        },
-        {
-          id: '718361521697095',
-          category: 'natura',
-          favourite: 0
-        },
-        {
-          id: '1169644526470881',
-          category: 'fantasia',
-          favourite: 0
-        },
-        {
-          id: '137492556866190',
-          category: 'trasformismo',
-          favourite: 0
-        },
-        {
-          id: '1683822428328710',
-          category: 'trasformismo',
-          favourite: 0
-        },
-        {
-          id: '354760301630118',
-          category: 'ignoranza',
-          favourite: 0
-        },
-      ],
-      }
-      ) 
-    }
+}
 componentDidMount(){ 
-    //load accessToken
-    setTimeout(()=>this.props.getAccessToken(),200);
-    //delayed api call and cards load + set message
-    setTimeout(()=>{
-      this.state.database.map(record=>{
-                   let url = new URL(`https://graph.facebook.com/${record.id}`),
-                      params = {access_token: this.props.accessToken, fields:'id,name,picture,fan_count,link'}
-                   Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
-                   this.props.onApiCall(url)
-                   return record
-                   })
-    },1000)
+    //load accessToken    
+     this.props.getAccessToken();
+      //delayed api call and cards load + set message
+   setTimeout(()=>{
+    this.props.database.map(record=>{
+     let url = new URL(`https://graph.facebook.com/${record.id}`),
+        params = {access_token: this.props.accessToken, fields:'id,name,picture,fan_count,link'}
+     Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
+     this.props.onApiCall(url)
+     return record
+     })
+   },2000)
+   
 //resize event listener
   window.addEventListener('resize',()=>{
       this.props.onWindowResize([window.innerWidth, window.innerHeight])
@@ -96,7 +57,7 @@ componentDidMount(){
 //add new Page
   addPage=(obj)=>{
     let url = new URL(`https://graph.facebook.com/${obj.id}`),
-        params = {access_token: this.state.accessToken, fields:'id,name,picture,fan_count,link'}
+        params = {access_token: this.props.accessToken, fields:'id,name,picture,fan_count,link'}
       Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
       this.props.onApiCall(url);
   }
@@ -104,7 +65,7 @@ componentDidMount(){
 //renders the page based on the state
   returnSwitch=()=>{
       switch(this.props.open){
-          case 'home':  return ( <Home key='categories' at={this.props.accessToken} cards={this.props.cards} db={this.state.database} />);
+          case 'home':  return ( <Home key='categories' at={this.props.accessToken} cards={this.props.cards} db={this.props.database} />);
           case 'add': return( <Add addPage={this.addPage} readMessage={this.readStateMessage}/>)
           case 'categories': return( <Categories categories={this.state.database} onPageChange={this.props.onPageChange}/>);
           case 'display-all': return ( <PagesList category='all' cards={this.props.cards} db={this.state.database}/> )
@@ -114,19 +75,22 @@ componentDidMount(){
   }
 //render method
   render() {
-    const {logged, onLoginChange, onPageChange }=this.props;
+    const { accessToken }=this.props;
       return(
+        accessToken? (
           <div className="App d-block w-100 m-0 p-0">
-            <Top width={this.props.size[0]} logged={logged} onLoginChange={onLoginChange} onPageChange={onPageChange} />
+            <Top />
               <div className="d-flex flex-column pt">
                   <Scroller>
                     {this.returnSwitch()}
                   </Scroller>
                   <Bottom height={this.props.size[1]} />
               </div>
-          }
-          }
           </div>
+          ):
+        (
+          <h1 className="text-center mt-5">.... WAITING AUTHORIZATION FROM FACEBOOK .... </h1>
+        )
         )
   }
 }

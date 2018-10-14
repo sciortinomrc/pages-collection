@@ -1,12 +1,7 @@
-import {SET_LOGIN_STATE,
-		REQUEST_PAGE_PENDING,
-		REQUEST_PAGE_SUCCESS,
-		REQUEST_PAGE_FAILED,
-		GET_ACCESS_SUCCESS,
-		WINDOW_RESIZE,
-		CHANGE_PAGE,
-		CATEGORY_CHOICE
-		} from './constants';
+import {SET_LOGIN_STATE, REQUEST_PAGE_PENDING, REQUEST_PAGE_SUCCESS, 
+		REQUEST_PAGE_FAILED, GET_ACCESS_SUCCESS, WINDOW_RESIZE,
+		CHANGE_PAGE, CATEGORY_CHOICE, ADD_PAGE_FAILED,
+		ADD_PAGE_SUCCESS } from './constants';
 export const setLoginState = (loggedIn) => ({
 	type: SET_LOGIN_STATE,
 	payload: loggedIn
@@ -46,6 +41,18 @@ export const changePage = (page,chosen_category="")=> {
 			}
 		}
 	
+}
+export const newPage=(id,category,country,message)=>{
+	if(!id)
+		return{
+			type: ADD_PAGE_FAILED,
+			payload: message
+		}
+	else
+		return{
+			type: ADD_PAGE_SUCCESS,
+			payload: {id,category,country,message}
+		}	
 }
 
 	

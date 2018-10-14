@@ -12,3 +12,6 @@ export const WINDOW_RESIZE = 'WINDOW_RESIZE';
 export const CHANGE_PAGE = 'CHANGE_PAGE';
 
 export const CATEGORY_CHOICE = 'CATEGORY_CHOICE';
+
+export const ADD_PAGE_SUCCESS = 'ADD_PAGE_SUCCESS';
+export const ADD_PAGE_FAILED = 'ADD_PAGE_FAILED';
