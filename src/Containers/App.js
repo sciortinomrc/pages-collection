@@ -64,10 +64,7 @@ componentDidMount(){
   }
 //add new Page
   addPage=(obj)=>{
-    let url = new URL(`https://graph.facebook.com/${obj.id}`),
-        params = {access_token: this.props.accessToken, fields:'id,name,picture,fan_count,link'}
-      Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
-      this.props.onApiCall(url);
+      this.props.onApiCall(obj);
   }
 //select category
 //renders the page based on the state
@@ -75,9 +72,9 @@ componentDidMount(){
       switch(this.props.open){
           case 'home':  return ( <Home key='categories' at={this.props.accessToken} cards={this.props.cards} db={this.props.database} />);
           case 'add': return( <Add addPage={this.addPage} readMessage={this.readStateMessage}/>)
-          case 'categories': return( <Categories categories={this.state.database} onPageChange={this.props.onPageChange}/>);
-          case 'display-all': return ( <PagesList category='all' cards={this.props.cards} db={this.state.database}/> )
-          case 'display-category': return (<PagesList category={this.props.category} cards={this.props.cards} db={this.state.database}/>)
+          case 'categories': return( <Categories categories={this.props.database} onPageChange={this.props.onPageChange}/>);
+          case 'display-all': return ( <PagesList category='all' cards={this.props.cards} db={this.props.database}/> )
+          case 'display-category': return (<PagesList category={this.props.category} cards={this.props.cards} db={this.props.database}/>)
           default: return( <h1> ... The page is Loading ...</h1> )
       }
   }
