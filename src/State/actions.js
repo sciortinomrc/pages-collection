@@ -22,7 +22,7 @@ export const getPageFromAPI = (record) => (dispatch) => {
 		else{
 			dispatch({type: REQUEST_PAGE_SUCCESS, payload: payload})
 		}
-	},500)
+	},1000)
 }
 export const windowResize = (windowSize) => ({type: WINDOW_RESIZE, payload: windowSize})
 export const changePage = (page,chosen_category="")=> {

@@ -6,7 +6,8 @@ import Bottom from '../Components/Bottom';
 import Add from '../Components/Add/Add';
 import Home from '../Components/Home/Home';
 import PagesList from '../Components/Main/PagesList';
-import Categories from '../Components/Categories/Categories'
+import Categories from '../Components/Categories/Categories';
+import DisplayCategory from '../Components/Categories/DisplayCategory';
 import './App.css';
 import {getPageFromAPI, getAccessToken,
   windowResize, changePage, newPage} from  '../State/actions.js'
@@ -70,11 +71,11 @@ componentDidMount(){
 //renders the page based on the state
   returnSwitch=()=>{
       switch(this.props.open){
-          case 'home':  return ( <Home key='categories' at={this.props.accessToken} cards={this.props.cards} db={this.props.database} />);
+          case 'home':  return ( <Home key='categories' at={this.props.accessToken} cards={this.props.cards} db={this.props.database} onPageChange={this.props.onPageChange}/>);
           case 'add': return( <Add addPage={this.addPage} readMessage={this.readStateMessage}/>)
           case 'categories': return( <Categories categories={this.props.database} onPageChange={this.props.onPageChange}/>);
-          case 'display-all': return ( <PagesList category='all' cards={this.props.cards} db={this.props.database}/> )
-          case 'display-category': return (<PagesList category={this.props.category} cards={this.props.cards} db={this.props.database}/>)
+          case 'display-all': return ( <DisplayCategory category='all' cards={this.props.cards} db={this.props.database}/> )
+          case 'display-category': return (<DisplayCategory category={this.props.category} cards={this.props.cards} db={this.props.database}/>)
           default: return( <h1> ... The page is Loading ...</h1> )
       }
   }

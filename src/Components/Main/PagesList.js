@@ -1,11 +1,14 @@
 import React from 'react';
 import Card from './Card';
 
-const PagesList=({category, cards,db})=>{
+const PagesList=({category, cards,db,limit})=>{
 	if(cards.length){
+		let lim=1;
 		return(
 			<div className="d-flex flex-wrap justify-content-baseline height m-auto" key={this.category}>
-			{	cards.map(card=>{
+			{
+
+				cards.map(card=>{
 					const recordMatch=db.filter(record=>{
 						if(category==='all' && record.id.includes(card.id)) return record
 						if(record.id.includes(card.id) && category===record.category){
@@ -13,7 +16,10 @@ const PagesList=({category, cards,db})=>{
 						}
 						else return undefined
 					})
+					
+				if(limit && lim>limit){ return}
 				if(recordMatch.length){
+					lim++;
 					return(<Card
 						key={card.id}
 						name={card.name}
