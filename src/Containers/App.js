@@ -1,16 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Top from '../Components/Top/Top';
-import Scroller from '../Components/Home/Scroller';
-import Bottom from '../Components/Bottom';
-import Add from '../Components/Add/Add';
-import Home from '../Components/Home/Home';
-import PagesList from '../Components/Main/PagesList';
-import Categories from '../Components/Categories/Categories';
-import DisplayCategory from '../Components/Categories/DisplayCategory';
+import Top from '../Components/Top/Top'; import Scroller from '../Components/Home/Scroller'; import Bottom from '../Components/Bottom';
+import Add from '../Components/Add/Add'; import Home from '../Components/Home/Home'; import Login from '../Components/Form/Login';
+import Register from '../Components/Form/Register'; import PagesList from '../Components/Main/PagesList'; import Categories from '../Components/Categories/Categories';
+import DisplayCategory from '../Components/Categories/DisplayCategory'; import Card from '../Components/Main/Card';
 import './App.css';
 import {getPageFromAPI, getAccessToken,
-  windowResize, changePage, newPage} from  '../State/actions.js'
+  windowResize, changePage, newPage } from  '../State/actions.js'
 
 const mapStateToProps= state=>{
   return {
@@ -22,7 +18,9 @@ const mapStateToProps= state=>{
     accessToken: state.fbLogin.accessToken,
     size: state.onWindowResize.size,
     open: state.onPageChange.open,
-    category: state.onPageChange.chosen_category
+    category: state.onPageChange.chosen_category,
+    card: state.displaySingleCard.card
+
   }
  }
 const mapDispatchToProps = (dispatch) =>{
@@ -68,24 +66,41 @@ componentDidMount(){
       this.props.onApiCall(obj);
   }
 //select category
+//display single card
+  displayReceivedCard=()=>{
+    const {card,database}=this.props;
+    const record=database.filter(record=>{
+     return record && record.id===card.id
+
+     })
+    console.log(record)
+    return(
+          <Card
+            id={card.id}
+            name={card.name}
+            fan_count={card.fan_count}
+            picture={card.picture.data.url}
+            link={card.link}
+            favourites={record[0].favourite}
+            category={record[0].category}
+            country={record[0].country}
+          />
+         )
+  } 
 //renders the page based on the state
   returnSwitch=()=>{
-      switch(this.props.open){
-          case 'home':  return ( <Home key='categories' at={this.props.accessToken} cards={this.props.cards} db={this.props.database} onPageChange={this.props.onPageChange}/>);
-          case 'add': return( <Add addPage={this.addPage} readMessage={this.readStateMessage}/>)
-          case 'categories': return( <Categories categories={this.props.database} onPageChange={this.props.onPageChange}/>);
-          case 'display-all': return ( <DisplayCategory category='all' cards={this.props.cards} db={this.props.database}/> )
-          case 'display-category': return (<DisplayCategory category={this.props.category} cards={this.props.cards} db={this.props.database}/>)
+    const {open, accessToken, cards, database, onPageChange, addPage, readStateMessage, category} = this.props;
+      switch(open){
+          case 'home':  return ( <Home category='categories' at={accessToken} cards={cards} db={database} onPageChange={onPageChange}/>);
+          case 'add': return( <Add addPage={addPage} readMessage={readStateMessage}/>)
+          case 'login': return (<Login />)
+          case 'register': return (<Register />)
+          case 'categories': return( <Categories categories={database} onPageChange={onPageChange}/>);
+          case 'display-all': return ( <DisplayCategory category='all' cards={cards} db={database}/> )
+          case 'display-category': return (<DisplayCategory category={category} cards={cards} db={database}/>)
+          case 'card': return (<div className="d-flex m-auto justify-content-center">{this.displayReceivedCard()}</div>)
           default: return( <h1> ... The page is Loading ...</h1> )
       }
-  }
- //  window.FB.api('/1868643320130834',(response)=>{
-  apiTest=()=>{
-    window.FB.api('/me',(response)=>{
-      this.setState({test:response})
-      console.log(this.state)
-    }
-  )
   }
 //render method
   render() {

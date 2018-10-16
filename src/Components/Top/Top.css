@@ -5,9 +5,6 @@
 .container{
 	max-width:100%;
 }
-.h{
-	height:32px;
-}
 .bg-light{
 	opacity:0.8;
 }
@@ -33,4 +30,16 @@
 }
 .minustop{
 	margin-top: -50px;
+}
+.set-height{
+	height:32px;
+}
+.set-width{
+	width: 198px;
+	overflow:hidden;
+}
+
+#hidden{
+	background-color: #4267b2;
+	opacity: 0.6;
 }

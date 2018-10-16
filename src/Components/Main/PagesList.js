@@ -10,24 +10,21 @@ const PagesList=({category, cards,db,limit})=>{
 
 				cards.map(card=>{
 					const recordMatch=db.filter(record=>{
-						if(category==='all' && record.id.includes(card.id)) return record
-						if(record.id.includes(card.id) && category===record.category){
-							return record
-						}
-						else return undefined
-					})
+						return record && category==='all' && record.id.includes(card.id) || record && record.id.includes(card.id) && category===record.category
+						})
 					
 				if(limit && lim>limit){ return}
 				if(recordMatch.length){
 					lim++;
 					return(<Card
-						key={card.id}
+						id={card.id}
 						name={card.name}
 						fan_count={card.fan_count}
 						picture={card.picture.data.url}
 						link={card.link}
 						favourites={recordMatch[0].favourite}
 						category={recordMatch[0].category}
+						country={recordMatch[0].country}
 					/>)
 				}
 				else return undefined

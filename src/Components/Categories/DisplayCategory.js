@@ -1,6 +1,7 @@
 import React from 'react';
 import PagesList from '../Main/PagesList';
 
+
 class DisplayCategory extends React.Component {
 	constructor({...props}){
 		super(...props)
@@ -19,7 +20,7 @@ class DisplayCategory extends React.Component {
 			<div>
 				<input type="search"  className="text-center w-50" placeholder="filter pages" onChange={this.onSearchChange}/>
 				<fieldset key={this.props.category} className="b m-2 pt-0 ">
-					<legend className="b w-25 d-flex text-left pl-1 ml-3 "><p className="ml-5 mb-0">{this.props.category.toUpperCase()}</p></legend>
+					<legend className="b w-auto d-flex text-left pl-1 ml-3 "><p className="pl-3 pr-3 mb-0">{this.props.category.toUpperCase()}</p></legend>
 						<div className="w-100 m-0 p-1 mtminus">
 			 				<PagesList {...this.props} cards={cards} />
 						</div>

@@ -1,7 +1,7 @@
 import {SET_LOGIN_STATE, REQUEST_PAGE_PENDING, REQUEST_PAGE_SUCCESS,
 		REQUEST_PAGE_FAILED, GET_ACCESS_FAILED, GET_ACCESS_SUCCESS,
 		WINDOW_RESIZE, CHANGE_PAGE, CATEGORY_CHOICE,
-		ADD_PAGE_FAILED, ADD_PAGE_SUCCESS, ACCESS_TOKEN } from './constants';
+		ADD_PAGE_FAILED, ADD_PAGE_SUCCESS, ACCESS_TOKEN, DISPLAY_CARD } from './constants';
 
 //login reducer
 	const initialLoginState={
@@ -102,4 +102,16 @@ import {SET_LOGIN_STATE, REQUEST_PAGE_PENDING, REQUEST_PAGE_SUCCESS,
 				return { database:[...state.database, {id: action.payload.id, category: action.payload.category, country: action.payload.country}], message:action.payload.message}
 			default: return state
 		}
+	}
+//single card display from search
+	const initialCardDisplayState={
+		card:{}
+	}
+	export const displaySingleCard=(state=initialCardDisplayState, action={})=>{
+		switch(action.type){
+			case DISPLAY_CARD:
+				return { card: action.payload}
+			default: return state
+		}
+
 	}

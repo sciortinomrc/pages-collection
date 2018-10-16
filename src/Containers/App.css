@@ -12,4 +12,13 @@ body,html{
 .pointer{
 	cursor:pointer;
 }
+.link{
+	text-decoration: none;
+	transition: font-size 1s, color 1s;
+}
+.link:hover{
+	font-size: 1.1em;
+	color: #4267b2;
+
+}
 
