@@ -4,7 +4,7 @@ import './Login.css';
 class Login extends React.Component{
 	render(){
 		return(
-				<div className="login-form-1 border">
+				<div className="login-form-1 border shadow1 box">
 					<div id="login-form" className="text-left">
 						<div className="login-form-main-message"></div>
 						<div className="main-login-form">

@@ -14,3 +14,15 @@
 .padding{
 	padding:20px;
 }
+.select-height{
+	width: 200px;
+	overflow-y:scroll;
+}
+.btn-width{
+	width:100px;
+}
+.on-top{
+	background-color: #cbcbcb;
+	position:absolute;
+	z-index:1000;
+}

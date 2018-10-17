@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect } from 'react-redux';
-import {newPage, getPageFromAPI} from '../../State/actions.js';
-import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-country-region-selector';
+import {newPage} from '../../State/actions.js';
+import { CountryDropdown } from 'react-country-region-selector';
 import "./Add.css";
 
 const mapStateToProps=state=>{

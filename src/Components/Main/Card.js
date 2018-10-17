@@ -22,7 +22,7 @@ class Card extends Component{
 		return(
 
 				
-			<div className="wrapper d-flex flex-column mt-1 ml-2 mr-3 rounded" data-toggle="tooltip" data-placement="top" title={category+", "+country}>
+			<div className="wrapper d-flex flex-column mt-1 ml-2 mr-3 rounded" title={category+", "+country}>
 				<div className="background1">
 					<div className='top d-flex '>
 					<p className=" mr-1 w-100 word-wrap p-1"><a href={link} className="no-deco" target='_blank'>{name}</a></p>

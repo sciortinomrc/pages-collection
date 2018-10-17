@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Top from '../Components/Top/Top'; import Scroller from '../Components/Home/Scroller'; import Bottom from '../Components/Bottom';
-import Add from '../Components/Add/Add'; import Home from '../Components/Home/Home'; import Login from '../Components/Form/Login';
-import Register from '../Components/Form/Register'; import PagesList from '../Components/Main/PagesList'; import Categories from '../Components/Categories/Categories';
-import DisplayCategory from '../Components/Categories/DisplayCategory'; import Card from '../Components/Main/Card';
+import Top from '../Components/Top/Top'; import Scroller from '../Components/Home/Scroller'; 
+import Bottom from '../Components/Bottom'; import Add from '../Components/Add/Add'; 
+import Home from '../Components/Home/Home'; import Login from '../Components/Form/Login';
+import Register from '../Components/Form/Register'; import Card from '../Components/Main/Card'; import DisplayPages from '../Components/Main/DisplayPages';
 import './App.css';
 import {getPageFromAPI, getAccessToken,
-  windowResize, changePage, newPage } from  '../State/actions.js'
+  windowResize, changePage } from  '../State/actions.js'
 
 const mapStateToProps= state=>{
   return {
@@ -95,9 +95,7 @@ componentDidMount(){
           case 'add': return( <Add addPage={addPage} readMessage={readStateMessage}/>)
           case 'login': return (<Login />)
           case 'register': return (<Register />)
-          case 'categories': return( <Categories categories={database} onPageChange={onPageChange}/>);
-          case 'display-all': return ( <DisplayCategory category='all' cards={cards} db={database}/> )
-          case 'display-category': return (<DisplayCategory category={category} cards={cards} db={database}/>)
+          case 'display': return ( <DisplayPages category={category} cards={cards} database={database}/> )
           case 'card': return (<div className="d-flex m-auto justify-content-center">{this.displayReceivedCard()}</div>)
           default: return( <h1> ... The page is Loading ...</h1> )
       }

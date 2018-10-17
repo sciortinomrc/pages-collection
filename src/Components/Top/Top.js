@@ -98,8 +98,7 @@ class Top extends Component {
 		return(
 			<div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
 		 		    <p className="dropdown-item" onClick={()=>onPageChange('home')}>Home</p>
-		 		    <p className="dropdown-item" onClick={()=>onPageChange('categories')}>Categories</p>
-		 		    <p className="dropdown-item" onClick={()=>onPageChange('display-all','all')}>All Pages</p>
+		 		    <p className="dropdown-item" onClick={()=>onPageChange('display','all')}>All Pages</p>
 		 		    <div className="dropdown-divider"></div>
 		 		    { this.loggedSmall()}
 			</div>		
@@ -112,18 +111,16 @@ class Top extends Component {
 		return(
 			<div className="d-flex col pt-3 p-0 justify-content-end">	
 				<p className=" btn border mb-0 rounded-top" onClick={()=>onPageChange('home')}>Home</p>
-				<p className=" btn border mb-0 rounded-top" onClick={()=>onPageChange('categories')}>Categories</p>
-				<p className=" btn border mb-0 rounded-top" onClick={()=>onPageChange('display-all','all')}>All Pages</p> 
+				<p className=" btn border mb-0 rounded-top" onClick={()=>onPageChange('display','all')}>Pages</p> 
 				{this.loggedXL()}
-				<div className="p-0 m-0 set-height" tabindex="0">
-			  		<input id="search" type="search"  className=" btn mb-0 rounded-right search text-center" placeholder="Search..." onChange={this.searchPage} tabindex="1"/>
+				<div className="p-0 m-0 set-height">
+			  		<input id="search" type="search"  className=" btn mb-0 rounded-right search text-center" placeholder="Search..." onChange={this.searchPage}/>
 			  		<div id="hidden" className="d-none p-absolute set-width">
 			  			{	
-
 			  				this.state.cards.map(card=>{
-			  				if(limit>4) return;
+			  				if(limit>4) return undefined;
 			  				limit ++;
-							return <p key={card.id} onClick={()=>{onPageChange('card');displaySingleCard(card.id,card.name,card.link,card.picture,card.fan_count);}}>{card.name}</p>
+							return <p key={card.id} onClick={()=>{onPageChange('card');displaySingleCard(card.id,card.name,card.link,card.picture,card.fan_count);}} className="plain-link">{card.name}</p>
 							})	
 			  			}
 			  		</div>
@@ -134,7 +131,7 @@ class Top extends Component {
 	//responsive function
 	loggedin=()=>{
 		let limit=0;
-		const {size}=this.props;
+		const {size, onPageChange, displaySingleCard}=this.props;
 		if(size[0]<1000){
 			return (
 			<div className=" dropdown d-flex col pt-3 p-0 justify-content-end navbar-light" >
@@ -144,9 +141,9 @@ class Top extends Component {
 			  			{	
 
 			  				this.state.cards.map(card=>{
-			  				if(limit>4) return;
+			  				if(limit>4) return undefined;
 			  				limit ++;
-							return <p key={card.id}>{card.name}</p>
+							return <p key={card.id} onClick={()=>{onPageChange('card');displaySingleCard(card.id,card.name,card.link,card.picture,card.fan_count);}} className="plain-link">{card.name}</p>
 							})	
 			  			}
 			  		</div>

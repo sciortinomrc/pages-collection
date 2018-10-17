@@ -1,19 +1,24 @@
 import React from 'react';
 import Card from './Card';
-
-const PagesList=({category, cards,db,limit})=>{
-	if(cards.length){
+const PagesList=({...props})=>{
+	console.log(props)
+	if(props.cards.length){
 		let lim=1;
 		return(
 			<div className="d-flex flex-wrap justify-content-baseline height m-auto" key={this.category}>
 			{
 
-				cards.map(card=>{
-					const recordMatch=db.filter(record=>{
-						return record && category==='all' && record.id.includes(card.id) || record && record.id.includes(card.id) && category===record.category
+				props.cards.map(card=>{
+					let recordMatch=props.database.filter(record=>{
+						return (record && props.category==='' && record.id.includes(card.id)) || (record && record.id.includes(card.id) && props.category===record.category)
 						})
+					console.log({recordMatch})
+					recordMatch=recordMatch.filter(record=>{
+						return (record && props.country==='' && record.id.includes(card.id)) || (record && record.id.includes(card.id) && props.country===record.country)
+						})
+					console.log({recordMatch})
 					
-				if(limit && lim>limit){ return}
+				if(props.limit && lim>props.limit){ return undefined}
 				if(recordMatch.length){
 					lim++;
 					return(<Card

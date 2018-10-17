@@ -1,5 +1,5 @@
 import {SET_LOGIN_STATE, REQUEST_PAGE_PENDING, REQUEST_PAGE_SUCCESS,
-		REQUEST_PAGE_FAILED, GET_ACCESS_FAILED, GET_ACCESS_SUCCESS,
+		REQUEST_PAGE_FAILED, GET_ACCESS_SUCCESS,
 		WINDOW_RESIZE, CHANGE_PAGE, CATEGORY_CHOICE,
 		ADD_PAGE_FAILED, ADD_PAGE_SUCCESS, ACCESS_TOKEN, DISPLAY_CARD } from './constants';
 
@@ -85,9 +85,9 @@ import {SET_LOGIN_STATE, REQUEST_PAGE_PENDING, REQUEST_PAGE_SUCCESS,
 
 	const initialDBState={
 		database:[ 
-        {id: '1868643320130834', category: 'natura', favourite: 0, country: 'Italy'},
+        {id: '1868643320130834', category: 'natura', favourite: 0, country: 'UK'},
         {id: '718361521697095', category: 'natura', favourite: 0, country: 'Italy'},
-        {id: '1169644526470881', category: 'fantasia', favourite: 0, country: 'Italy'},
+        {id: '1169644526470881', category: 'fantasia', favourite: 0, country: 'France'},
         {id: '137492556866190', category: 'trasformismo', favourite: 0, country: 'Italy'},
         {id: '1683822428328710', category: 'trasformismo', favourite: 0, country: 'Italy'},
         {id: '354760301630118', category: 'ignoranza', favourite: 0, country: 'Italy'},
