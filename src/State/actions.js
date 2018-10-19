@@ -1,7 +1,9 @@
 import {SET_LOGIN_STATE, REQUEST_PAGE_PENDING, REQUEST_PAGE_SUCCESS, 
 		REQUEST_PAGE_FAILED, GET_ACCESS_SUCCESS, WINDOW_RESIZE,
 		CHANGE_PAGE, CATEGORY_CHOICE, ADD_PAGE_FAILED,
-		ADD_PAGE_SUCCESS, ACCESS_TOKEN, DISPLAY_CARD } from './constants';
+		ADD_PAGE_SUCCESS, ACCESS_TOKEN, DISPLAY_CARD,
+		SET_SEARCH_FIELD, SET_COUNTRY_FILTER, SET_CATEGORY_FILTER,
+		FILTERS } from './constants';
 export const setLoginState = (loggedIn) => ({
 	type: SET_LOGIN_STATE,
 	payload: loggedIn
@@ -55,6 +57,24 @@ export const newPage=(id,category,country,message)=>{
 export const displayCard=(id,name,link,picture,fan_count)=>({
 	type: DISPLAY_CARD,
 	payload: {id,name,link,picture,fan_count}
+})
+
+export const setSearchfield=(text="")=>({
+	type: SET_SEARCH_FIELD,
+	payload: text
+})
+
+export const setCountryFilter=(filter="")=>({
+	type: SET_COUNTRY_FILTER,
+	payload: filter
+})
+export const setCategoryFilter=(filter="")=>({
+	type: SET_CATEGORY_FILTER,
+	payload: filter
+})
+export const setFilters=(categoryFilters,countryFilters)=>({
+	type: FILTERS,
+	payload: {categoryFilters,countryFilters}
 })
 
 	

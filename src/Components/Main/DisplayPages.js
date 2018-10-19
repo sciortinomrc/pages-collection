@@ -1,34 +1,43 @@
 import React from 'react'; 
 import PagesList from './PagesList';
+import {connect} from 'react-redux';
+import { setSearchfield, setCountryFilter, setCategoryFilter, setFilters } from '../../State/actions';
 import './Style/Scroller.css';
-import _ from 'lodash';
+const mapStateToProps=state=>{
+	return{
+		searchField: state.addFilter.searchField,
+		countryFilter: state.addFilter.countryFilter,
+		categoryFilter: state.addFilter.categoryFilter,
+		filters: state.addFilter.filters
+	}
+}
+
+const mapDispatchToProps=dispatch=>{
+	return{
+	setSearchfield: (text)=> dispatch(setSearchfield(text)),
+	setCategoryFilter: (filter)=> dispatch(setCategoryFilter(filter)),
+	setCountryFilter: (filter)=> dispatch(setCountryFilter(filter)),
+	setFilters: (categoryFilters,countryFilters)=> dispatch(setFilters(categoryFilters,countryFilters))
+	}
+}
+
 
 class DisplayPages extends React.Component{
-	constructor({category,cards,database,limit}){
-		super()
-		this.state=({
-			searchField: '',
-			countryFilter: '',
-			categoryFilter: ''
-		})
-	}
 //set filter
 	setFilter=(event,filter)=>{
 		switch(event.target.parentNode.id){
-			case 'hidden-country': {this.setState({countryFilter: filter}); event.target.parentNode.classList.toggle('d-none'); break;}
-			case 'hidden-category': {this.setState({categoryFilter: filter}); event.target.parentNode.classList.toggle('d-none'); break;}
+			case 'hidden-country': {this.props.setCountryFilter(filter); event.target.parentNode.classList.toggle('d-none'); break;}
+			case 'hidden-category': {this.props.setCategoryFilter(filter); event.target.parentNode.classList.toggle('d-none'); break;}
 			default: break;
 		}
 	}
 //country select filter
 	countrySelect=()=>{
-		const filteredPages= _.uniqBy(this.props.database, 'country');
-		const filteredCountries= filteredPages.map(record=>record.country);
 		return(
 			<div id="hidden-country" className="d-none p-absolute set-width border on-top">
 			<p key="nofilter" id="nofilter" className="link m-0 p-2 border" onClick={(event)=>this.setFilter(event,"")}>No Filter</p>
 			  	{
-					filteredCountries.map((country,i)=>{
+					this.props.filters.countryFilters.map((country,i)=>{
 						return<p key={country+i} id={country} className="link m-0 p-2 border" onClick={(event)=>this.setFilter(event,country)}>{country}</p>
 					})					
 			  	}
@@ -38,14 +47,12 @@ class DisplayPages extends React.Component{
 
 //category select flter
 	categorySelect=()=>{
-		const filteredPages= _.uniqBy(this.props.database, 'category');
-		const filteredCategories= filteredPages.map(record=>record.category);
 		return(
 			<div id="hidden-category" className="d-none p-absolute border set-width on-top">
-				<p key="nocateogory" id="noCategory" className="link m-0 p-2 border" className="link m-0 p-2 border" onClick={(event)=>this.setFilter(event,'')}>No filter</p>
+				<p key="nocateogory" id="noCategory" className="link m-0 p-2 border" onClick={(event)=>this.setFilter(event,'')}>No filter</p>
 			  	{
-					filteredCategories.map((category,i)=>{
-						return<p key={category+i} id={category} className="link m-0 p-2 border" className="link m-0 p-2 border" onClick={(event)=>this.setFilter(event,category)}>{category}</p>
+					this.props.filters.categoryFilters.map((category,i)=>{
+						return<p key={category+i} id={category} className="link m-0 p-2 border" onClick={(event)=>this.setFilter(event,category)}>{category}</p>
 					})					
 			  	}
 		  	</div>
@@ -62,25 +69,9 @@ class DisplayPages extends React.Component{
 			button.parentNode.children[1].classList.remove('d-none'):
 			button.parentNode.children[1].classList.add('d-none')
 	}
-	filterCards=(filter)=>{
-		switch(filter){
-			case 'country': {
-				this.state.filteredCards.filter(card=>{
-					return card && card.country.toLowerCase()===this.state.countryFilter.toLowerCase();
-				}); 
-				break;
-			}
-			case 'category': {
-				this.state.filteredCards.filter(card=>{
-					return card && card.category.toLowerCase()===this.state.categoryFilter.toLowerCase()
-				});
-				break;
-			}
-			default: return undefined
-		}
-	}
+
 	nameSearch=(event)=>{
-		this.setState({searchField: event.target.value})
+		this.props.setSearchfield(event.target.value)
 	}
 dropdown=(event)=>{
 					if(document.getElementById('display-pages')){		
@@ -89,25 +80,28 @@ dropdown=(event)=>{
 						if(
 							event.target.id!==hiddenCategory.id &&
 							event.target.id!==hiddenCountry.id &&
-							event.target.parentNode.id!==hiddenCategory.id &&
-							event.target.parentNode.id!==hiddenCountry.id &&
 							event.target.id!=='filter-country' && 
-							event.target.id!=='filter-category') 
+							event.target.id!=='filter-category' && event.target.tagName!=='I')
 							{
 								hiddenCountry.classList.add('d-none');
 								hiddenCategory.classList.add('d-none')
 						}
 					}
 				}
+	removeFilters=()=>{
+		this.props.setCategoryFilter("");
+		this.props.setCountryFilter("");
+		this.props.setSearchfield("");
+		const search=document.getElementById('searchField');
+		search.value=""
+	}
 	render(){
-		const {category,limit,cards,database}=this.props;
+
+		const {cards,database}=this.props;
 		return(
 			<div id="display-pages">
-			{
-				window.addEventListener('click', this.dropdown)
-			}
 				<div className="d-inline-flex w-75 justify-content-center">
-					<input type="search" placeholder="Filter by Name" className="rounded w-25 text-center"/>
+					<input type="search" id="searchField" placeholder="Filter by Name" className="rounded w-25 text-center" onChange={this.nameSearch}/>
 					<div className="p-0 m-0 set-height btn-width">
 				  		<button id="filter-country"  className=" text-center btn-width" title="Filter By Country" onClick={(event)=>this.expandSelection(event.target,'filter-country')}>Country<i className="fas fa-filter"></i></button>
 				  		{this.countrySelect()}
@@ -116,17 +110,21 @@ dropdown=(event)=>{
 				  		<button id="filter-category"  className=" text-center btn-width" title="Filter By Category"  onClick={(event)=>this.expandSelection(event.target,'filter-country')}>Category<i className="fas fa-filter"></i></button>
 				  		{this.categorySelect()}
 			  		</div>
+			  	<input type="button" value="Remove All" onClick={this.removeFilters}/>
 			  	</div>
+			  	{
+				window.addEventListener('click', this.dropdown)
+				}
 				<hr />
-				<PagesList 
-					category={this.state.categoryFilter}
-					country={this.state.countryFilter}
-					name={this.state.searchField}
+				<PagesList
 					cards={cards}
 					database={database}
+					countryFilter={this.props.countryFilter}
+					categoryFilter={this.props.categoryFilter}
+					previousFilters={this.props.filters}
 				/>
 			</div>
 			)
 	}
 }
-export default DisplayPages;
+export default connect(mapStateToProps,mapDispatchToProps)(DisplayPages);

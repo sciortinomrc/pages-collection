@@ -1,7 +1,9 @@
 import {SET_LOGIN_STATE, REQUEST_PAGE_PENDING, REQUEST_PAGE_SUCCESS,
 		REQUEST_PAGE_FAILED, GET_ACCESS_SUCCESS,
 		WINDOW_RESIZE, CHANGE_PAGE, CATEGORY_CHOICE,
-		ADD_PAGE_FAILED, ADD_PAGE_SUCCESS, ACCESS_TOKEN, DISPLAY_CARD } from './constants';
+		ADD_PAGE_FAILED, ADD_PAGE_SUCCESS, ACCESS_TOKEN, DISPLAY_CARD,
+		SET_SEARCH_FIELD, SET_COUNTRY_FILTER, SET_CATEGORY_FILTER,
+		FILTERS  } from './constants';
 
 //login reducer
 	const initialLoginState={
@@ -115,3 +117,27 @@ import {SET_LOGIN_STATE, REQUEST_PAGE_PENDING, REQUEST_PAGE_SUCCESS,
 		}
 
 	}
+//filter searchField
+const initialFilterState={
+	searchField: '',
+	categoryFilter: '',
+	countryFilter: '',
+	filters: {categoryFilters:[], countryFilters:[]}
+}
+export const addFilter=(state=initialFilterState, action={})=>{
+	switch(action.type){
+		case SET_SEARCH_FIELD:{
+			return {...state, searchField: action.payload}
+		}
+		case SET_COUNTRY_FILTER:{
+			return {...state, countryFilter: action.payload}
+		}
+		case SET_CATEGORY_FILTER:{
+			return {...state, categoryFilter: action.payload}
+		}
+		case FILTERS:{
+			return{...state, filters: {categoryFilters:action.payload.categoryFilters, countryFilters: action.payload.countryFilters}}
+		}
+		default: return state
+	}
+}
