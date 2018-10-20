@@ -1,22 +1,11 @@
-import {SET_LOGIN_STATE, REQUEST_PAGE_PENDING, REQUEST_PAGE_SUCCESS,
+import {REQUEST_PAGE_PENDING, REQUEST_PAGE_SUCCESS,
 		REQUEST_PAGE_FAILED, GET_ACCESS_SUCCESS,
 		WINDOW_RESIZE, CHANGE_PAGE, CATEGORY_CHOICE,
 		ADD_PAGE_FAILED, ADD_PAGE_SUCCESS, ACCESS_TOKEN, DISPLAY_CARD,
 		SET_SEARCH_FIELD, SET_COUNTRY_FILTER, SET_CATEGORY_FILTER,
-		FILTERS  } from './constants';
+		FILTERS, LOGIN_SUCCESS, LOGIN_PENDING, LOGIN_FAILED,
+		LOGOUT, REGISTER, REGISTER_FAILED  } from './constants';
 
-//login reducer
-	const initialLoginState={
-		logged: false,
-	}
-	export const onLogin = (state=initialLoginState, action={}) =>{
-		switch(action.type){
-			case SET_LOGIN_STATE: 
-				return { ...state, logged: action.payload};
-			default: 
-				return state;
-		}
-	}
 //api call reducer
 	const initialCardsState={
 		isPending: false,
@@ -141,3 +130,48 @@ export const addFilter=(state=initialFilterState, action={})=>{
 		default: return state
 	}
 }
+//login attempt
+	const initialLoginState={
+		isPending: false,
+		loginMessage: '',
+		loggedUser: {}
+	}
+
+	export const onLogin=(state=initialLoginState, action={})=>{
+		switch(action.type){
+			case LOGIN_PENDING: return{
+				isPending: true,
+				loginMessage: 'Contacting the database',
+				isPending: action.payload
+			}
+			case LOGIN_SUCCESS: return{
+				isPending: false,
+				loginMessage: 'Access Granted',
+				user: action.payload
+			}
+			case LOGIN_FAILED: return{
+				user:{},
+				isPending:false,
+				loginMessage: action.payload
+			}
+			case LOGOUT: return{
+				isPending: false,
+				loginMessage: action.payload,
+				user: undefined
+			}
+			default: return state
+		}
+	}
+//signup new account
+	const initialSignupState={
+		message: ''
+	}
+	export const signUp=(state=initialSignupState, action={})=>{
+		switch(action.type){
+			case REGISTER:
+				return{
+					message: "Your account has been added"
+				}
+			default: return state
+		}
+	}

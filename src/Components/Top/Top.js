@@ -6,7 +6,7 @@ import {setLoginState, windowResize,
 
 const mapStateToProps=state=>{
 	return{
-	logged: state.onLogin.logged,
+	user: state.onLogin.user,
 	open: state.onPageChange.open,
     size: state.onWindowResize.size,
     cards: state.fbApiCall.cards,
@@ -16,10 +16,10 @@ const mapStateToProps=state=>{
 
 const mapDispatchToProps=dispatch=>{
 	return{
-		onLoginChange: (loginStatusChange) =>dispatch (setLoginState(loginStatusChange)),
-	   onPageChange: (page,category)=>dispatch (changePage(page,category)),
-	   onWindowResize: (size)=>dispatch(windowResize (size)),
-	   displaySingleCard: (id,name,link,picture,fan_count)=>dispatch( displayCard(id,name,link,picture,fan_count))
+		onLoginChange: (user,password)=> dispatch(setLoginState(user,password)),
+		onPageChange: (page,category)=>dispatch (changePage(page,category)),
+		onWindowResize: (size)=>dispatch(windowResize (size)),
+		displaySingleCard: (id,name,link,picture,fan_count)=>dispatch( displayCard(id,name,link,picture,fan_count))
 	}
 }
 class Top extends Component {
@@ -55,12 +55,12 @@ class Top extends Component {
 
 //conditional rendering small responsive
 	loggedSmall=()=>{
-		const {logged,onLoginChange, onPageChange}=this.props;
-		if(logged){return (
+		const {user, onPageChange, onLoginChange}=this.props;
+		if(user){return (
 			<div>
 			<p className="dropdown-item" onClick={()=>{onPageChange('add')}}>Add</p>
 		    <p className="dropdown-item">Favourites</p>
-		    <p className="dropdown-item" onClick={()=>onLoginChange(false)}>Logout</p>
+		    <p className="dropdown-item" onClick={()=>onLoginChange()}>Logout</p>
 		    </div>
 		    )
 		}else{
@@ -74,13 +74,13 @@ class Top extends Component {
 	}
 	//conditional rendering large responsive
 	loggedXL=()=>{
-		const {logged, onLoginChange, onPageChange}=this.props;
-		if(logged){
+		const {user, onLoginChange, onPageChange}=this.props;
+		if(user){
 			return(
 				<div className=" p-0 m-0">
 					<p className=" btn border mb-0 rounded-top" onClick={()=>onPageChange('add')}>Add</p>
 					<p className=" btn border mb-0 rounded-top">Favourites</p>
-					<p className=" btn border mb-0 rounded-top" onClick={()=>onLoginChange(false)}>Logout</p>
+					<p className=" btn border mb-0 rounded-top" onClick={()=>onLoginChange()}>Logout</p>
 				</div>
 				)
 		}else{
@@ -129,7 +129,7 @@ class Top extends Component {
 			)
 	}
 	//responsive function
-	loggedin=()=>{
+	displayResponsiveTop=()=>{
 		let limit=0;
 		const {size, onPageChange, displaySingleCard}=this.props;
 		if(size[0]<1000){
@@ -165,7 +165,7 @@ class Top extends Component {
 				<div className="container header pt-5">
 					<div className="d-inline-flex w-100">
 						<div id="logo" className="shadow">P</div>
-						{this.loggedin()}
+						{this.displayResponsiveTop()}
 					</div>
 				</div>
 			)

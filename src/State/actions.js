@@ -1,14 +1,12 @@
-import {SET_LOGIN_STATE, REQUEST_PAGE_PENDING, REQUEST_PAGE_SUCCESS, 
+import {REQUEST_PAGE_PENDING, REQUEST_PAGE_SUCCESS, 
 		REQUEST_PAGE_FAILED, GET_ACCESS_SUCCESS, WINDOW_RESIZE,
 		CHANGE_PAGE, CATEGORY_CHOICE, ADD_PAGE_FAILED,
 		ADD_PAGE_SUCCESS, ACCESS_TOKEN, DISPLAY_CARD,
 		SET_SEARCH_FIELD, SET_COUNTRY_FILTER, SET_CATEGORY_FILTER,
-		FILTERS } from './constants';
-export const setLoginState = (loggedIn) => ({
-	type: SET_LOGIN_STATE,
-	payload: loggedIn
-})
-export const getAccessToken = (at) => (dispatch) =>({
+		FILTERS, LOGIN_SUCCESS, LOGIN_FAILED, LOGIN_PENDING,
+		LOGOUT, REGISTER, REGISTER_FAILED } from './constants';
+
+export const getAccessToken = (at) =>({
   type: GET_ACCESS_SUCCESS, payload: ACCESS_TOKEN
 })
 export const getPageFromAPI = (record) => (dispatch) => {
@@ -76,5 +74,29 @@ export const setFilters=(categoryFilters,countryFilters)=>({
 	type: FILTERS,
 	payload: {categoryFilters,countryFilters}
 })
+
+const database=[{user: 'marco', password: 'marco',fav: []}, {user: 'sandro', password:'sandro',fav: []}, {user: 'gianni', password:'gianni',fav: []}];
+export const setLoginState=(user="",password="")=>(dispatch)=>{
+	if(user==="" && password==="") dispatch({ type: LOGOUT, payload: 'Logged out'})
+	else{
+		dispatch({type: LOGIN_PENDING, payload: true})
+		const dbCheck=database.filter(record=>{
+			return record.user===user && record.password===password;
+		})
+		if(dbCheck[0]) dispatch({type:LOGIN_SUCCESS, payload:dbCheck[0]})
+		else dispatch({type: LOGIN_FAILED, payload: 'Login failed'})
+	}
+}
+export const registerUser=(user="", password="")=>dispatch=>{
+	const dbCheck=database.filter(dbUser=>dbUser==={user,password})
+	if(!dbCheck[0]){
+		database.push({user,password,fav: []})
+		return dispatch({type: REGISTER, payload: 'Your account has been created'})
+	}
+
+}
+
+
+
 
 	
