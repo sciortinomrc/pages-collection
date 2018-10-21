@@ -45,6 +45,8 @@ class PagesList extends React.Component{
 			}
 			return countryFilter==="" || record.country===countryFilter
 		})
+
+
 		if(!limit)this.returnFilters(filteredRecords)
 		return(
 			<div className="d-flex flex-wrap justify-content-baseline height m-auto" >

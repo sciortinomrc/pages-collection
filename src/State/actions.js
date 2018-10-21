@@ -4,7 +4,8 @@ import {REQUEST_PAGE_PENDING, REQUEST_PAGE_SUCCESS,
 		ADD_PAGE_SUCCESS, ACCESS_TOKEN, DISPLAY_CARD,
 		SET_SEARCH_FIELD, SET_COUNTRY_FILTER, SET_CATEGORY_FILTER,
 		FILTERS, LOGIN_SUCCESS, LOGIN_FAILED, LOGIN_PENDING,
-		LOGOUT, REGISTER, REGISTER_FAILED } from './constants';
+		LOGOUT, REGISTER, REGISTER_FAILED, INCREMENT_FAVOURITES,DECREMENT_FAVOURITES,
+		GET_FAVOURITES } from './constants';
 
 export const getAccessToken = (at) =>({
   type: GET_ACCESS_SUCCESS, payload: ACCESS_TOKEN
@@ -84,19 +85,39 @@ export const setLoginState=(user="",password="")=>(dispatch)=>{
 			return record.user===user && record.password===password;
 		})
 		if(dbCheck[0]) dispatch({type:LOGIN_SUCCESS, payload:dbCheck[0]})
-		else dispatch({type: LOGIN_FAILED, payload: 'Login failed'})
+		else dispatch( {type: LOGIN_FAILED, payload: 'Login failed'})
 	}
 }
 export const registerUser=(user="", password="")=>dispatch=>{
 	const dbCheck=database.filter(dbUser=>dbUser==={user,password})
 	if(!dbCheck[0]){
 		database.push({user,password,fav: []})
-		return dispatch({type: REGISTER, payload: 'Your account has been created'})
+		return {type: REGISTER, payload: 'Your account has been created'}
 	}
-
+	else{
+		return {type: REGISTER_FAILED, payload: 'Error - Could not create new account'}
+	}
 }
 
+export const updateFavourites=(id,user)=>dispatch=>{
+	database.map(record=>{
+		if(record===user){
+			if(!record.fav.includes(id)){
+				record.fav.push(id);
+				dispatch({
 
-
-
-	
+					type: INCREMENT_FAVOURITES, payload:id
+				})
+			}
+			else{
+				record.fav=record.fav.filter(recId=>{
+					return recId!==id
+				})
+				dispatch({
+					type: DECREMENT_FAVOURITES, payload:id
+				})
+			}
+		}
+		return undefined
+	})
+}

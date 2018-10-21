@@ -1,15 +1,19 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {setLoginState} from '../../State/actions';
+import {setLoginState, changePage} from '../../State/actions';
 import './Login.css';
 const mapStateToProps=state=>{
 	return{
+		loggedUser: state.onLogin.loggedUser,
 		loginMessage: state.onLogin.loginMessage,
 		isPending: state.onLogin.isPending
 	}
 }
 const mapDispatchToProps=dispatch=>{
-	return	{loginAttempt: (user,password)=>dispatch(setLoginState(user,password))}
+	return	{
+		loginAttempt: (user,password)=>dispatch(setLoginState(user,password)),
+		onLoginAccepted: (page)=>dispatch(changePage(page))
+	}
 }
 class Login extends React.Component{
 	constructor(){
@@ -27,12 +31,14 @@ class Login extends React.Component{
 		this.setState({password: event.target.value})
 	}
 	tryToLogin=()=>{
-		console.log(	)
 		const {username, password}=this.state
 		if(username.length && password.length)
 			this.props.loginAttempt(this.state.username, this.state.password);
 		this.setState({username:'', password:''})
-		console.log('message',this.props.loginMessage)
+		setTimeout(()=>{if(this.props.loggedUser){
+			alert(this.props.loginMessage+"\nClick ok to be redirected to the Home page");
+			this.props.onLoginAccepted('home');
+		}} , 50)
 	}
 
 	render(){

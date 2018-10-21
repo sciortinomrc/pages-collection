@@ -1,22 +1,19 @@
 import React, {Component} from 'react';
 import './Style/Card.css';
 import {connect} from 'react-redux';
+import {updateFavourites} from '../../State/actions';
 
 const mapStateToProps=state=>({
-	logged: state.onLogin.logged
+	user: state.onLogin.loggedUser
 })
 const mapDispatchToProps=dispatch=>{
-
+	return {
+		updateFavourites: (id,user)=> dispatch(updateFavourites(id,user))
+	}
 }
 
 class Card extends Component{
-	constructor(...props){
-		super(...props)
-	}
-	favpiuuno=()=>{
-		const star=document.getElementById(this.props.id);
-		console.log(star.children[0].classList)
-	}
+
 	render(){
 		const {id,category,name,link,picture,fan_count,favourites,country} =this.props;
 		return(
@@ -34,8 +31,8 @@ class Card extends Component{
 				<div className="likes d-inline-flex justify-content-end">
 				 <div className="mr-2"><img alt="" src="https://www.freistellen.de/wp-content/uploads/2017/03/Fotolia_142201188_S.jpg" width="30px" height="auto" />{fan_count}</div>
 				 {
-				 	this.props.logged?
-						<div id={id} className="mr-2 ml-2 d-inline-flex" onClick={this.favpiuuno}><p id="star-five" className="light"></p><p className="fav">{this.props.favourites}</p></div>
+				 	this.props.user?
+						<div id={id} className="mr-2 ml-2 d-inline-flex" onClick={()=>this.props.updateFavourites(id,this.props.user)}><p id="star-five" className="light"></p><p className="fav">{this.props.favourites}</p></div>
 				 	:
 						<div id={id} className="mr-2 ml-2 d-inline-flex"><p id="star-five"></p><p className="fav">{this.props.favourites}</p></div>	
 				 }

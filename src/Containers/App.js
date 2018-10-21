@@ -10,6 +10,7 @@ import {getPageFromAPI, getAccessToken,
 
 const mapStateToProps= state=>{
   return {
+    user: state.onLogin.loggedUser,
     database: state.addNewPage.database,
     cards: state.fbApiCall.cards,
     isPending: state.fbApiCall.isPending,
@@ -20,7 +21,6 @@ const mapStateToProps= state=>{
     open: state.onPageChange.open,
     category: state.onPageChange.chosen_category,
     card: state.displaySingleCard.card
-
   }
  }
 const mapDispatchToProps = (dispatch) =>{
@@ -87,6 +87,16 @@ componentDidMount(){
           />
          )
   } 
+//filter favourites from database
+  filterFavourites=()=>{
+   return(
+     this.props.database.filter(record=>{
+        return this.props.user.fav.some(fav=>fav===record.id)
+        })
+    ) 
+  }
+
+
 //renders the page based on the state
   returnSwitch=()=>{
     const {open, accessToken, cards, database, onPageChange, addPage, readStateMessage, category} = this.props;
@@ -97,6 +107,7 @@ componentDidMount(){
           case 'register': return (<Register />)
           case 'display': return ( <DisplayPages category={category} cards={cards} database={database}/> )
           case 'card': return (<div className="d-flex m-auto justify-content-center">{this.displayReceivedCard()}</div>)
+          case 'favourites': return( <DisplayPages category='favourites' cards={cards} database={this.filterFavourites()}/>)
           default: return( <h1> ... The page is Loading ...</h1> )
       }
   }
@@ -104,6 +115,7 @@ componentDidMount(){
   render() {
       
       const { accessToken }=this.props;
+      console.log (this.props.database)
       return(
         accessToken? (
           <div className="App d-block w-100 m-0 p-0">

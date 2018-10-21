@@ -6,7 +6,7 @@ import {setLoginState, windowResize,
 
 const mapStateToProps=state=>{
 	return{
-	user: state.onLogin.user,
+	user: state.onLogin.loggedUser,
 	open: state.onPageChange.open,
     size: state.onWindowResize.size,
     cards: state.fbApiCall.cards,
@@ -58,8 +58,8 @@ class Top extends Component {
 		const {user, onPageChange, onLoginChange}=this.props;
 		if(user){return (
 			<div>
-			<p className="dropdown-item" onClick={()=>{onPageChange('add')}}>Add</p>
-		    <p className="dropdown-item">Favourites</p>
+			<p className="dropdown-item" onClick={()=>onPageChange('add')}>Add</p>
+		    <p className="dropdown-item" onClick={()=>onPageChange('favourites')}>Favourites</p>
 		    <p className="dropdown-item" onClick={()=>onLoginChange()}>Logout</p>
 		    </div>
 		    )
@@ -79,7 +79,7 @@ class Top extends Component {
 			return(
 				<div className=" p-0 m-0">
 					<p className=" btn border mb-0 rounded-top" onClick={()=>onPageChange('add')}>Add</p>
-					<p className=" btn border mb-0 rounded-top">Favourites</p>
+					<p className=" btn border mb-0 rounded-top" onClick={()=>onPageChange('favourites')}>Favourites</p>
 					<p className=" btn border mb-0 rounded-top" onClick={()=>onLoginChange()}>Logout</p>
 				</div>
 				)
