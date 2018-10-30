@@ -1,7 +1,7 @@
 import {REQUEST_PAGE_SUCCESS, SET_DATABASE,
-		REQUEST_PAGE_FAILED, GET_ACCESS_SUCCESS, WINDOW_RESIZE,
+		WINDOW_RESIZE,
 		CHANGE_PAGE, CATEGORY_CHOICE, ADD_PAGE_FAILED, 
-		ADD_PAGE_SUCCESS, ACCESS_TOKEN, DISPLAY_CARD,
+		ADD_PAGE_SUCCESS, DISPLAY_CARD,
 		SET_SEARCH_FIELD, SET_COUNTRY_FILTER, SET_CATEGORY_FILTER,
 		FILTERS, LOGIN_SUCCESS, LOGIN_FAILED, LOGIN_PENDING,
 		LOGOUT, REGISTER, REGISTER_FAILED, UPDATE_FAVOURITES,
@@ -11,9 +11,6 @@ export const setPagesDatabase=(database)=>({
 	type: SET_DATABASE, payload: database
 })
 
-export const getAccessToken = (at) =>({
-  type: GET_ACCESS_SUCCESS, payload: ACCESS_TOKEN
-})
 export const getPageFromAPI=(cards)=>({
 	type: REQUEST_PAGE_SUCCESS,
 	payload: cards
@@ -80,7 +77,7 @@ export const setLoginState=(user="",password="")=>(dispatch)=>{
 	if(user==="") dispatch({ type: LOGOUT, payload: 'Logged out'})
 	else{
 		dispatch({type: LOGIN_PENDING, payload: true})
-		fetch('http://localhost:3001/login', {
+		fetch('https://git.heroku.com/peaceful-everglades-81846.git/login', {
 			method: 'post',
 			headers: {'Content-Type':'application/json'},
 			body: JSON.stringify({ user,password})
@@ -94,7 +91,7 @@ export const setLoginState=(user="",password="")=>(dispatch)=>{
 }
 export const registerUser=(user, password,email)=>dispatch=>{
 	dispatch({type: LOGIN_PENDING, payload: true})
-	fetch('http://localhost:3001/register', {
+	fetch('https://git.heroku.com/peaceful-everglades-81846.git/register', {
 		method: 'post',
 		headers: {'Content-Type':'application/json'},
 		body: JSON.stringify({ user,password,email})
@@ -108,7 +105,7 @@ export const registerUser=(user, password,email)=>dispatch=>{
 
 export const updateFavourites=(id,user)=>dispatch=>{
 	dispatch({type: LOGIN_PENDING, payload:true})
-	fetch('http://localhost:3001/updatefavs', {
+	fetch('https://git.heroku.com/peaceful-everglades-81846.git/updatefavs', {
 		method: 'post',
 		headers: {'Content-Type':'application/json'},
 		body:JSON.stringify({

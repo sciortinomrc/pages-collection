@@ -21,7 +21,7 @@ class Card extends Component{
 	}
 
 	render(){
-		const {id,category,name,link,picture,fan_count,favourites,country,favToggle} =this.props;
+		const {id,category,name,link,picture,fan_count,favourites,country} =this.props;
 		return(
 
 				

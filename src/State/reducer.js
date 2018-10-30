@@ -1,7 +1,7 @@
 import {REQUEST_PAGE_SUCCESS, SET_DATABASE,
-		REQUEST_PAGE_FAILED, GET_ACCESS_SUCCESS,
+		REQUEST_PAGE_FAILED, 
 		WINDOW_RESIZE, CHANGE_PAGE, CATEGORY_CHOICE,PAGE_ADDED,
-		ADD_PAGE_FAILED, ADD_PAGE_SUCCESS, ACCESS_TOKEN, DISPLAY_CARD,
+		ADD_PAGE_FAILED, ADD_PAGE_SUCCESS, DISPLAY_CARD,
 		SET_SEARCH_FIELD, SET_COUNTRY_FILTER, SET_CATEGORY_FILTER,
 		FILTERS, LOGIN_SUCCESS, LOGIN_PENDING, LOGIN_FAILED,
 		LOGOUT, REGISTER, REGISTER_FAILED,  UPDATE_FAVOURITES, UPDATE_USERS_FAVOURITES
@@ -24,20 +24,6 @@ import {REQUEST_PAGE_SUCCESS, SET_DATABASE,
 						...state,
 						message: action.payload
 						}
-			default: return state;
-		}
-	}
-//facebook Login
-	const initialFBState={
-		accessToken: ACCESS_TOKEN
-	}
-
-	export const fbLogin=(state=initialFBState, action={})=>{
-		switch(action.type){
-			case GET_ACCESS_SUCCESS:
-				return {
-					accessToken: action.payload
-				}
 			default: return state;
 		}
 	}

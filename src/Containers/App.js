@@ -5,8 +5,7 @@ import Bottom from '../Components/Bottom'; import Add from '../Components/Add/Ad
 import Home from '../Components/Home/Home'; import Login from '../Components/Form/Login';
 import Register from '../Components/Form/Register'; import Card from '../Components/Main/Card'; import DisplayPages from '../Components/Main/DisplayPages';
 import './App.css';
-import {getPageFromAPI, getAccessToken,
-  windowResize, changePage, setPagesDatabase } from  '../State/actions.js'
+import {getPageFromAPI, windowResize, changePage, setPagesDatabase } from  '../State/actions.js'
 
 const mapStateToProps= state=>{
   return {
@@ -16,7 +15,6 @@ const mapStateToProps= state=>{
     isPending: state.fbApiCall.isPending,
     message: state.fbApiCall.message,
     error: state.fbLogin.error,
-    accessToken: state.fbLogin.accessToken,
     size: state.onWindowResize.size,
     open: state.onPageChange.open,
     category: state.onPageChange.chosen_category,
@@ -27,7 +25,6 @@ const mapDispatchToProps = (dispatch) =>{
   return{
    setDB: (database)=> dispatch(setPagesDatabase(database)),
    onApiCall: (cards) => dispatch(getPageFromAPI(cards)),
-   getAccessToken: ()=> dispatch(getAccessToken()),
    onPageChange: (page,category)=>dispatch(changePage(page,category)),
    onWindowResize: (size)=>dispatch(windowResize(size))
     }
@@ -43,7 +40,7 @@ componentWillMount(){
  
 }
 componentDidMount(){ 
-  fetch('http://localhost:3001/')
+  fetch('https://git.heroku.com/peaceful-everglades-81846.git/')
   .then(resp=>resp.json())
   .then(data=>{
       this.props.setDB(data.db)
@@ -88,7 +85,7 @@ componentDidMount(){
 
 //renders the page based on the state
   returnSwitch=()=>{
-    const {open, accessToken, cards, database, onPageChange, readStateMessage, user, category} = this.props;
+    const {open, cards, database, onPageChange, readStateMessage, user, category} = this.props;
       switch(open){
           case 'home':  return ( <Home category='categories' cards={cards} db={database} user={user} onPageChange={onPageChange}/>);
           case 'add': return( <Add readMessage={readStateMessage}/>)

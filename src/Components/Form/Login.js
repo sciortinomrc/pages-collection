@@ -43,7 +43,6 @@ class Login extends React.Component{
 		setTimeout(()=>{if(this.props.loggedUser){
 			this.props.onLoginAccepted('home');
 		}},1000)
-		const form=document.getElementById('login-form');
 		this.formReset()
 
 	}

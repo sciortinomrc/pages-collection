@@ -3,8 +3,7 @@ import { Provider } from 'react-redux';
 import {createStore,applyMiddleware ,combineReducers} from 'redux';
 // import {createLogger} from 'redux-logger';
 import {
-	onLogin, fbApiCall, 
-	fbLogin, onWindowResize, 
+	onLogin, fbApiCall, onWindowResize, 
 	onPageChange, addNewPage,
 	displaySingleCard, addFilter,
 	signUp
@@ -12,18 +11,17 @@ import {
 import thunkMiddleware from 'redux-thunk';
 import ReactDOM from 'react-dom';
 import './index.css';
-import WindowFB from './Containers/WindowFB';
+import App from './Containers/App';
 import registerServiceWorker from './registerServiceWorker';
 
 // const logger=createLogger();
 const rootReducer=combineReducers({
-	onLogin, fbApiCall, fbLogin, 
-	onWindowResize, onPageChange, addNewPage,
+	onLogin, fbApiCall, onWindowResize, onPageChange, addNewPage,
 	displaySingleCard, addFilter, signUp})
 const store=createStore(rootReducer,applyMiddleware(thunkMiddleware)); /*logger*/
 
 ReactDOM.render(
 	<Provider store={store}>
-		<WindowFB />
+		<App />
 	</Provider>, document.getElementById('root'));
 registerServiceWorker();
