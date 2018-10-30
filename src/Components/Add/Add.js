@@ -43,7 +43,7 @@ stateCheck=(f)=>{
 	document.getElementById('category').value="";
 	const {id, category, country}=this.state;
 	if(id.length && category.length && country.length){
-		fetch('http://localhost:3001/newpage',{
+		fetch('https://peaceful-everglades-81846.herokuapp.com/newpage',{
 			method: 'post',
 			headers:{ "Content-Type":"application/json"},
 			body: JSON.stringify({id,category,country})

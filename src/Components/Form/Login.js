@@ -66,6 +66,7 @@ class Login extends React.Component{
 									<input type="password" className="form-control" id="lg_password" name="lg_password" placeholder="password" onChange={this.onPasswordChange}/>
 								</div>
 							</div>
+							<p className="m-auto p-0 text-center">{this.props.loginMessage}</p>
 							<button type="button" className="login-button p-0 text-top" onClick={this.tryToLogin}><span className="p-absolute span">></span></button>
 						</div>
 						<div className="etc-login-form">

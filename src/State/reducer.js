@@ -126,7 +126,7 @@ export const addFilter=(state=initialFilterState, action={})=>{
 			case LOGIN_PENDING: return{
 				...state,
 				isLoginPending: true,
-				loginMessage: 'Contacting the database',
+				loginMessage: '',
 			}
 			case LOGIN_SUCCESS: return{
 				isLoginPending: false,

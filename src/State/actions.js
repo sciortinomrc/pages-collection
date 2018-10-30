@@ -77,7 +77,7 @@ export const setLoginState=(user="",password="")=>(dispatch)=>{
 	if(user==="") dispatch({ type: LOGOUT, payload: 'Logged out'})
 	else{
 		dispatch({type: LOGIN_PENDING, payload: true})
-		fetch('https://git.heroku.com/peaceful-everglades-81846.git/login', {
+		fetch('https://peaceful-everglades-81846.herokuapp.com/login', {
 			method: 'post',
 			headers: {'Content-Type':'application/json'},
 			body: JSON.stringify({ user,password})
@@ -91,7 +91,7 @@ export const setLoginState=(user="",password="")=>(dispatch)=>{
 }
 export const registerUser=(user, password,email)=>dispatch=>{
 	dispatch({type: LOGIN_PENDING, payload: true})
-	fetch('https://git.heroku.com/peaceful-everglades-81846.git/register', {
+	fetch('https://peaceful-everglades-81846.herokuapp.com/register', {
 		method: 'post',
 		headers: {'Content-Type':'application/json'},
 		body: JSON.stringify({ user,password,email})
@@ -105,7 +105,7 @@ export const registerUser=(user, password,email)=>dispatch=>{
 
 export const updateFavourites=(id,user)=>dispatch=>{
 	dispatch({type: LOGIN_PENDING, payload:true})
-	fetch('https://git.heroku.com/peaceful-everglades-81846.git/updatefavs', {
+	fetch('https://peaceful-everglades-81846.herokuapp.com/updatefavs', {
 		method: 'post',
 		headers: {'Content-Type':'application/json'},
 		body:JSON.stringify({

@@ -14,7 +14,6 @@ const mapStateToProps= state=>{
     cards: state.fbApiCall.cards,
     isPending: state.fbApiCall.isPending,
     message: state.fbApiCall.message,
-    error: state.fbLogin.error,
     size: state.onWindowResize.size,
     open: state.onPageChange.open,
     category: state.onPageChange.chosen_category,
@@ -40,7 +39,7 @@ componentWillMount(){
  
 }
 componentDidMount(){ 
-  fetch('https://git.heroku.com/peaceful-everglades-81846.git/')
+  fetch('https://peaceful-everglades-81846.herokuapp.com/')
   .then(resp=>resp.json())
   .then(data=>{
       this.props.setDB(data.db)
@@ -99,24 +98,17 @@ componentDidMount(){
   }
 //render method
   render() {
-      
-      const { accessToken }=this.props;
-      return(
-        accessToken? (
-          <div className="App d-block w-100 m-0 p-0">
-            <Top />
-              <div className="d-flex flex-column pt">
-                  <Scroller>
-                    {this.returnSwitch()}
-                  </Scroller>
-                  <Bottom height={this.props.size[1]} />
-              </div>
+    return(
+      <div className="App d-block w-100 m-0 p-0">
+        <Top />
+          <div className="d-flex flex-column pt">
+              <Scroller>
+                {this.returnSwitch()}
+              </Scroller>
+              <Bottom height={this.props.size[1]} />
           </div>
-          ):
-        (
-          <h1 className="text-center mt-5">.... WAITING AUTHORIZATION FROM FACEBOOK .... </h1>
-        )
-        )
+      </div>
+    )
   }
 }
 
