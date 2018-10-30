@@ -20,7 +20,7 @@ const rootReducer=combineReducers({
 	onLogin, fbApiCall, fbLogin, 
 	onWindowResize, onPageChange, addNewPage,
 	displaySingleCard, addFilter, signUp})
-const store=createStore(rootReducer,applyMiddleware(thunkMiddleware /*logger*/
+const store=createStore(rootReducer,applyMiddleware(thunkMiddleware)); /*logger*/
 
 ReactDOM.render(
 	<Provider store={store}>
