@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect } from 'react-redux';
 import {newPage} from '../../State/actions.js';
 import { CountryDropdown } from 'react-country-region-selector';
+import {PAGE_ADDED} from '../../State/constants';
 import "./Add.css";
 
 const mapStateToProps=state=>{
@@ -35,26 +36,27 @@ onInputsChange=(event)=>{
 
 	(event.target.id==="id")
 	? this.setState({pageId: event.target.value})
-	: this.setState({category: event.target.value})
+	: this.setState({category: event.target.value.toLowerCase()})
 }
 
 stateCheck=(f)=>{
+	console.log(this.state)
 	document.getElementById('id').value="";
 	document.getElementById('category').value="";
 	const {pageId, category, country}=this.state;
 	if(pageId.length && category.length && country.length){
 			f({id: pageId, category: category, country: country})
 			setTimeout(()=>{
-				if(this.props.apiMessage.length<40 && this.props.apiMessage.length>38){
+				if(this.props.apiMessage===PAGE_ADDED){
 					this.props.addNewPage(pageId,category,country,this.props.apiMessage);
 				}
 				else this.props.addNewPage(undefined,undefined,undefined,this.props.apiMessage)
-			},500)
+			},1100)
 	}else{this.props.addNewPage(undefined,undefined,undefined,'You need to complete the form.')
 	}
 	this.setState({country: '', pageId: '', category: ''})
-
 }
+
 	selectCountry (val) {
 	this.setState({ country: val });
 	}
@@ -93,7 +95,7 @@ return(
 					<div className="d-flex flex-column border w-100">
 						<input id="id" type="text" className="rounded-left text-center" placeholder="Page ID" onChange={this.onInputsChange}/>
 						<input id="category" type="text" className="rounded-left text-center" placeholder="Category" onChange={this.onInputsChange}/>
-				        <CountryDropdown
+				       	<CountryDropdown
 				          value={country}
 				          onChange={(val) => this.selectCountry(val)} />
 					</div>

@@ -6,7 +6,7 @@ import Home from '../Components/Home/Home'; import Login from '../Components/For
 import Register from '../Components/Form/Register'; import Card from '../Components/Main/Card'; import DisplayPages from '../Components/Main/DisplayPages';
 import './App.css';
 import {getPageFromAPI, getAccessToken,
-  windowResize, changePage } from  '../State/actions.js'
+  windowResize, changePage, setPagesDatabase } from  '../State/actions.js'
 
 const mapStateToProps= state=>{
   return {
@@ -25,6 +25,7 @@ const mapStateToProps= state=>{
  }
 const mapDispatchToProps = (dispatch) =>{
   return{
+   setDB: (database)=> dispatch(setPagesDatabase(database)),
    onApiCall: (url) => dispatch(getPageFromAPI(url)),
    getAccessToken: ()=> dispatch(getAccessToken()),
    onPageChange: (page,category)=>dispatch(changePage(page,category)),
@@ -38,24 +39,22 @@ constructor(){
     test: {}
   })
 }
+componentWillMount(){
+  fetch('http://localhost:3001/')
+  .then(resp=>resp.json())
+  .then(data=>this.props.setDB(data))
+}
 componentDidMount(){ 
     //load accessToken    
      this.props.getAccessToken();
-
-     console.log(this.props.accessToken)
       //delayed api call and cards load + set message
-   this.props.database.map(record=>{
-    this.props.onApiCall(record)
-    return record
-   })/*
-     let url = new URL(`https://graph.facebook.com/${record.id}`),
-        params = {access_token: this.props.accessToken, fields:'id,name,picture,fan_count,link'}
-     Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
-     this.props.onApiCall(url)
-     return record
-     })
-   },2000)*/
-   
+      setTimeout(()=>{
+        this.props.database.map(record=>{
+        this.props.onApiCall(record)
+        return record
+        })
+      },50)
+      
 //resize event listener
   window.addEventListener('resize',()=>{
       this.props.onWindowResize([window.innerWidth, window.innerHeight])
@@ -89,20 +88,20 @@ componentDidMount(){
   } 
 //filter favourites from database
   filterFavourites=()=>{
-   return(
-     this.props.database.filter(record=>{
-        return this.props.user.fav.some(fav=>fav===record.id)
-        })
-    ) 
+       return(
+         this.props.database.filter(record=>{
+            return this.props.user.fav.some(fav=>fav===record.id)
+            })
+        ) 
   }
 
 
 //renders the page based on the state
   returnSwitch=()=>{
-    const {open, accessToken, cards, database, onPageChange, addPage, readStateMessage, category} = this.props;
+    const {open, accessToken, cards, database, onPageChange, readStateMessage, user, category} = this.props;
       switch(open){
-          case 'home':  return ( <Home category='categories' at={accessToken} cards={cards} db={database} onPageChange={onPageChange}/>);
-          case 'add': return( <Add addPage={addPage} readMessage={readStateMessage}/>)
+          case 'home':  return ( <Home category='categories' at={accessToken} cards={cards} db={database} user={user} onPageChange={onPageChange}/>);
+          case 'add': return( <Add addPage={this.addPage} readMessage={readStateMessage}/>)
           case 'login': return (<Login />)
           case 'register': return (<Register />)
           case 'display': return ( <DisplayPages category={category} cards={cards} database={database}/> )
@@ -115,7 +114,6 @@ componentDidMount(){
   render() {
       
       const { accessToken }=this.props;
-      console.log (this.props.database)
       return(
         accessToken? (
           <div className="App d-block w-100 m-0 p-0">

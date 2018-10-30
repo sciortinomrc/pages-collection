@@ -19,6 +19,9 @@ hr {
 	width: 15%;
 }
 select {
-	text-indent: 48%;
+	text-align-last: center;
+   text-align: center;
+   -ms-text-align-last: center;
+   -moz-text-align-last: center;
 	background-color: white;
 }

@@ -27,6 +27,31 @@ class Top extends Component {
 		super()
 		this.state=({search: '',cards:[]});
 	}
+//addEventListener
+componentDidMount(){
+	document.addEventListener('click',(event)=>{
+		if(document.getElementById("dropdown-div")){
+			const dropdownDiv=document.getElementById("dropdown-div");
+			const element=event.target;
+			if(element.id==="logout" || (element!==dropdownDiv && 
+				element.id!=="dropdown" && element.parentNode.id!=="dropdown"))
+				dropdownDiv.classList.add('d-none')
+		}
+	})
+}
+
+//open dropdown menu
+	dropdown=(event)=>{
+		const dropdownDiv=document.getElementById('dropdown-div');
+		const button=event.target.tagName==='I'?event.target.parentNode:event.target
+		if(button.id==='dropdown'){
+			if(dropdownDiv.classList.contains('d-none'))	dropdownDiv.classList.add('d-none')
+			else dropdownDiv.classList.remove('d-none')
+		}
+		button.parentNode.children[1].classList.contains('d-none')?
+			button.parentNode.children[1].classList.remove('d-none'):
+			button.parentNode.children[1].classList.add('d-none')
+	}
 //searchPage
 	searchPage=(event)=>{
 		const hidden= document.getElementById('hidden');
@@ -53,14 +78,20 @@ class Top extends Component {
 	 	this.setState({search: '',cards:[]})
 	 }
 
+//logout
+ 	logout=()=>{
+ 		this.props.onLoginChange();
+ 		this.props.onPageChange('home')
+ 	}
+
 //conditional rendering small responsive
 	loggedSmall=()=>{
-		const {user, onPageChange, onLoginChange}=this.props;
+		const {user, onPageChange}=this.props;
 		if(user){return (
 			<div>
 			<p className="dropdown-item" onClick={()=>onPageChange('add')}>Add</p>
 		    <p className="dropdown-item" onClick={()=>onPageChange('favourites')}>Favourites</p>
-		    <p className="dropdown-item" onClick={()=>onLoginChange()}>Logout</p>
+		    <p id="logout" className="dropdown-item" onClick={this.logout}>Logout</p>
 		    </div>
 		    )
 		}else{
@@ -74,13 +105,13 @@ class Top extends Component {
 	}
 	//conditional rendering large responsive
 	loggedXL=()=>{
-		const {user, onLoginChange, onPageChange}=this.props;
+		const {user, onPageChange}=this.props;
 		if(user){
 			return(
 				<div className=" p-0 m-0">
 					<p className=" btn border mb-0 rounded-top" onClick={()=>onPageChange('add')}>Add</p>
 					<p className=" btn border mb-0 rounded-top" onClick={()=>onPageChange('favourites')}>Favourites</p>
-					<p className=" btn border mb-0 rounded-top" onClick={()=>onLoginChange()}>Logout</p>
+					<p className=" btn border mb-0 rounded-top" onClick={this.logout}>Logout</p>
 				</div>
 				)
 		}else{
@@ -96,7 +127,7 @@ class Top extends Component {
 	show=()=>{
 		const {onPageChange}=this.props;
 		return(
-			<div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+			<div id="dropdown-div" className="position-absolute d-none">
 		 		    <p className="dropdown-item" onClick={()=>onPageChange('home')}>Home</p>
 		 		    <p className="dropdown-item" onClick={()=>onPageChange('display','all')}>All Pages</p>
 		 		    <div className="dropdown-divider"></div>
@@ -109,11 +140,11 @@ class Top extends Component {
 		const {onPageChange, displaySingleCard}=this.props;
 		let limit=0;
 		return(
-			<div className="d-flex col pt-3 p-0 justify-content-end">	
-				<p className=" btn border mb-0 rounded-top" onClick={()=>onPageChange('home')}>Home</p>
-				<p className=" btn border mb-0 rounded-top" onClick={()=>onPageChange('display','all')}>Pages</p> 
+			<div className="d-flex col pt-3 p-0 justify-content-end dd">	
+				<p className=" btn border mb-0 rounded-top " onClick={()=>onPageChange('home')}>Home</p>
+				<p className=" btn border mb-0 rounded-top " onClick={()=>onPageChange('display','all')}>Pages</p> 
 				{this.loggedXL()}
-				<div className="p-0 m-0 set-height">
+				<div className="p-0 m-0 set-height ">
 			  		<input id="search" type="search"  className=" btn mb-0 rounded-right search text-center" placeholder="Search..." onChange={this.searchPage}/>
 			  		<div id="hidden" className="d-none p-absolute set-width">
 			  			{	
@@ -148,11 +179,12 @@ class Top extends Component {
 			  			}
 			  		</div>
 		  		</div>
-
-				  <p className="navbar-toggler bg-light btn dropdown-toggle border mb-0 p-0 rounded-right bg" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> </p>
+		  		<div className="h-100">
+				  <button id="dropdown" className="bg-light btn border mb-0 p-0 rounded-right bg h-100" onClick={this.dropdown}><i className="fas fa-bars pl-3 pr-3"></i> </button>
 				  {this.show()}
-				</div>
-				)
+				 </div>
+			</div>
+			)
 		}else{
 			return(
 				this.showXL()
@@ -162,7 +194,7 @@ class Top extends Component {
 	//definition and rendering
 	render(){
 			return(
-				<div className="container header pt-5">
+				<div className="container header pt-5 box-shadow">
 					<div className="d-inline-flex w-100">
 						<div id="logo" className="shadow">P</div>
 						{this.displayResponsiveTop()}

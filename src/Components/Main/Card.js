@@ -13,13 +13,19 @@ const mapDispatchToProps=dispatch=>{
 }
 
 class Card extends Component{
+	toggleFavourite=(event)=>{
+		const click=event.target;
+		if(click.classList.contains('fav')) click.classList.remove('fav')
+		else click.classList.add('fav')
+		this.props.updateFavourites(this.props.id,this.props.user.id)
+	}
 
 	render(){
-		const {id,category,name,link,picture,fan_count,favourites,country} =this.props;
+		const {id,category,name,link,picture,fan_count,favourites,country,favToggle} =this.props;
 		return(
 
 				
-			<div className="wrapper d-flex flex-column mt-1 ml-2 mr-3 rounded" title={category+", "+country}>
+			<div className="wrapper d-flex flex-column mt-1 ml-2 mr-3 rounded pop" title={category+", "+country}>
 				<div className="background1">
 					<div className='top d-flex '>
 					<p className=" mr-1 w-100 word-wrap p-1"><a href={link} className="no-deco" target='_blank'>{name}</a></p>
@@ -28,13 +34,20 @@ class Card extends Component{
 				<div className="photo">
 						<img alt=""  src={picture} height="100%" width="auto" className=" flex m-auto" />
 				</div>
-				<div className="likes d-inline-flex justify-content-end">
-				 <div className="mr-2"><img alt="" src="https://www.freistellen.de/wp-content/uploads/2017/03/Fotolia_142201188_S.jpg" width="30px" height="auto" />{fan_count}</div>
+				<div className="likes d-inline-flex justify-content-end p-0">
+				 <div className="d-inline-flex justify-content-center align-content-center p-0 h-100 pr-2"><p className="fas fa-thumbs-up align-self-center mr-1 like"></p><p className="star">{fan_count}</p></div>
 				 {
-				 	this.props.user?
-						<div id={id} className="mr-2 ml-2 d-inline-flex" onClick={()=>this.props.updateFavourites(id,this.props.user)}><p id="star-five" className="light"></p><p className="fav">{this.props.favourites}</p></div>
+				 	this.props.user?(
+						<div id={id} className=" d-inline-flex justify-content-center align-content-center p-0 h-100 pr-2" >
+							{
+								this.props.user.fav.includes(id)?
+									<p id="star" className='star pointer fav' onClick={this.toggleFavourite}>&#9733;</p>:
+									<p id="star" className='star pointer' onClick={this.toggleFavourite}>&#9733;</p>
+							}
+							<p className="star ">{this.props.favourites}</p></div>
+				 		)
 				 	:
-						<div id={id} className="mr-2 ml-2 d-inline-flex"><p id="star-five"></p><p className="fav">{this.props.favourites}</p></div>	
+						<div id={id} className="d-inline-flex justify-content-center pr-2"><p id="star" className='star mt-0 pt-0'>&#9733;</p><p className="star">{favourites}</p></div>	
 				 }
 				 
 				</div>

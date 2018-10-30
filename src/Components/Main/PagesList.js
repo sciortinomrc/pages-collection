@@ -25,7 +25,7 @@ class PagesList extends React.Component{
 			this.props.setFilters(categoryFilters, countryFilters)
 	}
 	render(){
-		const {categoryFilter,countryFilter,limit,database,cards} =this.props
+		const {categoryFilter,countryFilter,limit,database,cards,userFavourites} =this.props
 		let filteredRecords=[];
 		let lim=1;
 		let filteredCardsId=cards.filter(card=>{
@@ -49,7 +49,7 @@ class PagesList extends React.Component{
 
 		if(!limit)this.returnFilters(filteredRecords)
 		return(
-			<div className="d-flex flex-wrap justify-content-baseline height m-auto" >
+			<div className="d-flex flex-wrap justify-content-start height m-auto align-content-center" >
 			{
 				cards.map(card=>{
 					const recordMatch=filteredRecords.filter(record=>{
@@ -57,7 +57,22 @@ class PagesList extends React.Component{
 					})
 				if(recordMatch.length){
 					return (
+						(userFavourites && userFavourites.includes(recordMatch[0]))?(
 							<Card
+								key={card.id}
+								id={card.id}
+								name={card.name}
+								fan_count={card.country_page_likes}
+								picture={card.picture.data.url}
+								link={card.link}
+								favourites={recordMatch[0].favourite}
+								category={recordMatch[0].category}
+								country={recordMatch[0].country}
+								favToggle={true}
+							/>)	
+						:(
+							<Card
+								key={card.id}
 								id={card.id}
 								name={card.name}
 								fan_count={card.fan_count}
@@ -66,7 +81,9 @@ class PagesList extends React.Component{
 								favourites={recordMatch[0].favourite}
 								category={recordMatch[0].category}
 								country={recordMatch[0].country}
-							/>)
+								favToggle={false}
+							/>)	
+						)
 				}
 				else return undefined
 				})

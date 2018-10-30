@@ -30,21 +30,33 @@ class Login extends React.Component{
 	onPasswordChange=(event)=>{
 		this.setState({password: event.target.value})
 	}
+
+	hashPassword=()=>{
+
+	}
+
 	tryToLogin=()=>{
 		const {username, password}=this.state
 		if(username.length && password.length)
 			this.props.loginAttempt(this.state.username, this.state.password);
 		this.setState({username:'', password:''})
 		setTimeout(()=>{if(this.props.loggedUser){
-			alert(this.props.loginMessage+"\nClick ok to be redirected to the Home page");
 			this.props.onLoginAccepted('home');
-		}} , 50)
+		}},1000)
+		const form=document.getElementById('login-form');
+		this.formReset()
+
 	}
 
+	formReset=()=>{
+		this.setState({username: '', password: ''})
+		const form=document.getElementById('login-form');
+		form.reset()
+	}
 	render(){
 		return(
 				<div className="login-form-1 border shadow1 box">
-					<div id="login-form" className="text-left">
+					<form id="login-form" className="text-left">
 						<div className="login-form-main-message"></div>
 						<div className="main-login-form">
 							<div className="login-group">
@@ -55,12 +67,12 @@ class Login extends React.Component{
 									<input type="password" className="form-control" id="lg_password" name="lg_password" placeholder="password" onChange={this.onPasswordChange}/>
 								</div>
 							</div>
-							<button type="submit" className="login-button p-0 text-top" onClick={this.tryToLogin}><span className="p-absolute span">></span></button>
+							<button type="button" className="login-button p-0 text-top" onClick={this.tryToLogin}><span className="p-absolute span">></span></button>
 						</div>
 						<div className="etc-login-form">
 							<p>New user? <span className="link">Register</span></p>
 						</div>
-					</div>
+					</form>
 				</div>
 
 		)

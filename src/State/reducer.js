@@ -1,32 +1,27 @@
-import {REQUEST_PAGE_PENDING, REQUEST_PAGE_SUCCESS,
+import {REQUEST_PAGE_SUCCESS, SET_DATABASE,
 		REQUEST_PAGE_FAILED, GET_ACCESS_SUCCESS,
-		WINDOW_RESIZE, CHANGE_PAGE, CATEGORY_CHOICE,
+		WINDOW_RESIZE, CHANGE_PAGE, CATEGORY_CHOICE,PAGE_ADDED,
 		ADD_PAGE_FAILED, ADD_PAGE_SUCCESS, ACCESS_TOKEN, DISPLAY_CARD,
 		SET_SEARCH_FIELD, SET_COUNTRY_FILTER, SET_CATEGORY_FILTER,
 		FILTERS, LOGIN_SUCCESS, LOGIN_PENDING, LOGIN_FAILED,
-		LOGOUT, REGISTER, REGISTER_FAILED,  INCREMENT_FAVOURITES, DECREMENT_FAVOURITES  } from './constants';
+		LOGOUT, REGISTER, REGISTER_FAILED,  UPDATE_FAVOURITES, UPDATE_USERS_FAVOURITES
+	} from './constants';
 
 //api call reducer
 	const initialCardsState={
-		isPending: false,
 		cards: [],
 		message: ''
 	}
 	export const fbApiCall=(state=initialCardsState, action={})=>{
 		switch(action.type){
-			case REQUEST_PAGE_PENDING:
-				return { ...state, isPending: true};
-			case REQUEST_PAGE_SUCCESS:{
-				//tempCards.push(action.payload);
-				return { isPending: false,
+			case REQUEST_PAGE_SUCCESS:
+				return {
 					 	 cards: [...state.cards, action.payload],
-						 message: 'The page has been added to our Database',
+						 message: PAGE_ADDED,
 						} 
-			}
 			case REQUEST_PAGE_FAILED:
 				return { 
 						...state,
-						isPending: false,
 						message: action.payload
 						}
 			default: return state;
@@ -75,52 +70,24 @@ import {REQUEST_PAGE_PENDING, REQUEST_PAGE_SUCCESS,
 //add new page
 
 	const initialDBState={
-		database:[ 
-        {id: '1868643320130834', category: 'natura', favourite: 0, country: 'UK'},
-        {id: '718361521697095', category: 'natura', favourite: 0, country: 'Italy'},
-        {id: '1169644526470881', category: 'fantasia', favourite: 0, country: 'France'},
-        {id: '137492556866190', category: 'trasformismo', favourite: 0, country: 'Italy'},
-        {id: '1683822428328710', category: 'trasformismo', favourite: 0, country: 'Italy'},
-        {id: '354760301630118', category: 'ignoranza', favourite: 0, country: 'Italy'},
-      ],
-      message:''
+		database: [],
+     	message:''
 	}
 	export const addNewPage=(state=initialDBState, action={})=>{
 		switch(action.type){
+			case SET_DATABASE:{
+				return {...state, database: action.payload}
+			}
 			case ADD_PAGE_FAILED:
 				return {...state, message:action.payload}
 			case ADD_PAGE_SUCCESS:
-				return { database:[...state.database, {id: action.payload.id, category: action.payload.category, country: action.payload.country}], message:action.payload.message}
-			case INCREMENT_FAVOURITES:{
+				return { database:action.payload, message:'Your page has been added to our database'}
+			case UPDATE_FAVOURITES:{
 				return{
-					message: "",
-					database: state.database.map(data=>{
-						if(data.id===action.payload)
-							return {
-								id: data.id, 
-								category: data.category,
-								favourite: data.favourite+1,
-								country: data.country
-							}
-						else return data
-					})
+					message: '',
+					database: action.payload
+					}
 				}
-			}
-			case DECREMENT_FAVOURITES:{
-				return{
-					message: "",
-					database: state.database.map(data=>{
-						if(data.id===action.payload)
-							return {
-								id: data.id, 
-								category: data.category,
-								favourite: data.favourite-1,
-								country: data.country
-							}
-						else return data
-					})
-				}
-			}
 			default: return state
 		}
 	}
@@ -171,9 +138,9 @@ export const addFilter=(state=initialFilterState, action={})=>{
 	export const onLogin=(state=initialLoginState, action={})=>{
 		switch(action.type){
 			case LOGIN_PENDING: return{
+				...state,
 				isLoginPending: true,
 				loginMessage: 'Contacting the database',
-				isPending: action.payload
 			}
 			case LOGIN_SUCCESS: return{
 				isLoginPending: false,
@@ -181,7 +148,7 @@ export const addFilter=(state=initialFilterState, action={})=>{
 				loggedUser: action.payload
 			}
 			case LOGIN_FAILED: return{
-				loggedUser:{},
+				loggedUser:undefined,
 				isLoginPending:false,
 				loginMessage: action.payload
 			}
@@ -189,6 +156,11 @@ export const addFilter=(state=initialFilterState, action={})=>{
 				isLoginPending: false,
 				loginMessage: action.payload,
 				loggedUser: undefined
+			}
+			case UPDATE_USERS_FAVOURITES: return{
+				isLoginPending: false,
+				loginMessage: 'Updated favourites',
+				loggedUser: action.payload
 			}
 			default: return state
 		}

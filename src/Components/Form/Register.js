@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {registerUser} from '../../State/actions';
+import {registerUser,changePage} from '../../State/actions';
 import './Login.css';
 
 const mapStateToProps=state=>{
@@ -10,7 +10,8 @@ const mapStateToProps=state=>{
 }
 const mapDispatchToProps=dispatch=>{
 	return{
-		registerUser: (user,password)=>dispatch(registerUser(user,password))
+		onPageChange: (page,category)=>dispatch (changePage(page,category)),
+		registerUser: (user,password,email)=>dispatch(registerUser(user,password,email))
 	}
 }
 
@@ -20,18 +21,41 @@ class Register extends React.Component{
 		this.state={
 			username: '',
 			email: '',
-			password: ''
+			password: '',
+			confirm: ''
 		}
 	}
-
+	reset=()=>{
+		this.setState({
+			username: '',
+			email: '',
+			password: '',
+			confirm: ''
+		})
+		const form=document.getElementsByClassName('login-group');
+		form[0].reset()
+	}
 	onUserChange=(event)=>{
 		this.setState({username: event.target.value})
 	}
 	onPasswordChange=(event)=>{
 		this.setState({password: event.target.value})
 	}
+	onEmailChange=(event)=>{
+		this.setState({email: event.target.value})
+	}
+	onPasswordConfirm=(event)=>{
+		this.setState({confirm: event.target.value})
+	}
 	sendSignupRequest=()=>{
-		this.props.registerUser(this.state.username, this.state.password)
+		const {username,password,email,confirm}= this.state
+		if(password===confirm && password!==""){
+			this.props.registerUser(username, password,email)
+		}
+		if(this.props.message==="Your account has been created"){
+			this.props.onPageChange('login')
+		}
+		this.reset()
 	}
 
 	render(){
@@ -40,21 +64,22 @@ class Register extends React.Component{
 					<div id="login-form" className="text-left">
 						<div className="login-form-main-message"></div>
 						<div className="main-login-form">
-							<div className="login-group">
+							<form className="login-group">
 								<div className="form-group">
-									<input type="text" className="form-control" id="lg_username" name="lg_username" placeholder="username" onChange={this.onUserChange}/>
+									<input type="text" required className="form-control" id="lg_username" name="lg_username" placeholder="username" onChange={this.onUserChange}/>
 								</div>
 								<div className="form-group">
-									<input type="email" className="form-control" id="lg_username" name="lg_username" placeholder="email@email.com"/>
+									<input type="email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$" className="form-control" id="lg_email" name="lg_email" placeholder="email@email.com" onChange={this.onEmailChange}/>
 								</div>
 								<div className="form-group">
-									<input type="password" className="form-control" id="lg_password" name="lg_password" placeholder="password" onChange={this.onPasswordChange}/>
+									<input type="password" required className="form-control" id="lg_password" name="lg_password" placeholder="password" onChange={this.onPasswordChange}/>
 								</div>
 								<div className="form-group">
-									<input type="password" className="form-control" id="lg_username" name="lg_username" placeholder="confirm password"/>
+									<input type="password" required className="form-control" id="lg_confirm" name="lg_confirm" placeholder="confirm password" onChange={this.onPasswordConfirm}/>
 								</div>
-							</div>
-							<button type="submit" className="login-button p-0 text-top" onClick={this.sendSignupRequest}><span className="p-absolute span">></span></button>
+								<button type="button" className="login-button p-0 text-top" onClick={this.sendSignupRequest}><span className="p-absolute span">></span></button>
+							</form>
+							
 						</div>
 					</div>
 				</div>

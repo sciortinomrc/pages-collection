@@ -5,6 +5,7 @@ import { setSearchfield, setCountryFilter, setCategoryFilter, setFilters } from 
 import './Style/Scroller.css';
 const mapStateToProps=state=>{
 	return{
+		userFavourites: state.onLogin.loggedUser,
 		searchField: state.addFilter.searchField,
 		countryFilter: state.addFilter.countryFilter,
 		categoryFilter: state.addFilter.categoryFilter,
@@ -96,7 +97,6 @@ dropdown=(event)=>{
 		search.value=""
 	}
 	render(){
-
 		const {cards,database}=this.props;
 		return(
 			<div id="display-pages">
@@ -115,13 +115,14 @@ dropdown=(event)=>{
 			  	{
 				window.addEventListener('click', this.dropdown)
 				}
-				<hr />
+				<hr className="mt-2 mb-5"/>
 				<PagesList
 					cards={cards}
 					database={database}
 					countryFilter={this.props.countryFilter}
 					categoryFilter={this.props.categoryFilter}
 					previousFilters={this.props.filters}
+					userFavourites={this.props.userFavourites.fav}
 				/>
 			</div>
 			)

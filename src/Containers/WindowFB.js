@@ -26,7 +26,7 @@ class WindowFB extends Component{
         appId: '899425356926402',
         appSecret: 'bd3418470ead59bf077838b510f19d64',
         cookie: true,
-        version: 'v3.1'
+        version: 'v3.2'
       });
     };
 
