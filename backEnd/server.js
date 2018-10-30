@@ -18,28 +18,32 @@ app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
 // app
-// const ACCESS_TOKEN='EAAMyBcjmzcIBANXIEZCvuWKXI5OMwckVtzlX6B6YlxPUommBxEvmvB5OERvMrtBuJ2k2cJxtxAYZC8W7utdAz91GgnG9XDxlA4dfYkcl13hFnw3BfySx3sTbHpQSSePQQe5aOk94jwl7X9AsqcBDishf13B9UZD';
+const ACCESS_TOKEN='EAAMyBcjmzcIBANXIEZCvuWKXI5OMwckVtzlX6B6YlxPUommBxEvmvB5OERvMrtBuJ2k2cJxtxAYZC8W7utdAz91GgnG9XDxlA4dfYkcl13hFnw3BfySx3sTbHpQSSePQQe5aOk94jwl7X9AsqcBDishf13B9UZD';
 //test
-const ACCESS_TOKEN='EAAHA0tNTMtsBAJwiixLbnjgftZBI9QcBxRvyDtisxlhODQZCxHAbsrWKl8YHAsmtjsh9zTjvgO1c3qJEaAR0KnfmTGg23hvmNFqW6eTZBxqgK8IdDfQXGDpt7SscXBkvHh3ujjatLIEpqNghYwC3SZBJSMUIbkO9JVQEgoZA2B8abo1sEz03jW1VoBs8RG8Tba99GZAXjdKwZDZD';
+// const ACCESS_TOKEN='EAAHA0tNTMtsBAJwiixLbnjgftZBI9QcBxRvyDtisxlhODQZCxHAbsrWKl8YHAsmtjsh9zTjvgO1c3qJEaAR0KnfmTGg23hvmNFqW6eTZBxqgK8IdDfQXGDpt7SscXBkvHh3ujjatLIEpqNghYwC3SZBJSMUIbkO9JVQEgoZA2B8abo1sEz03jW1VoBs8RG8Tba99GZAXjdKwZDZD';
 const cards=[];
-
+const batch=[];
 knex.select('id').from('database')
 .then(response=>response.map(record=>{
-	apiCall(record);
+	console.log(record)
+	batch.push({method: 'get', relative_url: record+'?fields=id,name,fan_count,link,picture'})
 }))
+FB.setAccessToken(ACCESS_TOKEN);
+
+FB.api('','post',{
+	batch:batch},(response)=>{
+		response.map(page=>{
+			cards.push(JSON.parse(page.body))
+		})
+	}
+)
 
 const apiCall=(record)=>{
-	FB.api('/'+record.id,'get',{access_token:ACCESS_TOKEN, fields:'id,email'},(response)=>{
-		if(response.error){
-			console.log(response.error.message)
-			FB.api('/'+record.id,'get',{access_token:ACCESS_TOKEN, fields:'id,name, fan_count, link, picture'},(response)=>{
-				if(!response.error){
-					cards.push(response)
-				}
-				else return "Error - Something went wrong with this ID"
-			})
+	FB.api('/'+record.id,'get',{access_token:ACCESS_TOKEN, fields:'id,name, fan_count, link, picture'},(response)=>{
+		if(!response.error){
+			cards.push(response)
 		}
-		else return "Error - The ID you are trying to send is not a Facebook page"
+		else return "Error - Something went wrong with this ID"
 	})
 }
 
@@ -58,21 +62,23 @@ app.post('/newpage',(req,res)=>{
 			res.status(400).send("The page already exists")
 		}
 		else{
-			const addOk=apiCall({id});
-			if(addOk){
-				res.send({undefined,undefined,addOk})
-			} 
-			else{
-				knex('database').returning('*').insert({id: id, category: category, country: country, favourite:0})
-				.then(response=>{
-					knex.select('*').from('database')
-					.then(db=>{
-						setTimeout(()=>{
-							res.send({db,cards,message:"Your page has been added to our database"})
-						},500)
+			FB.api('/'+id,'get',{access_token:ACCESS_TOKEN, fields:'id,email'},(response)=>{
+				if(!response.error){
+					res.send({db: undefined,cards: undefined,message: 'Error - The ID you are trying to send is not a Facebook page'})
+				}
+				else{
+					apiCall({id});
+					knex('database').returning('*').insert({id: id, category: category, country: country, favourite:0})
+					.then(response=>{
+						knex.select('*').from('database')
+						.then(db=>{
+							setTimeout(()=>{
+								res.send({db,cards,message:"Your page has been added to our database"})
+							},500)
+						})
 					})
-				})
-			}
+				}
+			})
 		}	
 	})
 })
@@ -169,4 +175,4 @@ app.post('/updatefavs',(req,res)=>{
 
 
 
-app.listen(3001, ()=>{console.log('listening on 3001')})
+app.listen(process.env.PORT || 3001 , ()=>{console.log(`listening on ${process.env.PORT`)})
