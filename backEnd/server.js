@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser= require ('body-parser');
+const FB=require('fb');
 const bcrypt= require('bcrypt-nodejs');
 const cors= require('cors');
 const knex=require('knex')({
@@ -11,27 +12,69 @@ const knex=require('knex')({
     database : 'fbpages'
   }
 });
-
 const app=express();
 app.use(cors());
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
+// app
+// const ACCESS_TOKEN='EAAMyBcjmzcIBANXIEZCvuWKXI5OMwckVtzlX6B6YlxPUommBxEvmvB5OERvMrtBuJ2k2cJxtxAYZC8W7utdAz91GgnG9XDxlA4dfYkcl13hFnw3BfySx3sTbHpQSSePQQe5aOk94jwl7X9AsqcBDishf13B9UZD';
+//test
+const ACCESS_TOKEN='EAAHA0tNTMtsBAJwiixLbnjgftZBI9QcBxRvyDtisxlhODQZCxHAbsrWKl8YHAsmtjsh9zTjvgO1c3qJEaAR0KnfmTGg23hvmNFqW6eTZBxqgK8IdDfQXGDpt7SscXBkvHh3ujjatLIEpqNghYwC3SZBJSMUIbkO9JVQEgoZA2B8abo1sEz03jW1VoBs8RG8Tba99GZAXjdKwZDZD';
+const cards=[];
+
+knex.select('id').from('database')
+.then(response=>response.map(record=>{
+	apiCall(record);
+}))
+
+const apiCall=(record)=>{
+	FB.api('/'+record.id,'get',{access_token:ACCESS_TOKEN, fields:'id,email'},(response)=>{
+		if(response.error){
+			console.log(response.error.message)
+			FB.api('/'+record.id,'get',{access_token:ACCESS_TOKEN, fields:'id,name, fan_count, link, picture'},(response)=>{
+				if(!response.error){
+					cards.push(response)
+				}
+				else return "Error - Something went wrong with this ID"
+			})
+		}
+		else return "Error - The ID you are trying to send is not a Facebook page"
+	})
+}
+
+
 //get pages DB
 app.get('/', (req,res)=>{
 	knex.select('*').from('database')
-	.then(data=>res.send(data))
+	.then(db=>res.send({db,cards}))
 })
 //update pages DB
 app.post('/newpage',(req,res)=>{
 	const {id, category, country} = req.body;
-	if(knex('database').where({id: id}).length){
-		res.status(400).send("The page already exists")
-	}
-	else{
-		knex('database').returning('*').insert({id: id, category: category, country: country, favourite:0})
-		.then(response=>res.send(response[0]))
-	}
+	knex('database').where({id: id})
+	.then(response=>{
+		if(response.length){
+			res.status(400).send("The page already exists")
+		}
+		else{
+			const addOk=apiCall({id});
+			if(addOk){
+				res.send({undefined,undefined,addOk})
+			} 
+			else{
+				knex('database').returning('*').insert({id: id, category: category, country: country, favourite:0})
+				.then(response=>{
+					knex.select('*').from('database')
+					.then(db=>{
+						setTimeout(()=>{
+							res.send({db,cards,message:"Your page has been added to our database"})
+						},500)
+					})
+				})
+			}
+		}	
+	})
 })
 
 app.post('/login',(req,res)=>{

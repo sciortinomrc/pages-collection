@@ -26,7 +26,7 @@ const mapStateToProps= state=>{
 const mapDispatchToProps = (dispatch) =>{
   return{
    setDB: (database)=> dispatch(setPagesDatabase(database)),
-   onApiCall: (url) => dispatch(getPageFromAPI(url)),
+   onApiCall: (cards) => dispatch(getPageFromAPI(cards)),
    getAccessToken: ()=> dispatch(getAccessToken()),
    onPageChange: (page,category)=>dispatch(changePage(page,category)),
    onWindowResize: (size)=>dispatch(windowResize(size))
@@ -40,29 +40,19 @@ constructor(){
   })
 }
 componentWillMount(){
-  fetch('http://localhost:3001/')
-  .then(resp=>resp.json())
-  .then(data=>this.props.setDB(data))
+ 
 }
 componentDidMount(){ 
-    //load accessToken    
-     this.props.getAccessToken();
-      //delayed api call and cards load + set message
-      setTimeout(()=>{
-        this.props.database.map(record=>{
-        this.props.onApiCall(record)
-        return record
-        })
-      },50)
-      
+  fetch('http://localhost:3001/')
+  .then(resp=>resp.json())
+  .then(data=>{
+      this.props.setDB(data.db)
+      this.props.onApiCall(data.cards)
+})
 //resize event listener
   window.addEventListener('resize',()=>{
       this.props.onWindowResize([window.innerWidth, window.innerHeight])
     })
-  }
-//add new Page
-  addPage=(obj)=>{
-      this.props.onApiCall(obj);
   }
 //select category
 //display single card
@@ -100,8 +90,8 @@ componentDidMount(){
   returnSwitch=()=>{
     const {open, accessToken, cards, database, onPageChange, readStateMessage, user, category} = this.props;
       switch(open){
-          case 'home':  return ( <Home category='categories' at={accessToken} cards={cards} db={database} user={user} onPageChange={onPageChange}/>);
-          case 'add': return( <Add addPage={this.addPage} readMessage={readStateMessage}/>)
+          case 'home':  return ( <Home category='categories' cards={cards} db={database} user={user} onPageChange={onPageChange}/>);
+          case 'add': return( <Add readMessage={readStateMessage}/>)
           case 'login': return (<Login />)
           case 'register': return (<Register />)
           case 'display': return ( <DisplayPages category={category} cards={cards} database={database}/> )

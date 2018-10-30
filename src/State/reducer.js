@@ -16,7 +16,7 @@ import {REQUEST_PAGE_SUCCESS, SET_DATABASE,
 		switch(action.type){
 			case REQUEST_PAGE_SUCCESS:
 				return {
-					 	 cards: [...state.cards, action.payload],
+					 	 cards: action.payload,
 						 message: PAGE_ADDED,
 						} 
 			case REQUEST_PAGE_FAILED:
@@ -81,7 +81,7 @@ import {REQUEST_PAGE_SUCCESS, SET_DATABASE,
 			case ADD_PAGE_FAILED:
 				return {...state, message:action.payload}
 			case ADD_PAGE_SUCCESS:
-				return { database:action.payload, message:'Your page has been added to our database'}
+				return { database:action.payload.db, message:action.payload.message}
 			case UPDATE_FAVOURITES:{
 				return{
 					message: '',

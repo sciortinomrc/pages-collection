@@ -14,7 +14,7 @@ const mapStateToProps=state=>{
 }
 const mapDispatchToProps=dispatch=>{
 	return{
-		addNewPage: (id,category,country,message)=> dispatch(newPage(id,category,country,message))
+		addNewPage: (db, cards, message)=> dispatch(newPage(db,cards,message))
 	}
 }
 
@@ -23,7 +23,7 @@ constructor(props){
 	super(props)
 	this.state={
 		country: '', 
-		pageId: '',
+		id: '',
 		category: ''
 	}
 }
@@ -35,26 +35,27 @@ deliverMessage=()=>{
 onInputsChange=(event)=>{
 
 	(event.target.id==="id")
-	? this.setState({pageId: event.target.value})
+	? this.setState({id: event.target.value})
 	: this.setState({category: event.target.value.toLowerCase()})
 }
 
 stateCheck=(f)=>{
-	console.log(this.state)
 	document.getElementById('id').value="";
 	document.getElementById('category').value="";
-	const {pageId, category, country}=this.state;
-	if(pageId.length && category.length && country.length){
-			f({id: pageId, category: category, country: country})
-			setTimeout(()=>{
-				if(this.props.apiMessage===PAGE_ADDED){
-					this.props.addNewPage(pageId,category,country,this.props.apiMessage);
-				}
-				else this.props.addNewPage(undefined,undefined,undefined,this.props.apiMessage)
-			},1100)
-	}else{this.props.addNewPage(undefined,undefined,undefined,'You need to complete the form.')
+	const {id, category, country}=this.state;
+	if(id.length && category.length && country.length){
+		fetch('http://localhost:3001/newpage',{
+			method: 'post',
+			headers:{ "Content-Type":"application/json"},
+			body: JSON.stringify({id,category,country})
+		})
+		.then(response=>response.json())
+		.then(data=>{
+			this.props.addNewPage(data.db, data.cards, data.message)
+		})
+	}else{this.props.addNewPage(undefined,undefined,'You need to complete the form.')
 	}
-	this.setState({country: '', pageId: '', category: ''})
+	this.setState({country: '', id: '', category: ''})
 }
 
 	selectCountry (val) {
@@ -100,7 +101,7 @@ return(
 				          onChange={(val) => this.selectCountry(val)} />
 					</div>
 					<div className="h-auto w-15">
-						<input type="button" className="h-100 w-100 btn btn-primary" value="Add" onClick={()=>this.stateCheck(this.props.addPage)}/>
+						<input type="button" className="h-100 w-100 btn btn-primary" value="Add" onClick={this.stateCheck}/>
 					</div>
 				</div>
 					<p className="mt-2">{this.props.message}</p>

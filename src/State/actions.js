@@ -7,31 +7,17 @@ import {REQUEST_PAGE_SUCCESS, SET_DATABASE,
 		LOGOUT, REGISTER, REGISTER_FAILED, UPDATE_FAVOURITES,
 		UPDATE_USERS_FAVOURITES} from './constants';
 
-export const setPagesDatabase=(database)=>dispatch=>{
-	fetch('http://localhost:3001/')
-	.then(response=>response.json())
-	.then(data=>dispatch({type: SET_DATABASE, payload: data}))
-}
+export const setPagesDatabase=(database)=>({
+	type: SET_DATABASE, payload: database
+})
 
 export const getAccessToken = (at) =>({
   type: GET_ACCESS_SUCCESS, payload: ACCESS_TOKEN
 })
-export const getPageFromAPI = (record) => dispatch => {
-	let payload;
-	window.FB.api('/'+record.id,'get',{access_token:ACCESS_TOKEN, fields:'id,email'},(response)=>{
-		if(response.error){
-			window.FB.api('/'+record.id,'get',{access_token:ACCESS_TOKEN, fields:'id,name, fan_count, link, picture'},(response)=>{
-				if(response.error){
-					dispatch({type: REQUEST_PAGE_FAILED, payload: response.error.message})							
-				}
-				else{
-					dispatch({type: REQUEST_PAGE_SUCCESS, payload: response})
-				}
-			})
-		}
-		else dispatch({type: REQUEST_PAGE_FAILED, payload: 'The request you have sent is not valid. Try a different Page ID'})
-	})
-}
+export const getPageFromAPI=(cards)=>({
+	type: REQUEST_PAGE_SUCCESS,
+	payload: cards
+})
 
 export const windowResize = (windowSize) => ({type: WINDOW_RESIZE, payload: windowSize})
 export const changePage = (page,chosen_category="")=> {
@@ -47,30 +33,22 @@ export const changePage = (page,chosen_category="")=> {
 			}
 		}
 }
-export const newPage=(id,category,country,message)=>dispatch=>{
-	if(id){
-
-		fetch('http://localhost:3001/newpage', {
-			method: 'post',
-			headers: {'Content-Type': 'application/json'},
-			body: JSON.stringify({
-				id, category, country, favourite:0
-			})
+export const newPage=(db,cards,message)=>dispatch=>{
+	if(db)
+	{
+		dispatch({
+			type: REQUEST_PAGE_SUCCESS,
+			payload: cards
 		})
-		.then(response=>{if(response.status!==200)throw new Error("Ops... Something went wrong - Try again please"); return response.json()})
-		.then(data=>{
-			dispatch({
-				type:ADD_PAGE_SUCCESS, payload: data.pagesDatabase
-			})
+		dispatch({
+			type: ADD_PAGE_SUCCESS,
+			payload: {db, message}
 		})
-		.catch(err=>
-			dispatch({
-			type: ADD_PAGE_FAILED, payload: err
-		}))
 	}
 	else{
 		dispatch({
-			type: ADD_PAGE_FAILED, payload: 'The request you have sent is not valid. Try a different Page ID'
+			type: ADD_PAGE_FAILED,
+			payload: message
 		})
 	}
 }
