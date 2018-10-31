@@ -58,6 +58,7 @@
 }
 
 #hidden{
+	position:absolute;
 	background-color: #4267b2;
 	opacity: 0.6;
 }
