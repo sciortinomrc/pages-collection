@@ -170,7 +170,6 @@ componentDidMount(){
 			  		<input id="search" type="search" className=" btn mb-0 rounded-right search text-center" placeholder="Search..." onChange={this.searchPage} />
 			  		<div id="hidden" className="d-none p-absolute set-width">
 			  			{	
-
 			  				this.state.cards.map(card=>{
 			  				if(limit>4) return undefined;
 			  				limit ++;
