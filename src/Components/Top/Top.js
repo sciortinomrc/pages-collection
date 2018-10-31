@@ -30,6 +30,7 @@ class Top extends Component {
 //addEventListener
 componentDidMount(){
 	document.addEventListener('click',(event)=>{
+		console.log('listener1', event.target)
 		if(document.getElementById("dropdown-div")){
 			const dropdownDiv=document.getElementById("dropdown-div");
 			const element=event.target;
@@ -38,6 +39,12 @@ componentDidMount(){
 				dropdownDiv.classList.add('d-none')
 		}
 	})
+	document.addEventListener('click',(eventClick)=>{
+			console.log('listener2', eventClick.target)
+			if(eventClick.target.id!=='hidden' || eventClick.target.parentNode.id!== 'hidden'){
+				this.resetState()
+			}
+		})
 }
 
 //open dropdown menu
@@ -55,11 +62,6 @@ componentDidMount(){
 //searchPage
 	searchPage=(event)=>{
 		const hidden= document.getElementById('hidden');
-		window.addEventListener('click',(eventClick)=>{
-			if(eventClick.target.id!=='hidden' || event.target.parentNode.id!== 'hidden'){
-				this.resetState()
-			}
-		})
 		this.setState({search: event.target.value},()=>{
 				!this.state.search.length?
 					hidden.classList.add('d-none') :
@@ -166,7 +168,7 @@ componentDidMount(){
 		if(size[0]<1000){
 			return (
 			<div className=" dropdown d-flex col pt-3 p-0 justify-content-end navbar-light" >
-				<div onBlur={this.resetState}>
+				<div className="p-0 m-0 set-height ">
 			  		<input id="search" type="search" className=" btn mb-0 rounded-right search text-center" placeholder="Search..." onChange={this.searchPage} />
 			  		<div id="hidden" className="d-none p-absolute set-width">
 			  			{	
