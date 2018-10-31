@@ -116,14 +116,26 @@ dropdown=(event)=>{
 				window.addEventListener('click', this.dropdown)
 				}
 				<hr className="mt-2 mb-5"/>
-				<PagesList
-					cards={cards}
-					database={database}
-					countryFilter={this.props.countryFilter}
-					categoryFilter={this.props.categoryFilter}
-					previousFilters={this.props.filters}
-					userFavourites={this.props.userFavourites.fav}
-				/>
+				{
+					this.props.userFavourites===undefined?
+						(
+						<PagesList
+							cards={cards}
+							database={database}
+							countryFilter={this.props.countryFilter}
+							categoryFilter={this.props.categoryFilter}
+							previousFilters={this.props.filters}
+							userFavourites={[]}
+						/>):(
+						<PagesList
+							cards={cards}
+							database={database}
+							countryFilter={this.props.countryFilter}
+							categoryFilter={this.props.categoryFilter}
+							previousFilters={this.props.filters}
+							userFavourites={this.props.userFavourites.fav}
+						/>)
+				}
 			</div>
 			)
 	}
