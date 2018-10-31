@@ -31,12 +31,16 @@
 			width: 130px!important
 		}
 }
-@media (max-width: 350px ){
+@media (max-width: 360px ){
 		.search{
 			width: 100px!important
 		}
 }
-
+@media (max-width: 320px ){
+		.search{
+			width: 60px!important
+		}
+}
 .btn{
 	border-bottom-right-radius: 0px;
 	border-bottom-left-radius: 0px;

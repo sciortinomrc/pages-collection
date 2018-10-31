@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import ErrorBoundary from '../Components/ErrorBoundary';
 import Top from '../Components/Top/Top'; import Scroller from '../Components/Home/Scroller'; 
 import Bottom from '../Components/Bottom'; import Add from '../Components/Add/Add'; 
 import Home from '../Components/Home/Home'; import Login from '../Components/Form/Login';
@@ -102,8 +103,11 @@ componentDidMount(){
       <div className="App d-block w-100 m-0 p-0">
         <Top />
           <div className="d-flex flex-column pt">
+              
               <Scroller>
+                <ErrorBoundary>
                 {this.returnSwitch()}
+                </ErrorBoundary>
               </Scroller>
               <Bottom height={this.props.size[1]} />
           </div>
