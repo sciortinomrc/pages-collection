@@ -104,11 +104,11 @@ componentDidMount(){
         <Top />
           <div className="d-flex flex-column pt">
               
-              <Scroller>
-                <ErrorBoundary>
+               <ErrorBoundary>  
+                <Scroller>
                 {this.returnSwitch()}
-                </ErrorBoundary>
-              </Scroller>
+                </Scroller>
+               </ErrorBoundary>
               <Bottom height={this.props.size[1]} />
           </div>
       </div>

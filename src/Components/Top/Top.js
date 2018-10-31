@@ -39,7 +39,7 @@ componentDidMount(){
 		}
 	})
 	document.addEventListener('click',(eventClick)=>{
-			if(eventClick.target.id!=='searchSuggestion' || event.target.parentNode.id!== 'searchSuggestion'){
+			if(eventClick.target.id!=='searchSuggestion' || eventClick.target.parentNode.id!== 'searchSuggestion'){
 				this.resetState()
 			}
 		})
