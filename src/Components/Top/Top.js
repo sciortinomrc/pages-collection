@@ -38,6 +38,11 @@ componentDidMount(){
 				dropdownDiv.classList.add('d-none')
 		}
 	})
+	document.addEventListener('click',(eventClick)=>{
+			if(eventClick.target.id!=='searchSuggestion' || event.target.parentNode.id!== 'searchSuggestion'){
+				this.resetState()
+			}
+		})
 }
 
 //open dropdown menu
@@ -55,11 +60,7 @@ componentDidMount(){
 //searchPage
 	searchPage=(event)=>{
 		const hidden= document.getElementById('hidden');
-		window.addEventListener('click',(eventClick)=>{
-			if(eventClick.target.id!=='searchSuggestion' || event.target.parentNode.id!== 'searchSuggestion'){
-				this.resetState()
-			}
-		})
+		
 		this.setState({search: event.target.value},()=>{
 				!this.state.search.length?
 					hidden.classList.add('d-none') :
