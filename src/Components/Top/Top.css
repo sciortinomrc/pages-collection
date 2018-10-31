@@ -96,6 +96,7 @@
 
 #dropdown-div{
 	background-color: #f3f3f3;
+	z-index: 99;
 }
 
 .position-absolute{
