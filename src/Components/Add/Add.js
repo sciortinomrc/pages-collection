@@ -6,6 +6,7 @@ import "./Add.css";
 
 const mapStateToProps=state=>{
 	return{
+		user: state.onLogin.loggedUser,
 		database: state.addNewPage.database,
 		message: state.addNewPage.message,
 		apiMessage: state.fbApiCall.message
@@ -39,6 +40,7 @@ onInputsChange=(event)=>{
 }
 
 stateCheck=(f)=>{
+	const username=this.props.user.id;
 	document.getElementById('id').value="";
 	document.getElementById('category').value="";
 	const {id, category, country}=this.state;
@@ -46,7 +48,7 @@ stateCheck=(f)=>{
 		fetch('https://peaceful-everglades-81846.herokuapp.com/newpage',{
 			method: 'post',
 			headers:{ "Content-Type":"application/json"},
-			body: JSON.stringify({id,category,country})
+			body: JSON.stringify({id,category,country,username})
 		})
 		.then(response=>response.json())
 		.then(data=>{
