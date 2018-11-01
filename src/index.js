@@ -11,6 +11,7 @@ import {
 import thunkMiddleware from 'redux-thunk';
 import ReactDOM from 'react-dom';
 import './index.css';
+import './Components/ErrorBoundary'
 import App from './Containers/App';
 import registerServiceWorker from './registerServiceWorker';
 
@@ -22,6 +23,8 @@ const store=createStore(rootReducer,applyMiddleware(thunkMiddleware)); /*logger*
 
 ReactDOM.render(
 	<Provider store={store}>
-		<App />
+		<ErrorBoundary>
+			<App />
+		</ErrorBoundary>
 	</Provider>, document.getElementById('root'));
 registerServiceWorker();
