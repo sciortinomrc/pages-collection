@@ -3,6 +3,7 @@ import PagesList from './PagesList';
 import {connect} from 'react-redux';
 import { setSearchfield, setCountryFilter, setCategoryFilter, setFilters } from '../../State/actions';
 import './Style/Scroller.css';
+import ErrorBoundary from '../ErrorBoundary';
 const mapStateToProps=state=>{
 	return{
 		userFavourites: state.onLogin.loggedUser,
@@ -119,6 +120,7 @@ dropdown=(event)=>{
 				{
 					this.props.userFavourites===undefined?
 						(
+						<ErrorBoundary>
 						<PagesList
 							cards={cards}
 							database={database}
@@ -126,15 +128,17 @@ dropdown=(event)=>{
 							categoryFilter={this.props.categoryFilter}
 							previousFilters={this.props.filters}
 							userFavourites={[]}
-						/>):(
-						<PagesList
+						/>
+						</ErrorBoundary>):(
+						<ErrorBoundary><PagesList
 							cards={cards}
 							database={database}
 							countryFilter={this.props.countryFilter}
 							categoryFilter={this.props.categoryFilter}
 							previousFilters={this.props.filters}
 							userFavourites={this.props.userFavourites.fav}
-						/>)
+						/>
+						</ErrorBoundary>)
 				}
 			</div>
 			)
