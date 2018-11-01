@@ -11,7 +11,7 @@ import {
 import thunkMiddleware from 'redux-thunk';
 import ReactDOM from 'react-dom';
 import './index.css';
-import './Components/ErrorBoundary'
+import ErrorBoundary from './Components/ErrorBoundary';
 import App from './Containers/App';
 import registerServiceWorker from './registerServiceWorker';
 
