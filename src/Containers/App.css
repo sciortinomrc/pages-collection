@@ -28,3 +28,10 @@ body,html{
 
 }
 
+.icon-spin5{
+	font-size: 100px;
+	opacity: .2;
+}
+#loading{
+	padding-top: 10%;
+}

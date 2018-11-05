@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ErrorBoundary from '../Components/ErrorBoundary';
+import '../css/fontello.css';
+import '../css/animation.css';
 import Top from '../Components/Top/Top'; import Scroller from '../Components/Home/Scroller'; 
 import Bottom from '../Components/Bottom'; import Add from '../Components/Add/Add'; 
 import Home from '../Components/Home/Home'; import Login from '../Components/Form/Login';
@@ -35,9 +37,6 @@ constructor(){
   this.state=({
     test: {}
   })
-}
-componentWillMount(){
- 
 }
 componentDidMount(){ 
   fetch('https://peaceful-everglades-81846.herokuapp.com/')
@@ -103,12 +102,19 @@ componentDidMount(){
       <div className="App d-block w-100 m-0 p-0">
         <Top />
           <div className="d-flex flex-column pt">
-              
-               <ErrorBoundary>  
-                <Scroller>
-                {this.returnSwitch()}
-                </Scroller>
-               </ErrorBoundary>
+            {
+            //   this.props.database.length?
+            //   (
+            //    <ErrorBoundary>  
+            //     <Scroller>
+            //     {this.returnSwitch()}
+            //     </Scroller>
+            //    </ErrorBoundary>
+            //     ):
+              <div id="loading" className="display-flex full-screen">
+                <i className="fab icon-spin5 animate-spin margin-auto"></i>
+              </div>
+            }  
               <Bottom height={this.props.size[1]} />
           </div>
       </div>
