@@ -103,17 +103,18 @@ componentDidMount(){
         <Top />
           <div className="d-flex flex-column pt">
             {
-            //   this.props.database.length?
-            //   (
-            //    <ErrorBoundary>  
-            //     <Scroller>
-            //     {this.returnSwitch()}
-            //     </Scroller>
-            //    </ErrorBoundary>
-            //     ):
-              <div id="loading" className="display-flex full-screen">
+              this.props.database.length?
+              (
+               <ErrorBoundary>  
+                <Scroller>
+                {this.returnSwitch()}
+                </Scroller>
+               </ErrorBoundary>
+                ):
+              (<div id="loading" className="display-flex full-screen">
                 <i className="fab icon-spin5 animate-spin margin-auto"></i>
-              </div>
+                <h1>Getting data from Facebook</h1>
+              </div>)
             }  
               <Bottom height={this.props.size[1]} />
           </div>
