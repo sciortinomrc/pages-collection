@@ -72,7 +72,7 @@ componentDidMount(){
     })
   if(window.FB){
       window.FB.getLoginStatus(function(response) {
-          statusChangeCallback(response);
+          console.log(response);
       });
   }
 }
