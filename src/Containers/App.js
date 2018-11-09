@@ -38,18 +38,44 @@ constructor(){
     test: {}
   })
 }
+componentWillMount(){
+  window.fbAsyncInit = function() {
+    window.FB.init({
+      appId      : '899425356926402',
+      cookie     : true,
+      xfbml      : true,
+      version    : 'v3.2'
+    });
+      
+    window.FB.AppEvents.logPageView();   
+      
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "https://connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+}
 componentDidMount(){ 
   fetch('https://peaceful-everglades-81846.herokuapp.com/')
   .then(resp=>resp.json())
   .then(data=>{
       this.props.setDB(data.db)
       this.props.onApiCall(data.cards)
-})
+  })
 //resize event listener
   window.addEventListener('resize',()=>{
       this.props.onWindowResize([window.innerWidth, window.innerHeight])
     })
+  if(window.FB){
+      window.FB.getLoginStatus(function(response) {
+          statusChangeCallback(response);
+      });
   }
+}
 //select category
 //display single card
   displayReceivedCard=()=>{
