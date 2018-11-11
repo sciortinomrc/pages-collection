@@ -40,7 +40,7 @@ constructor(){
   })
 }
 componentWillMount(){
-const APPID="493486697820891";
+const APPID="899425356926402";
   window.fbAsyncInit = function() {
     window.FB.init({
       appId      : APPID,
