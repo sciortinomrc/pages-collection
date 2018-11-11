@@ -74,7 +74,6 @@ export const setFilters=(categoryFilters,countryFilters)=>({
 })
 
 export const setLoginState=(userId="")=>(dispatch)=>{
-	console.log({userId})
 	if(userId==="") dispatch({ type: LOGOUT, payload: 'Logged out'})
 	else{
 		if(userId==="failed"){
