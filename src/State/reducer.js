@@ -4,7 +4,7 @@ import {REQUEST_PAGE_SUCCESS, SET_DATABASE,
 		ADD_PAGE_FAILED, ADD_PAGE_SUCCESS, DISPLAY_CARD,
 		SET_SEARCH_FIELD, SET_COUNTRY_FILTER, SET_CATEGORY_FILTER,
 		FILTERS, LOGIN_SUCCESS, LOGIN_PENDING, LOGIN_FAILED,
-		LOGOUT, REGISTER, REGISTER_FAILED,  UPDATE_FAVOURITES, UPDATE_USERS_FAVOURITES
+		LOGOUT,  UPDATE_FAVOURITES, UPDATE_USERS_FAVOURITES
 	} from './constants';
 
 //api call reducer
@@ -151,21 +151,5 @@ export const addFilter=(state=initialFilterState, action={})=>{
 			default: return state
 		}
 	}
-//signup new account
-	const initialSignupState={
-		message: ''
-	}
-	export const signUp=(state=initialSignupState, action={})=>{
-		switch(action.type){
-			case REGISTER:
-				return{
-					message: action.payload
-				}
-			case REGISTER_FAILED:
-				return{
-					message: action.payload
-				}
-			default: return state
-		}
-	}
+
  

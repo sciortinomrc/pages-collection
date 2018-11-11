@@ -6,7 +6,6 @@ import {
 	onLogin, fbApiCall, onWindowResize, 
 	onPageChange, addNewPage,
 	displaySingleCard, addFilter,
-	signUp
 } from './State/reducer.js';
 import thunkMiddleware from 'redux-thunk';
 import ReactDOM from 'react-dom';
@@ -18,7 +17,7 @@ import registerServiceWorker from './registerServiceWorker';
 // const logger=createLogger();
 const rootReducer=combineReducers({
 	onLogin, fbApiCall, onWindowResize, onPageChange, addNewPage,
-	displaySingleCard, addFilter, signUp})
+	displaySingleCard, addFilter})
 const store=createStore(rootReducer,applyMiddleware(thunkMiddleware)); /*logger*/
 
 ReactDOM.render(

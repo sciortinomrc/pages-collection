@@ -4,7 +4,7 @@ import {REQUEST_PAGE_SUCCESS, SET_DATABASE,
 		ADD_PAGE_SUCCESS, DISPLAY_CARD,
 		SET_SEARCH_FIELD, SET_COUNTRY_FILTER, SET_CATEGORY_FILTER,
 		FILTERS, LOGIN_SUCCESS, LOGIN_FAILED, LOGIN_PENDING,
-		LOGOUT, REGISTER, REGISTER_FAILED, UPDATE_FAVOURITES,
+		LOGOUT, UPDATE_FAVOURITES,
 		UPDATE_USERS_FAVOURITES} from './constants';
 
 export const setPagesDatabase=(database)=>({
@@ -73,35 +73,27 @@ export const setFilters=(categoryFilters,countryFilters)=>({
 	payload: {categoryFilters,countryFilters}
 })
 
-export const setLoginState=(user="",password="")=>(dispatch)=>{
-	if(user==="") dispatch({ type: LOGOUT, payload: 'Logged out'})
+export const setLoginState=(userId="")=>(dispatch)=>{
+	console.log({userId})
+	if(userId==="") dispatch({ type: LOGOUT, payload: 'Logged out'})
 	else{
-		dispatch({type: LOGIN_PENDING, payload: true})
-		fetch('https://peaceful-everglades-81846.herokuapp.com/login', {
+		if(userId==="failed"){
+			dispatch({type:LOGIN_FAILED, payload:'Unable to Login"'})
+		}
+		else{
+			fetch('https://peaceful-everglades-81846.herokuapp.com/login', {
 			method: 'post',
 			headers: {'Content-Type':'application/json'},
-			body: JSON.stringify({ user,password})
-		})
-		.then(response=>{if(response.status!==200){throw new Error("Bad request")} return response.json()})
-		.then(data=>{
-			dispatch({type:LOGIN_SUCCESS, payload:data})
-		})
-		.catch(error=>dispatch( {type: LOGIN_FAILED, payload: 'Login failed'}))
+			body: JSON.stringify({ userId })
+			})
+			.then(resp=>resp.json())
+			.then(user=>{
+				dispatch({type:LOGIN_SUCCESS, payload:user})
+			})
+		}
 	}
 }
-export const registerUser=(user, password,email)=>dispatch=>{
-	dispatch({type: LOGIN_PENDING, payload: true})
-	fetch('https://peaceful-everglades-81846.herokuapp.com/register', {
-		method: 'post',
-		headers: {'Content-Type':'application/json'},
-		body: JSON.stringify({ user,password,email})
-	})
-	.then(response=>{if(response.status!==200){throw new Error("Bad request")} return response.json()})
-	.then(data=>{
-		dispatch({type: REGISTER, payload: 'Your account has been created'})
-	})
-	.catch(error=>dispatch({type: REGISTER_FAILED, payload: 'Error - Could not create new account'}))
-}
+
 
 export const updateFavourites=(id,user)=>dispatch=>{
 	dispatch({type: LOGIN_PENDING, payload:true})

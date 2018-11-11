@@ -16,21 +16,20 @@ const mapStateToProps=state=>{
 
 const mapDispatchToProps=dispatch=>{
 	return{
-		onLoginChange: (user,password)=> dispatch(setLoginState(user,password)),
+		onLoginChange: (userId)=> dispatch(setLoginState(userId)),
 		onPageChange: (page,category)=>dispatch (changePage(page,category)),
 		onWindowResize: (size)=>dispatch(windowResize (size)),
 		displaySingleCard: (id,name,link,picture,fan_count)=>dispatch( displayCard(id,name,link,picture,fan_count))
 	}
 }
 class Top extends Component {
-	constructor(){
-		super()
+	constructor(props){
+		super(props)
 		this.state=({search: '',cards:[]});
 	}
 //addEventListener
 componentDidMount(){
 	document.addEventListener('click',(event)=>{
-		console.log('listener1', event.target)
 		if(document.getElementById("dropdown-div")){
 			const dropdownDiv=document.getElementById("dropdown-div");
 			const element=event.target;
@@ -40,7 +39,6 @@ componentDidMount(){
 		}
 	})
 	document.addEventListener('click',(eventClick)=>{
-			console.log('listener2', eventClick.target)
 			if(eventClick.target.id!=='hidden' || eventClick.target.parentNode.id!== 'hidden'){
 				this.resetState()
 			}
@@ -82,6 +80,8 @@ componentDidMount(){
 
 //logout
  	logout=()=>{
+ 		window.FB.logout();
+ 		this.props.reset();
  		this.props.onLoginChange();
  		this.props.onPageChange('home')
  	}
@@ -99,8 +99,7 @@ componentDidMount(){
 		}else{
 		 return (
 			<div >
-			<p className="dropdown-item" onClick={()=>onPageChange('login')}>Login</p>
-			<p className="dropdown-item" onClick={()=>onPageChange('register')}>Register</p>
+				<p className="dropdown-item" data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false" onClick={this.props.fblogin}><i className="fab fa-facebook-square"></i> Login</p>
 			</div>
 			)
 		}
@@ -119,8 +118,7 @@ componentDidMount(){
 		}else{
 			return(
 				<div className=" p-0 m-0">
-					<p className=" btn border mb-0 rounded-top" onClick={()=>onPageChange('login')}>Login</p>
-					<p className=" btn border mb-0 rounded-top" onClick={()=>onPageChange('register')}>Register</p>
+				<p className="btn border mb-0 rounded-top" data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false" onClick={this.props.fblogin}><i className="fab fa-facebook-square"></i> Login</p>
 				</div>
 				)
 		}
@@ -143,6 +141,7 @@ componentDidMount(){
 		let limit=0;
 		return(
 			<div className="d-flex col pt-3 p-0 justify-content-end dd">	
+				{this.props.userName?<p className=" btn mb-0 rounded-right text-center">Welcome back, {this.props.userName}</p>:""}
 				<p className=" btn border mb-0 rounded-top " onClick={()=>onPageChange('home')}>Home</p>
 				<p className=" btn border mb-0 rounded-top " onClick={()=>onPageChange('display','all')}>Pages</p> 
 				{this.loggedXL()}
@@ -169,6 +168,7 @@ componentDidMount(){
 			return (
 			<div className=" dropdown d-flex col pt-3 p-0 justify-content-end navbar-light" >
 				<div className="p-0 m-0 set-height ">
+					{this.props.userName?<p className=" btn mb-0 rounded-right text-center">Welcome back, {this.props.userName}</p>:""}
 			  		<input id="search" type="search" className=" btn mb-0 rounded-right search text-center" placeholder="Search..." onChange={this.searchPage} />
 			  		<div id="hidden" className="d-none p-absolute set-width">
 			  			{	

@@ -5,10 +5,10 @@ import '../css/fontello.css';
 import '../css/animation.css';
 import Top from '../Components/Top/Top'; import Scroller from '../Components/Home/Scroller'; 
 import Bottom from '../Components/Bottom'; import Add from '../Components/Add/Add'; 
-import Home from '../Components/Home/Home'; import Login from '../Components/Form/Login';
-import Register from '../Components/Form/Register'; import Card from '../Components/Main/Card'; import DisplayPages from '../Components/Main/DisplayPages';
+import Home from '../Components/Home/Home';import Card from '../Components/Main/Card'; 
+import DisplayPages from '../Components/Main/DisplayPages';
 import './App.css';
-import {getPageFromAPI, windowResize, changePage, setPagesDatabase } from  '../State/actions.js'
+import {getPageFromAPI, windowResize, changePage, setPagesDatabase, setLoginState} from  '../State/actions.js'
 
 const mapStateToProps= state=>{
   return {
@@ -28,20 +28,22 @@ const mapDispatchToProps = (dispatch) =>{
    setDB: (database)=> dispatch(setPagesDatabase(database)),
    onApiCall: (cards) => dispatch(getPageFromAPI(cards)),
    onPageChange: (page,category)=>dispatch(changePage(page,category)),
-   onWindowResize: (size)=>dispatch(windowResize(size))
+   onWindowResize: (size)=>dispatch(windowResize(size)),
+   setLoginState: (userId)=>dispatch(setLoginState(userId))
     }
   }
 class App extends Component {
 constructor(){
   super()
   this.state=({
-    test: {}
+   userName: ''
   })
 }
 componentWillMount(){
+const APPID="493486697820891";
   window.fbAsyncInit = function() {
     window.FB.init({
-      appId      : '899425356926402',
+      appId      : APPID,
       cookie     : true,
       xfbml      : true,
       version    : 'v3.2'
@@ -58,6 +60,14 @@ componentWillMount(){
      js.src = "https://connect.facebook.net/en_US/sdk.js";
      fjs.parentNode.insertBefore(js, fjs);
    }(document, 'script', 'facebook-jssdk'));
+
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = 'https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v3.2&appId=493486697820891&autoLogAppEvents=1';
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
 }
 componentDidMount(){ 
   fetch('https://peaceful-everglades-81846.herokuapp.com/')
@@ -70,13 +80,30 @@ componentDidMount(){
   window.addEventListener('resize',()=>{
       this.props.onWindowResize([window.innerWidth, window.innerHeight])
     })
-  if(window.FB){
-      window.FB.getLoginStatus(function(response) {
-          console.log(response);
-      });
-  }
+  
 }
-//select category
+//facebook login
+ checkLoginState=() => {
+   window.FB.getLoginStatus((response)=>{
+   if(response.status==="connected"){
+      this.props.setLoginState(response.authResponse.userID)
+      window.FB.api("/me",(resp)=>this.setState({userName: resp.name.split(" ")[0]}))
+   }
+   else{
+      window.FB.login((response)=>{
+          console.log(response)
+          if(response.status==="connected"){
+            this.props.setLoginState(response.authResponse.userID)
+            window.FB.api("/me",(resp)=>this.setState({userName: resp.name.split(" ")[0]}))
+         }
+      }, {scope: 'public_profile,email'})
+   }
+  }, {scope: 'public_profile,email'});
+}
+  resetState=()=>{
+    this.setState({userName: ""})
+  }
+
 //display single card
   displayReceivedCard=()=>{
     const {card,database}=this.props;
@@ -84,7 +111,6 @@ componentDidMount(){
      return record && record.id===card.id
 
      })
-    console.log(record)
     return(
           <Card
             id={card.id}
@@ -114,8 +140,6 @@ componentDidMount(){
       switch(open){
           case 'home':  return ( <Home category='categories' cards={cards} db={database} user={user} onPageChange={onPageChange}/>);
           case 'add': return( <Add readMessage={readStateMessage}/>)
-          case 'login': return (<Login />)
-          case 'register': return (<Register />)
           case 'display': return ( <DisplayPages category={category} cards={cards} database={database}/> )
           case 'card': return (<div className="d-flex m-auto justify-content-center">{this.displayReceivedCard()}</div>)
           case 'favourites': return( <DisplayPages category='favourites' cards={cards} database={this.filterFavourites()}/>)
@@ -126,7 +150,7 @@ componentDidMount(){
   render() {
     return(
       <div className="App d-block w-100 m-0 p-0">
-        <Top />
+        <Top fblogin={this.checkLoginState} userName={this.state.userName} reset={this.resetState}/>
           <div className="d-flex flex-column pt">
             {
               this.props.database.length?
