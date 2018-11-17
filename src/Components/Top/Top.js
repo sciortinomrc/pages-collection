@@ -99,7 +99,7 @@ componentDidMount(){
 		}else{
 		 return (
 			<div >
-				<p className="dropdown-item" data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false" onClick={this.props.fblogin}><i className="fab fa-facebook-square"></i> Login</p>
+				<p className="dropdown-item" className="fb-login-button" data-max-rows="1" data-size="large" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></p>
 			</div>
 			)
 		}
@@ -118,7 +118,7 @@ componentDidMount(){
 		}else{
 			return(
 				<div className=" p-0 m-0">
-				<p className="btn border mb-0 rounded-top" data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false" onClick={this.props.fblogin}><i className="fab fa-facebook-square"></i> Login</p>
+				<p className="fb-login-button btn border mb-0 rounded-top" data-max-rows="1" data-size="large" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"</p>
 				</div>
 				)
 		}
