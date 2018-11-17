@@ -118,7 +118,7 @@ componentDidMount(){
 		}else{
 			return(
 				<div className=" p-0 m-0">
-				<p className="fb-login-button btn border mb-0 rounded-top" data-max-rows="1" data-size="large" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"</p>
+				<p className="fb-login-button btn border mb-0 rounded-top" data-max-rows="1" data-size="large" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></p>
 				</div>
 				)
 		}
