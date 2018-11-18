@@ -39,6 +39,9 @@ constructor(){
    userName: ''
   })
 }
+
+
+
 componentWillMount(){
 const APPID="899425356926402";
   window.fbAsyncInit = function() {
@@ -50,24 +53,17 @@ const APPID="899425356926402";
     });
       
     window.FB.AppEvents.logPageView();   
-      
   };
-
-  (function(d, s, id){
-     var js, fjs = d.getElementsByTagName(s)[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement(s); js.id = id;
-     js.src = "https://connect.facebook.net/en_US/sdk.js";
-     fjs.parentNode.insertBefore(js, fjs);
+ const onStatusChange=(resp)=>{
+  console.log(resp)
+ }
+   (function(d, s, id){
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) {return;}
+      js = d.createElement(s); js.id = id;
+      js.src = "https://connect.facebook.net/en_US/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
    }(document, 'script', 'facebook-jssdk'));
-
-   (function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = 'https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v3.2&appId=899425356926402&autoLogAppEvents=1';
-    fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'))
 }
 componentDidMount(){ 
   fetch('https://peaceful-everglades-81846.herokuapp.com/')
@@ -80,26 +76,28 @@ componentDidMount(){
   window.addEventListener('resize',()=>{
       this.props.onWindowResize([window.innerWidth, window.innerHeight])
     })
-  
+
 }
 //facebook login
- checkLoginState=() => {
-   window.FB.getLoginStatus((response)=>{
-   if(response.status==="connected"){
-      this.props.setLoginState(response.authResponse.userID)
-      window.FB.api("/me",(resp)=>this.setState({userName: resp.name.split(" ")[0]}))
+   fbLogin=()=>{
+      window.FB.getLoginStatus(resp=>{
+         console.log(resp)
+      if(resp.status==="connected"){
+         window.FB.api("/"+resp.authResponse.userID, user=>{
+            console.log(user)
+            this.props.setLoginState(user);
+            this.setState({
+               userName: user.name.split(" ")[0]
+            })
+         })
+      }
+      else{
+         window.FB.login((response)=>{this.fbLogin();});
+
+      }
+      })
    }
-   else{
-      window.FB.login((response)=>{
-          console.log(response)
-          if(response.status==="connected"){
-            this.props.setLoginState(response.authResponse.userID)
-            window.FB.api("/me",(resp)=>this.setState({userName: resp.name.split(" ")[0]}))
-         }
-      }, {scope: 'public_profile,email'})
-   }
-  }, {scope: 'public_profile,email'});
-}
+
   resetState=()=>{
     this.setState({userName: ""})
   }
@@ -150,7 +148,7 @@ componentDidMount(){
   render() {
     return(
       <div className="App d-block w-100 m-0 p-0">
-        <Top fblogin={this.checkLoginState} userName={this.state.userName} reset={this.resetState}/>
+        <Top fblogin={this.fbLogin} userName={this.state.userName} reset={this.resetState}/>
           <div className="d-flex flex-column pt">
             {
               this.props.database.length?

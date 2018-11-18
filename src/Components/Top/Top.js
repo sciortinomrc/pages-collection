@@ -3,6 +3,8 @@ import './Top.css';
 import {connect} from 'react-redux';
 import {setLoginState, windowResize, 
   changePage, displayCard} from '../../State/actions.js';
+ import fbwhite from '../../f-Logo_Assets/F_Logo_Online_09_2018/White/SVG/flogo-HexRBG-Wht-58.svg'
+ import fbblack from '../../f-Logo_Assets/F_Logo_Online_09_2018/Black/SVG/flogo-RGB-HEX-Blk-58.svg'
 
 const mapStateToProps=state=>{
 	return{
@@ -89,19 +91,17 @@ componentDidMount(){
 //conditional rendering small responsive
 	loggedSmall=()=>{
 		const {user, onPageChange}=this.props;
-		if(user){return (
-			<div>
-			<p className="dropdown-item" onClick={()=>onPageChange('add')}>Add</p>
-		    <p className="dropdown-item" onClick={()=>onPageChange('favourites')}>Favourites</p>
-		    <p id="logout" className="dropdown-item" onClick={this.logout}>Logout</p>
-		    </div>
-		    )
-		}else{
-		 return (
-			<div >
-				<p className="dropdown-item" className="fb-login-button" data-max-rows="1" data-size="large" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></p>
-			</div>
-			)
+		if(user){
+			return (
+				<div>
+					<p className="dropdown-item" onClick={()=>onPageChange('add')}>Add</p>
+		   			<p className="dropdown-item" onClick={()=>onPageChange('favourites')}>Favourites</p>
+		   			<p className="dropdown-item" onClick={this.logout}>Logout</p>
+		    		</div>
+		   	 )
+		}
+		else{
+			return <p className="dropdown-item" onClick={this.props.fblogin}><img id="fb" src={fbblack} alt="Facebook Logo"/>Login with Facebook</p>
 		}
 	}
 	//conditional rendering large responsive
@@ -114,14 +114,12 @@ componentDidMount(){
 					<p className=" btn border mb-0 rounded-top" onClick={()=>onPageChange('favourites')}>Favourites</p>
 					<p className=" btn border mb-0 rounded-top" onClick={this.logout}>Logout</p>
 				</div>
-				)
-		}else{
-			return(
-				<div className=" p-0 m-0">
-				<p className="fb-login-button btn border mb-0 rounded-top" data-max-rows="1" data-size="large" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></p>
-				</div>
-				)
+			)
 		}
+		else{
+			return <p className=" btn border mb-0 rounded-top" onClick={this.props.fblogin}><img id="fb" src={fbwhite} alt="Facebook Logo"/>Login with Facebook</p>
+		}
+			
 	}
 	//component mount small responsive
 	show=()=>{
@@ -136,8 +134,12 @@ componentDidMount(){
 			)
 	}
 	//component mount large responsive
+	login=()=>{
+		console.log("login")
+		this.props.fblogin()
+	}
 	showXL=()=>{
-		const {onPageChange, displaySingleCard}=this.props;
+		const {onPageChange, displaySingleCard, fblogin}=this.props;
 		let limit=0;
 		return(
 			<div className="d-flex col pt-3 p-0 justify-content-end dd">	
