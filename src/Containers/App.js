@@ -65,7 +65,7 @@ const APPID="899425356926402";
       fjs.parentNode.insertBefore(js, fjs);
    }(document, 'script', 'facebook-jssdk'));
 
-   document.alert("This app is currently working with reduced functionality due to Facebook permissions. We apologize for the incovenience.");
+   window.alert("This app is currently working with reduced functionality due to Facebook permissions. We apologize for the incovenience.");
 }
 componentDidMount(){ 
   fetch('https://peaceful-everglades-81846.herokuapp.com/')
