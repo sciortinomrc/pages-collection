@@ -54,9 +54,7 @@ const APPID="899425356926402";
       
     window.FB.AppEvents.logPageView();   
   };
- const onStatusChange=(resp)=>{
-  console.log(resp)
- }
+
    (function(d, s, id){
       var js, fjs = d.getElementsByTagName(s)[0];
       if (d.getElementById(id)) {return;}
@@ -65,7 +63,6 @@ const APPID="899425356926402";
       fjs.parentNode.insertBefore(js, fjs);
    }(document, 'script', 'facebook-jssdk'));
 
-   window.alert("This app is currently working with reduced functionality due to Facebook permissions. We apologize for the incovenience.");
 }
 componentDidMount(){ 
   fetch('https://peaceful-everglades-81846.herokuapp.com/')
@@ -78,6 +75,7 @@ componentDidMount(){
   window.addEventListener('resize',()=>{
       this.props.onWindowResize([window.innerWidth, window.innerHeight])
     })
+  window.alert("This app is currently working with reduced functionality due to Facebook permissions. We apologize for the incovenience.");
 
 }
 //facebook login

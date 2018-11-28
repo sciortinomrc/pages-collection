@@ -28,7 +28,7 @@ class Card extends Component{
 			<div className="wrapper d-flex flex-column mt-1 ml-2 mr-3 rounded pop" title={category+", "+country}>
 				<div className="background1">
 					<div className='top d-flex '>
-					<p className=" mr-1 w-100 word-wrap p-1"><a href={link} className="no-deco" target='_blank'>{name}</a></p>
+					<p className=" mr-1 w-100 word-wrap p-1"><a href={link} className="no-deco" target='_blank' rel="noopener noreferrer">{name}</a></p>
 					</div>
 				</div>
 				<div className="photo">

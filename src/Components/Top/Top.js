@@ -8,11 +8,11 @@ import {setLoginState, windowResize,
 
 const mapStateToProps=state=>{
 	return{
-	user: state.onLogin.loggedUser,
-	open: state.onPageChange.open,
-    size: state.onWindowResize.size,
-    cards: state.fbApiCall.cards,
-    card: state.displaySingleCard.card
+		user: state.onLogin.loggedUser,
+		open: state.onPageChange.open,
+		size: state.onWindowResize.size,
+		cards: state.fbApiCall.cards,
+		card: state.displaySingleCard.card
 	}
 }
 
@@ -135,11 +135,10 @@ componentDidMount(){
 	}
 	//component mount large responsive
 	login=()=>{
-		console.log("login")
 		this.props.fblogin()
 	}
 	showXL=()=>{
-		const {onPageChange, displaySingleCard, fblogin}=this.props;
+		const {onPageChange, displaySingleCard}=this.props;
 		let limit=0;
 		return(
 			<div className="d-flex col pt-3 p-0 justify-content-end dd">	
