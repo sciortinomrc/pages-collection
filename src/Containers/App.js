@@ -151,7 +151,7 @@ componentDidMount(){
         <Top fblogin={this.fbLogin} userName={this.state.userName} reset={this.resetState}/>
           <div className="d-flex flex-column pt">
             {
-              this.props.database.length?
+              (!this.props.database.length || (this.props.database.length && this.props.database.length === this.props.database.length))?
               (
                <ErrorBoundary>  
                 <Scroller>
