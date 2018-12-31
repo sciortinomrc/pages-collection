@@ -119,7 +119,7 @@ return(
 				</p>
 				<ul className="text-left">
 					<li>Open the Facebook page URL</li>
-					<li>Get the page ID [ https://facebook.com/<b>PAGE-ID</b></li>
+					<li>Get the page ID [ https://facebook.com/<b>PAGE-ID</b> ]</li>
 					<li>Paste it below, insert a Category and simply click Add Page</li>
 				</ul>
 				<hr/>
