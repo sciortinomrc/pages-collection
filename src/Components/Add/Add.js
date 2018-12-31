@@ -44,10 +44,17 @@ stateCheck=(f)=>{
 	document.getElementById('id').value="";
 	document.getElementById('category').value="";
 	const {id, category, country}=this.state;
+	let splitId="";
 	if(id.length && category.length && country.length){
+		if(id.includes("-")){
+			splitId=id.split("-");
+			splitId=splitId[splitId.length-1];
+		}
+		else splitId=id;
+
 		const KEY="AIzaSyAIlsTN7qyrUVTR2eaZ0YCBFEQiUiF7AkM";
 		const ENGINE="001070113199472549264:vzktzi43pzq";
-		fetch(`https://www.googleapis.com/customsearch/v1?key=${KEY}&cx=${ENGINE}&q=facebook ${this.state.id}`)
+		fetch(`https://www.googleapis.com/customsearch/v1?key=${KEY}&cx=${ENGINE}&q=facebook ${splitId}`)
 		.then(googleApiResp=>googleApiResp.json())
 		.then(searchResult=>{
 			let found=false;
@@ -60,7 +67,7 @@ stateCheck=(f)=>{
 				}
 			}
 			if(found){
-					const picture=`https://graph.facebook.com/${id}/picture?type=large`;
+					const picture=`https://graph.facebook.com/${splitId}/picture?type=large`;
 					fetch('https://peaceful-everglades-81846.herokuapp.com/newpage',{
 						method: 'post',
 						headers:{ "Content-Type":"application/json"},
@@ -68,8 +75,8 @@ stateCheck=(f)=>{
 							category,
 							country,
 							username,
-							id,
-							url: `https://facebook.com/${id}`,
+							splitId,
+							url: `https://facebook.com/${splitId}`,
 							picture,
 							name
 						})
