@@ -8,7 +8,7 @@ import Bottom from '../Components/Bottom'; import Add from '../Components/Add/Ad
 import Home from '../Components/Home/Home';import Card from '../Components/Main/Card'; 
 import DisplayPages from '../Components/Main/DisplayPages';
 import './App.css';
-import {getPageFromAPI, windowResize, changePage, setPagesDatabase, setLoginState} from  '../State/actions.js'
+import {windowResize, changePage, setPagesDatabase, setLoginState} from  '../State/actions.js'
 
 const mapStateToProps= state=>{
   return {
@@ -144,7 +144,7 @@ componentDidMount(){
         <Top fblogin={this.fbLogin} userName={this.state.userName} reset={this.resetState}/>
           <div className="d-flex flex-column pt">
             {
-              (!this.props.database.length || (this.props.database.length && this.props.database.length === this.props.database.length))?
+              (!this.props.database.length)?
               (
                <ErrorBoundary>  
                 <Scroller>

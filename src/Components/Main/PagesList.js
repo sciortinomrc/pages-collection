@@ -28,7 +28,6 @@ class PagesList extends React.Component{
 		const {categoryFilter,countryFilter,limit,database,userFavourites} =this.props
 		let lim=1;
 		let filteredRecords=database.filter(record=>{
-			console.log(record)
 			return record.name.toLowerCase().includes(this.props.searchField.toLowerCase()) && (categoryFilter==="" || record.category===categoryFilter)
 		})
 		filteredRecords=filteredRecords.filter(record=>{
