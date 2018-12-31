@@ -14,7 +14,6 @@ const mapStateToProps= state=>{
   return {
     user: state.onLogin.loggedUser,
     database: state.addNewPage.database,
-    cards: state.fbApiCall.cards,
     isPending: state.fbApiCall.isPending,
     message: state.fbApiCall.message,
     size: state.onWindowResize.size,
@@ -26,7 +25,6 @@ const mapStateToProps= state=>{
 const mapDispatchToProps = (dispatch) =>{
   return{
    setDB: (database)=> dispatch(setPagesDatabase(database)),
-   onApiCall: (cards) => dispatch(getPageFromAPI(cards)),
    onPageChange: (page,category)=>dispatch(changePage(page,category)),
    onWindowResize: (size)=>dispatch(windowResize(size)),
    setLoginState: (userId)=>dispatch(setLoginState(userId))
@@ -69,13 +67,12 @@ componentDidMount(){
   .then(resp=>resp.json())
   .then(data=>{
       this.props.setDB(data.db)
-      this.props.onApiCall(data.cards)
   })
 //resize event listener
-  window.addEventListener('resize',()=>{
-      this.props.onWindowResize([window.innerWidth, window.innerHeight])
-    })
-  window.alert("This app is currently working with reduced functionality due to Facebook permissions. We apologize for the incovenience.");
+  // window.addEventListener('resize',()=>{
+  //     this.props.onWindowResize([window.innerWidth, window.innerHeight])
+  //   })
+  // window.alert("This app is currently working with reduced functionality due to Facebook permissions. We apologize for the incovenience.");
 
 }
 //facebook login
@@ -104,21 +101,17 @@ componentDidMount(){
 
 //display single card
   displayReceivedCard=()=>{
-    const {card,database}=this.props;
-    const record=database.filter(record=>{
-     return record && record.id===card.id
-
-     })
+    const {database}=this.props;
     return(
           <Card
-            id={card.id}
-            name={card.name}
-            fan_count={card.fan_count}
-            picture={card.picture.data.url}
-            link={card.link}
-            favourites={record[0].favourite}
-            category={record[0].category}
-            country={record[0].country}
+            id={database.id}
+            name={database.name}
+            fan_count={database.fan_count}
+            picture={database.picture.data.url}
+            link={database.link}
+            favourites={database.favourite}
+            category={database.category}
+            country={database.country}
           />
          )
   } 
@@ -134,13 +127,13 @@ componentDidMount(){
 
 //renders the page based on the state
   returnSwitch=()=>{
-    const {open, cards, database, onPageChange, readStateMessage, user, category} = this.props;
+    const {open, database, onPageChange, readStateMessage, user, category} = this.props;
       switch(open){
-          case 'home':  return ( <Home category='categories' cards={cards} db={database} user={user} onPageChange={onPageChange}/>);
+          case 'home':  return ( <Home category='categories' db={database} user={user} onPageChange={onPageChange}/>);
           case 'add': return( <Add readMessage={readStateMessage}/>)
-          case 'display': return ( <DisplayPages category={category} cards={cards} database={database}/> )
+          case 'display': return ( <DisplayPages category={category} database={database}/> )
           case 'card': return (<div className="d-flex m-auto justify-content-center">{this.displayReceivedCard()}</div>)
-          case 'favourites': return( <DisplayPages category='favourites' cards={cards} database={this.filterFavourites()}/>)
+          case 'favourites': return( <DisplayPages category='favourites' database={this.filterFavourites()}/>)
           default: return( <h1> ... The page is Loading ...</h1> )
       }
   }

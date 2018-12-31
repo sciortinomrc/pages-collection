@@ -25,19 +25,11 @@ class PagesList extends React.Component{
 			this.props.setFilters(categoryFilters, countryFilters)
 	}
 	render(){
-		const {categoryFilter,countryFilter,limit,database,cards,userFavourites} =this.props
-		let filteredRecords=[];
+		const {categoryFilter,countryFilter,limit,database,userFavourites} =this.props
 		let lim=1;
-		let filteredCardsId=cards.filter(card=>{
-			return card.name.toLowerCase().includes(this.props.searchField.toLowerCase())
+		let filteredRecords=database.filter(record=>{
+			return record.name.toLowerCase().includes(this.props.searchField.toLowerCase()) && (categoryFilter==="" || record.category===categoryFilter)
 		})
-		filteredCardsId=filteredCardsId.map(card=>card.id)
-		filteredRecords=database.filter(record=>{
-			return filteredCardsId.some(card=>card.includes(record.id))
-		})
-		filteredRecords=filteredRecords.filter(record=>{
-			return categoryFilter==="" || record.category===categoryFilter
-			})
 		filteredRecords=filteredRecords.filter(record=>{
 			lim++
 			if(limit && lim>limit){
@@ -51,23 +43,18 @@ class PagesList extends React.Component{
 		return(
 			<div className="d-flex flex-wrap justify-content-start height m-auto align-content-center" >
 			{
-				cards.map(card=>{
-					const recordMatch=filteredRecords.filter(record=>{
-						return record.id===card.id
-					})
-				if(recordMatch.length){
+				filteredRecords.map(card=>{
 					return (
-						(userFavourites && userFavourites.includes(recordMatch[0]))?(
+						(userFavourites && userFavourites.includes(card.id)?(
 							<Card
 								key={card.id}
 								id={card.id}
 								name={card.name}
-								fan_count={card.country_page_likes}
-								picture={card.picture.data.url}
-								link={card.link}
-								favourites={recordMatch[0].favourite}
-								category={recordMatch[0].category}
-								country={recordMatch[0].country}
+								picture={card.picture}
+								url={card.url}
+								favourites={card.favourite}
+								category={card.category}
+								country={card.country}
 								favToggle={true}
 							/>)	
 						:(
@@ -75,20 +62,18 @@ class PagesList extends React.Component{
 								key={card.id}
 								id={card.id}
 								name={card.name}
-								fan_count={card.fan_count}
-								picture={card.picture.data.url}
-								link={card.link}
-								favourites={recordMatch[0].favourite}
-								category={recordMatch[0].category}
-								country={recordMatch[0].country}
+								picture={card.picture}
+								url={card.url}
+								favourites={card.favourite}
+								category={card.category}
+								country={card.country}
 								favToggle={false}
 							/>)	
 						)
-				}
-				else return undefined
+					)
 				})
 			}
-			 </div>
+			</div>
 		)
 	}
 }

@@ -98,7 +98,7 @@ dropdown=(event)=>{
 		search.value=""
 	}
 	render(){
-		const {cards,database}=this.props;
+		const {database}=this.props;
 		return(
 			<div id="display-pages">
 				<div className="d-inline-flex w-75 justify-content-center">
@@ -122,7 +122,6 @@ dropdown=(event)=>{
 						(
 						<ErrorBoundary>
 						<PagesList
-							cards={cards}
 							database={database}
 							countryFilter={this.props.countryFilter}
 							categoryFilter={this.props.categoryFilter}
@@ -131,7 +130,6 @@ dropdown=(event)=>{
 						/>
 						</ErrorBoundary>):(
 						<ErrorBoundary><PagesList
-							cards={cards}
 							database={database}
 							countryFilter={this.props.countryFilter}
 							categoryFilter={this.props.categoryFilter}
