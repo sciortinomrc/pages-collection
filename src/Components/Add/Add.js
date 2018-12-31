@@ -78,7 +78,6 @@ stateCheck=(f)=>{
 					// .then(data=>{
 					// 	this.props.addNewPage(data.db, data.cards, data.message)
 					// })
-				})
 			}
 			else	this.props.addNewPage(undefined,undefined,'Page not found')
 		})
