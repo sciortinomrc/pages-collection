@@ -45,15 +45,45 @@ stateCheck=(f)=>{
 	document.getElementById('category').value="";
 	const {id, category, country}=this.state;
 	if(id.length && category.length && country.length){
-		fetch('https://peaceful-everglades-81846.herokuapp.com/newpage',{
-			method: 'post',
-			headers:{ "Content-Type":"application/json"},
-			body: JSON.stringify({id,category,country,username})
+		const KEY="AIzaSyAIlsTN7qyrUVTR2eaZ0YCBFEQiUiF7AkM";
+		const ENGINE="001070113199472549264:vzktzi43pzq";
+		fetch(`https://www.googleapis.com/customsearch/v1?key=${KEY}&cx=${ENGINE}&q=facebook ${this.state.id}`)
+		.then(googleApiResp=>googleApiResp.json())
+		.then(searchResult=>{
+			let found=false;
+			let name="";
+			for(let item of searchResult.items){
+				if(item.link.includes("www.facebook.com")){
+					found=true;
+					name=item.htmlTitle.split("-")[0]
+					break;
+				}
+			}
+			if(found){
+				fetch(`http://graph.facebook.com/${id}/picture?type=large`)
+				.then(picture=>{
+
+					console.log({id,picture,name})
+					// fetch('https://peaceful-everglades-81846.herokuapp.com/newpage',{
+					// 	method: 'post',
+					// 	headers:{ "Content-Type":"application/json"},
+					// 	body: JSON.stringify({
+					// 		category,
+					// 		country,
+					// 		username,
+					// 		url: `https://facebook.com/${id}`,
+					// 		picture
+					// 	})
+					// })
+					// .then(response=>response.json())
+					// .then(data=>{
+					// 	this.props.addNewPage(data.db, data.cards, data.message)
+					// })
+				})
+			}
+			else	this.props.addNewPage(undefined,undefined,'Page not found')
 		})
-		.then(response=>response.json())
-		.then(data=>{
-			this.props.addNewPage(data.db, data.cards, data.message)
-		})
+
 	}else{this.props.addNewPage(undefined,undefined,'You need to complete the form.')
 	}
 	this.setState({country: '', id: '', category: ''})
