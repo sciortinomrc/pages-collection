@@ -68,6 +68,7 @@ stateCheck=(f)=>{
 							category,
 							country,
 							username,
+							id,
 							url: `https://facebook.com/${id}`,
 							picture
 						})
