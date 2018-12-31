@@ -46,14 +46,11 @@ stateCheck=(f)=>{
 	const {id, category, country}=this.state;
 	let splitId="";
 	if(id.length && category.length && country.length){
-		console.log(id)
 		if(id.includes("-")){
 			splitId=id.split("-");
 			splitId=splitId[splitId.length-1];
 		}
 		else splitId=id;
-
-		console.log(splitId)
 		const KEY="AIzaSyAIlsTN7qyrUVTR2eaZ0YCBFEQiUiF7AkM";
 		const ENGINE="001070113199472549264:vzktzi43pzq";
 		fetch(`https://www.googleapis.com/customsearch/v1?key=${KEY}&cx=${ENGINE}&q=facebook ${splitId}`)
@@ -63,7 +60,6 @@ stateCheck=(f)=>{
 			let name="";
 			for(let item of searchResult.items){
 				if(item.link.includes("www.facebook.com")){
-					console.log(searchResult)
 					found=true;
 					name=item.title.split("-")[0]
 					break;
@@ -122,9 +118,9 @@ return(
 				Here's what you have to do:
 				</p>
 				<ul className="text-left">
-					<li>Copy the Facebook Page URL</li>
-					<li>Go to <a href="https://findmyfbid.com/" target="_blank" rel="noopener noreferrer">https://findmyfbid.com/</a> and paste your URL</li>
-					<li>Here's your Facebook Page ID. Paste it below, insert a Category and simply click Add Page</li>
+					<li>Open the Facebook page URL</li>
+					<li>Get the page ID [ https://facebook.com/<b>PAGE-ID</b></li>
+					<li>Paste it below, insert a Category and simply click Add Page</li>
 				</ul>
 				<hr/>
 				
