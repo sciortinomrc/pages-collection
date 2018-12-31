@@ -70,7 +70,8 @@ stateCheck=(f)=>{
 							username,
 							id,
 							url: `https://facebook.com/${id}`,
-							picture
+							picture,
+							name
 						})
 					})
 					.then(response=>response.json())
