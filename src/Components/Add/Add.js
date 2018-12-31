@@ -65,7 +65,7 @@ stateCheck=(f)=>{
 				if(item.link.includes("www.facebook.com")){
 					console.log(searchResult)
 					found=true;
-					name=item.htmlTitle.split("-")[0]
+					name=item.title.split("-")[0]
 					break;
 				}
 			}
@@ -78,7 +78,7 @@ stateCheck=(f)=>{
 							category,
 							country,
 							username,
-							splitId,
+							id: splitId,
 							url: `https://facebook.com/${splitId}`,
 							picture,
 							name
