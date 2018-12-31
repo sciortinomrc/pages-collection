@@ -60,29 +60,27 @@ stateCheck=(f)=>{
 				}
 			}
 			if(found){
-					const picture=`http://graph.facebook.com/${id}/picture?type=large`;
-					document.write(`<img src="${picture}" alt="img"/>`)
-					console.log({id,picture,name})
-					// fetch('https://peaceful-everglades-81846.herokuapp.com/newpage',{
-					// 	method: 'post',
-					// 	headers:{ "Content-Type":"application/json"},
-					// 	body: JSON.stringify({
-					// 		category,
-					// 		country,
-					// 		username,
-					// 		url: `https://facebook.com/${id}`,
-					// 		picture
-					// 	})
-					// })
-					// .then(response=>response.json())
-					// .then(data=>{
-					// 	this.props.addNewPage(data.db, data.cards, data.message)
-					// })
+					const picture=`https://graph.facebook.com/${id}/picture?type=large`;
+					fetch('https://peaceful-everglades-81846.herokuapp.com/newpage',{
+						method: 'post',
+						headers:{ "Content-Type":"application/json"},
+						body: JSON.stringify({
+							category,
+							country,
+							username,
+							url: `https://facebook.com/${id}`,
+							picture
+						})
+					})
+					.then(response=>response.json())
+					.then(data=>{
+						this.props.addNewPage(data.db, data.message)
+					})
 			}
-			else	this.props.addNewPage(undefined,undefined,'Page not found')
+			else	this.props.addNewPage(undefined,'Page not found')
 		})
 
-	}else{this.props.addNewPage(undefined,undefined,'You need to complete the form.')
+	}else{this.props.addNewPage(undefined,'You need to complete the form.')
 	}
 	this.setState({country: '', id: '', category: ''})
 }

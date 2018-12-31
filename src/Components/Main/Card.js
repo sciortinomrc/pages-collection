@@ -21,7 +21,7 @@ class Card extends Component{
 	}
 
 	render(){
-		const {id,category,name,link,picture,fan_count,favourites,country} =this.props;
+		const {id,category,name,url,picture,favourites,country} =this.props;
 		return(
 
 				
@@ -35,7 +35,6 @@ class Card extends Component{
 						<img alt=""  src={picture} height="100%" width="auto" className=" flex m-auto" />
 				</div>
 				<div className="likes d-inline-flex justify-content-end p-0">
-				 <div className="d-inline-flex justify-content-center align-content-center p-0 h-100 pr-2"><p className="fas fa-thumbs-up align-self-center mr-1 like"></p><p className="star">{fan_count}</p></div>
 				 {
 				 	this.props.user?(
 						<div id={id} className=" d-inline-flex justify-content-center align-content-center p-0 h-100 pr-2" >

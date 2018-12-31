@@ -30,12 +30,12 @@ export const changePage = (page,chosen_category="")=> {
 			}
 		}
 }
-export const newPage=(db,cards,message)=>dispatch=>{
+export const newPage=(db,message)=>dispatch=>{
 	if(db)
 	{
 		dispatch({
 			type: REQUEST_PAGE_SUCCESS,
-			payload: cards
+			payload: db
 		})
 		dispatch({
 			type: ADD_PAGE_SUCCESS,
@@ -50,9 +50,9 @@ export const newPage=(db,cards,message)=>dispatch=>{
 	}
 }
 
-export const displayCard=(id,name,link,picture,fan_count)=>({
+export const displayCard=(id,name,url,picture)=>({
 	type: DISPLAY_CARD,
-	payload: {id,name,link,picture,fan_count}
+	payload: {id,name,url,picture}
 })
 
 export const setSearchfield=(text="")=>({
