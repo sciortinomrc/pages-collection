@@ -60,9 +60,8 @@ stateCheck=(f)=>{
 				}
 			}
 			if(found){
-				fetch(`http://graph.facebook.com/${id}/picture?type=large`)
-				.then(picture=>{
-
+					const picture=`http://graph.facebook.com/${id}/picture?type=large`;
+					document.write(`<img src="${picture}" alt="img"/>`)
 					console.log({id,picture,name})
 					// fetch('https://peaceful-everglades-81846.herokuapp.com/newpage',{
 					// 	method: 'post',

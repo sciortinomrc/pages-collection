@@ -81,10 +81,10 @@ componentDidMount(){
 //facebook login
    fbLogin=()=>{
       window.FB.getLoginStatus(resp=>{
-         console.log(resp)
+
       if(resp.status==="connected"){
          window.FB.api("/"+resp.authResponse.userID, user=>{
-            console.log(user)
+
             this.props.setLoginState(user);
             this.setState({
                userName: user.name.split(" ")[0]
