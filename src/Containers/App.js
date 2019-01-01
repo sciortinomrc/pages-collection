@@ -68,11 +68,10 @@ componentDidMount(){
   .then(data=>{
       this.props.setDB(data.db)
   })
-//resize event listener
-  // window.addEventListener('resize',()=>{
-  //     this.props.onWindowResize([window.innerWidth, window.innerHeight])
-  //   })
-  // window.alert("This app is currently working with reduced functionality due to Facebook permissions. We apologize for the incovenience.");
+// resize event listener
+  window.addEventListener('resize',()=>{
+      this.props.onWindowResize([window.innerWidth, window.innerHeight])
+    })
 
 }
 //facebook login
