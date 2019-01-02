@@ -11,7 +11,7 @@ const mapStateToProps=state=>{
 		user: state.onLogin.loggedUser,
 		open: state.onPageChange.open,
 		size: state.onWindowResize.size,
-		cards: state.fbApiCall.cards,
+		database: state.addNewPage.database,
 		card: state.displaySingleCard.card
 	}
 }
