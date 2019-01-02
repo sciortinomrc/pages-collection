@@ -66,7 +66,7 @@ componentDidMount(){
 				!this.state.search.length?
 					hidden.classList.add('d-none') :
 					hidden.classList.remove('d-none');
-				const filterCards=this.props.cards.filter(card=>{
+				const filterCards=this.props.database.filter(card=>{
 					return card.name.toLowerCase().includes(this.state.search.toLowerCase());
 				})
 				this.setState({cards: filterCards});
