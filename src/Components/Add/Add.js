@@ -74,7 +74,7 @@ stateCheck=(f)=>{
 						body: JSON.stringify({
 							category,
 							country,
-							username,
+							createdby: username,
 							id: splitId,
 							url: `https://facebook.com/${splitId}`,
 							picture,
