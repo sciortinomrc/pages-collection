@@ -34,7 +34,7 @@ class App extends Component {
 constructor(){
   super()
   this.state=({
-   userName: ''
+   userName: '',
   })
 }
 
@@ -100,20 +100,20 @@ componentDidMount(){
 
 //display single card
   displayReceivedCard=()=>{
-    const {database}=this.props;
+  const {card}=this.props;
     return(
           <Card
-            id={database.id}
-            name={database.name}
-            fan_count={database.fan_count}
-            picture={database.picture.data.url}
-            link={database.link}
-            favourites={database.favourite}
-            category={database.category}
-            country={database.country}
+            id={card.id}
+            name={card.name}
+            picture={card.picture}
+            url={card.url}
+            favourites={card.favourite}
+            category={card.category}
+            country={card.country}
           />
          )
-  } 
+  }
+  
 //filter favourites from database
   filterFavourites=()=>{
        return(
@@ -131,16 +131,17 @@ componentDidMount(){
           case 'home':  return ( <Home category='categories' db={database} user={user} onPageChange={onPageChange}/>);
           case 'add': return( <Add readMessage={readStateMessage}/>)
           case 'display': return ( <DisplayPages category={category} database={database}/> )
-          case 'card': return (<div className="d-flex m-auto justify-content-center">{this.displayReceivedCard()}</div>)
+          case 'card': return (<div className="d-flex m-auto justify-content-center">{this.displayReceivedCard(this.state.cardToDisplay)}</div>)
           case 'favourites': return( <DisplayPages category='favourites' database={this.filterFavourites()}/>)
           default: return( <h1> ... The page is Loading ...</h1> )
       }
   }
+
 //render method
   render() {
     return(
       <div className="App d-block w-100 m-0 p-0">
-        <Top fblogin={this.fbLogin} userName={this.state.userName} reset={this.resetState}/>
+        <Top fblogin={this.fbLogin} userName={this.state.userName} reset={this.resetState} />
           <div className="d-flex flex-column pt">
             {
               (this.props.database.length)?

@@ -21,7 +21,7 @@ const mapDispatchToProps=dispatch=>{
 		onLoginChange: (userId)=> dispatch(setLoginState(userId)),
 		onPageChange: (page,category)=>dispatch (changePage(page,category)),
 		onWindowResize: (size)=>dispatch(windowResize (size)),
-		displaySingleCard: (id,name,link,picture,fan_count)=>dispatch( displayCard(id,name,link,picture,fan_count))
+		displaySingleCard: (id,name,url,picture,favourite, category, country)=>dispatch( displayCard(id,name,url,picture,favourite, category, country))
 	}
 }
 class Top extends Component {
@@ -75,8 +75,8 @@ componentDidMount(){
 	}
 //resetState onFocusOut
 	 resetState=()=>{
-	 	const search=document.getElementById('search');
-	 	search.value="";
+	 	const s=document.getElementById('search');
+	 	if(s) s.value="";
 	 	this.setState({search: '',cards:[]})
 	 }
 
@@ -153,7 +153,7 @@ componentDidMount(){
 			  				this.state.cards.map(card=>{
 			  				if(limit>4) return undefined;
 			  				limit ++;
-							return <p key={card.id} onClick={()=>{onPageChange('card');displaySingleCard(card.id,card.name,card.link,card.picture,card.fan_count);}} className="plain-link">{card.name}</p>
+							return <p key={card.id} onClick={()=>{onPageChange('card');displaySingleCard(card.id,card.name,card.url,card.picture,card.country, card.category, card.favourite);}} className="plain-link">{card.name}</p>
 							})	
 			  			}
 			  		</div>
@@ -176,7 +176,7 @@ componentDidMount(){
 			  				this.state.cards.map(card=>{
 			  				if(limit>4) return undefined;
 			  				limit ++;
-							return <p key={card.id} onClick={()=>{onPageChange('card');displaySingleCard(card.id,card.name,card.link,card.picture,card.fan_count);}} className="plain-link">{card.name}</p>
+							return <p key={card.id} onClick={()=>{onPageChange('card');displaySingleCard(card.id,card.name,card.url,card.picture,card.country, card.category, card.favourite);}} className="plain-link">{card.name}</p>
 							})	
 			  			}
 			  		</div>

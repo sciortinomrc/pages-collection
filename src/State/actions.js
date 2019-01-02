@@ -50,9 +50,9 @@ export const newPage=(db,message)=>dispatch=>{
 	}
 }
 
-export const displayCard=(id,name,url,picture)=>({
+export const displayCard=(id,name,url,picture,country,category, favourite)=>({
 	type: DISPLAY_CARD,
-	payload: {id,name,url,picture}
+	payload: {id,name,url,picture,country, category, favourite}
 })
 
 export const setSearchfield=(text="")=>({
