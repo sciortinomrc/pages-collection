@@ -85,7 +85,7 @@ export const setLoginState=(userId="")=>(dispatch)=>{
 			fetch('https://peaceful-everglades-81846.herokuapp.com/login', {
 			method: 'post',
 			headers: {'Content-Type':'application/json'},
-			body: JSON.stringify({ userId })
+			body: JSON.stringify({ userId: userId.id })
 			})
 			.then(resp=>resp.json())
 			.then(user=>{
