@@ -78,7 +78,7 @@ export const setLoginState=(userId="")=>(dispatch)=>{
 	else{
 		console.log(userId)
 
-		if(userId==="failed"){
+		if(!userId.id){
 			dispatch({type:LOGIN_FAILED, payload:'Unable to Login"'})
 		}
 		else{
