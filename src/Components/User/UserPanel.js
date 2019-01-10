@@ -72,7 +72,7 @@ const UserPanel=(props)=>{
 		<React.Fragment>
 		<h2>
 		<img id="userPic" src={userPictureURL} alt=""/>
-		user.name</h2>
+		{user.name}</h2>
 		{(db.length)?
 			<React.Fragment>
 			Here's the list of all your pages.
