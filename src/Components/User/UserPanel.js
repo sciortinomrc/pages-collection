@@ -64,6 +64,7 @@ const resetLight=(event)=>{
 
 const UserPanel=(props)=>{
 	const {database,user} = props;
+	console.log(user)
 	const [pageId, setPageId] = useState("");
 	const db=database.filter(card=>card.createdby===user.id)
 	const userPictureURL=`https://graph.facebook.com/${user.id}/picture?type=large`
@@ -71,7 +72,7 @@ const UserPanel=(props)=>{
 		<React.Fragment>
 		<h2>
 		<img id="userPic" src={userPictureURL} alt=""/>
-		{user.name}</h2>
+		user.name</h2>
 		{(db.length)?
 			<React.Fragment>
 			Here's the list of all your pages.
