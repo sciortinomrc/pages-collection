@@ -96,6 +96,7 @@ componentDidMount(){
 				<div>
 					<p className="dropdown-item" onClick={()=>onPageChange('add')}>Add</p>
 		   			<p className="dropdown-item" onClick={()=>onPageChange('favourites')}>Favourites</p>
+		   			<p className="dropdown-item" onClick={()=>onPageChange('user')}>Profile</p>
 		   			<p className="dropdown-item" onClick={this.logout}>Logout</p>
 		    		</div>
 		   	 )
@@ -108,10 +109,12 @@ componentDidMount(){
 	loggedXL=()=>{
 		const {user, onPageChange}=this.props;
 		if(user){
+		//if(true){
 			return(
 				<div className=" p-0 m-0">
 					<p className=" btn border mb-0 rounded-top" onClick={()=>onPageChange('add')}>Add</p>
 					<p className=" btn border mb-0 rounded-top" onClick={()=>onPageChange('favourites')}>Favourites</p>
+					<p className=" btn border mb-0 rounded-top" onClick={()=>onPageChange('user')}>Profile</p>
 					<p className=" btn border mb-0 rounded-top" onClick={this.logout}>Logout</p>
 				</div>
 			)
