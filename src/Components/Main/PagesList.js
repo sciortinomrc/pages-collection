@@ -26,7 +26,7 @@ class PagesList extends React.Component{
 	}
 	render(){
 		const {categoryFilter,countryFilter,limit,database,userFavourites} =this.props
-		let lim=1;
+		let lim=0;
 		let filteredRecords=database.filter(record=>{
 			return record.name.toLowerCase().includes(this.props.searchField.toLowerCase()) && (categoryFilter==="" || record.category===categoryFilter)
 		})
@@ -41,7 +41,7 @@ class PagesList extends React.Component{
 
 		if(!limit)this.returnFilters(filteredRecords)
 		return(
-			<div className="d-flex flex-wrap justify-content-start height m-auto align-content-center" >
+			<div className="d-flex flex-wrap justify-content-start height m-auto align-content-center">
 			{
 				filteredRecords.map(card=>{
 					return (
