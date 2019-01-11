@@ -1,7 +1,5 @@
 import React from "react";
 import {useState} from "react";
-import {connect} from "react-redux"
-import {setPagesDatabase} from  '../State/actions.js'
 import './UserPanel.css';
 
 const expand=(id)=>{
