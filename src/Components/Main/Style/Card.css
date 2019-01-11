@@ -13,6 +13,9 @@
         -ms-transform: scale(1.05);
         transform: scale(1.05);
 }
+.card-width{
+	width:400px;
+}
 .top{
 	height:100%;
 	margin-left:30%;

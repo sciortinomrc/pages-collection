@@ -14,5 +14,5 @@
 }
 .grid{
 	display: grid;
-	grid-template-columns: 1fr;
+	grid-template-columns: repeat(auto-fill,minmax(400px, 410px));
 }

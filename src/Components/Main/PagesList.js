@@ -41,7 +41,7 @@ class PagesList extends React.Component{
 
 		if(!limit)this.returnFilters(filteredRecords)
 		return(
-			<div className="d-flex flex-wrap justify-content-start height m-auto align-content-center">
+			<div className=" height m-auto align-content-center grid">
 			{
 				filteredRecords.map(card=>{
 					return (
