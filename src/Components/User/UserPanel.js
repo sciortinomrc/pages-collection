@@ -3,9 +3,7 @@ import {useState} from "react";
 import {connect} from "react-redux"
 import {setPagesDatabase} from  '../State/actions.js'
 import './UserPanel.css';
-const mapDispatchToProps=(dispatch)=>{
-	setDB: (database)=> dispatch(setPagesDatabase(database))
-}
+
 const expand=(id)=>{
 	const pic=document.getElementById(id+"picture");
 	const picDescription=document.getElementById(id+"description");
@@ -40,7 +38,7 @@ const flag=(pageId)=>{
 	})
 	.then(r=>{})
 }
-const delPage=(event,pageId,setPageId)=>{
+const delPage=(event,pageId,setPageId,setDB)=>{
 	const popup=document.getElementById("fullpage");
 	if(event.key==="Enter" && event.target.value==="DELETE"){
 		fetch('https://peaceful-everglades-81846.herokuapp.com/delete', {
@@ -49,7 +47,7 @@ const delPage=(event,pageId,setPageId)=>{
 			body: JSON.stringify({ pageId })
 		})
 		.then(r=>{
-			props.setDB(r)
+			setDB(r)
 		})
 		popup.style.display="none";
 		setPageId("");
@@ -111,7 +109,7 @@ const UserPanel=(props)=>{
 				<div id="popup">
 					<h3>Do you really want to delete this page?</h3>
 					<h6>Changed your mind? Just press SPACE</h6>
-					<input type="text" placeholder="Write DELETE and press enter" onKeyPress={(event)=>delPage(event,pageId,setPageId)}/>
+					<input type="text" placeholder="Write DELETE and press enter" onKeyPress={(event)=>delPage(event,pageId,setPageId,setDB)}/>
 				</div>
 			</div>
 			: ""
@@ -119,4 +117,4 @@ const UserPanel=(props)=>{
 		 </React.Fragment>
 		)
 }
-export default connect(mapDispatchToProps)(UserPanel);
+export default UserPanel;

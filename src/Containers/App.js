@@ -133,7 +133,7 @@ componentDidMount(){
           case 'display': return ( <DisplayPages category={category} database={database}/> )
           case 'card': return (<div className="d-flex m-auto justify-content-center">{this.displayReceivedCard(this.state.cardToDisplay)}</div>)
           case 'favourites': return( <DisplayPages category='favourites' database={this.filterFavourites()}/>)
-          case 'user': return(<UserPanel database={database} user={user} name={this.state.userName}/>)
+          case 'user': return(<UserPanel database={database} user={user} name={this.state.userName} setDB={this.props.setDB}/>)
           default: return( <h1> ... The page is Loading ...</h1> )
       }
   }
