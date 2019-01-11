@@ -44,7 +44,9 @@ const delPage=(event,pageId,setPageId)=>{
 			headers: {'Content-Type':'application/json'},
 			body: JSON.stringify({ pageId })
 		})
-		.then(r=>{})
+		.then(r=>{
+			setDB(r)
+		})
 		popup.style.display="none";
 		setPageId("");
 	}
@@ -63,7 +65,7 @@ const resetLight=(event)=>{
 
 
 const UserPanel=(props)=>{
-	const {database,user,name} = props;
+	const {database,user,name,setDB} = props;
 	const [pageId, setPageId] = useState("");
 	const db=database.filter(card=>card.createdby===user.id)
 	const userPictureURL=`https://graph.facebook.com/${user.id}/picture?type=large`
@@ -89,7 +91,7 @@ const UserPanel=(props)=>{
 							</div>
 							<div id={`${card.id}commands`} className="commands">
 								<div id="F" title="Flag an error with the page" onClick={()=>flag(card.id)} onMouseOver={light} onMouseLeave={resetLight}>FLAG ERROR</div>
-								<div id="X" title="Delete this page" onClick={()=>setPageId(card.id)} onMouseOver={light} onMouseLeave={resetLight}>DELETE</div>
+								<div id="X" title="Delete this page" onClick={()=>setPageId(card.id,setDB)} onMouseOver={light} onMouseLeave={resetLight}>DELETE</div>
 							</div>
 						</div>
 					</div>
