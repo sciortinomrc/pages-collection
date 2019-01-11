@@ -36,7 +36,7 @@ const flag=(pageId)=>{
 	})
 	.then(r=>{})
 }
-const delPage=(event,pageId,setPageId)=>{
+const delPage=(event,pageId,setPageId,setDB)=>{
 	const popup=document.getElementById("fullpage");
 	if(event.key==="Enter" && event.target.value==="DELETE"){
 		fetch('https://peaceful-everglades-81846.herokuapp.com/delete', {
@@ -45,7 +45,7 @@ const delPage=(event,pageId,setPageId)=>{
 			body: JSON.stringify({ pageId })
 		})
 		.then(r=>{
-			alert(r)
+			setDB(r)
 		})
 		popup.style.display="none";
 		setPageId("");
