@@ -1,7 +1,10 @@
 import React from "react";
 import {useState} from "react";
+import {connect} from "react-redux"
 import './UserPanel.css';
-
+const mapDispatchToProps=(dispatch)=>{
+	setDB: (database)=> dispatch(setPagesDatabase(database))
+}
 const expand=(id)=>{
 	const pic=document.getElementById(id+"picture");
 	const picDescription=document.getElementById(id+"description");
@@ -36,7 +39,7 @@ const flag=(pageId)=>{
 	})
 	.then(r=>{})
 }
-const delPage=(event,pageId,setPageId,setDB)=>{
+const delPage=(event,pageId,setPageId)=>{
 	const popup=document.getElementById("fullpage");
 	if(event.key==="Enter" && event.target.value==="DELETE"){
 		fetch('https://peaceful-everglades-81846.herokuapp.com/delete', {
@@ -45,7 +48,7 @@ const delPage=(event,pageId,setPageId,setDB)=>{
 			body: JSON.stringify({ pageId })
 		})
 		.then(r=>{
-			setDB(r)
+			this.props.setDB(r)
 		})
 		popup.style.display="none";
 		setPageId("");
@@ -91,7 +94,7 @@ const UserPanel=(props)=>{
 							</div>
 							<div id={`${card.id}commands`} className="commands">
 								<div id="F" title="Flag an error with the page" onClick={()=>flag(card.id)} onMouseOver={light} onMouseLeave={resetLight}>FLAG ERROR</div>
-								<div id="X" title="Delete this page" onClick={()=>setPageId(card.id,setDB)} onMouseOver={light} onMouseLeave={resetLight}>DELETE</div>
+								<div id="X" title="Delete this page" onClick={()=>setPageId(card.id)} onMouseOver={light} onMouseLeave={resetLight}>DELETE</div>
 							</div>
 						</div>
 					</div>
@@ -115,4 +118,4 @@ const UserPanel=(props)=>{
 		 </React.Fragment>
 		)
 }
-export default UserPanel;
+export default connect(mapDispatchToProps)(UserPanel);
