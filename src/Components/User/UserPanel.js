@@ -44,6 +44,7 @@ const delPage=(event,pageId,setPageId,setDB)=>{
 			headers: {'Content-Type':'application/json'},
 			body: JSON.stringify({ pageId })
 		})
+		.then(response=>response.json())
 		.then(r=>{
 			setDB(r)
 			console.log({r})
