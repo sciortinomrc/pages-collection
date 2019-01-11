@@ -45,7 +45,7 @@ const delPage=(event,pageId,setPageId)=>{
 			body: JSON.stringify({ pageId })
 		})
 		.then(r=>{
-			console.log(r)
+			alert(r)
 		})
 		popup.style.display="none";
 		setPageId("");
