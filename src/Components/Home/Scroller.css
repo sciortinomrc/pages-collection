@@ -16,3 +16,8 @@
 	display: grid;
 	grid-template-columns: repeat(auto-fill,minmax(400px, 410px));
 }
+@media (hover: none)  or (width: 498px){
+	.grid{
+	grid-template-columns: repeat(auto-fill,minmax(230px, 231px));
+}
+}

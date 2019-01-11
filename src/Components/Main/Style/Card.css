@@ -81,10 +81,13 @@
 }
 
 @media (hover: none){
-		.photo{
-			width: 60px!important;
-			height: 60px!important;
-			left: 2%;
-			top:40%;
-		}
+	.photo{
+		width: 60px!important;
+		height: 60px!important;
+		left: 2%;
+		top:40%;
+	}
+	.wrapper{
+		width: 210px;
+	}
 }
