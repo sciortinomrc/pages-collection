@@ -45,7 +45,7 @@ const delPage=(event,pageId,setPageId)=>{
 			body: JSON.stringify({ pageId })
 		})
 		.then(r=>{
-			setDB(r)
+			console.log(r)
 		})
 		popup.style.display="none";
 		setPageId("");
