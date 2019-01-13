@@ -59,7 +59,7 @@ stateCheck=(f)=>{
 			let found=false;
 			let name="";
 			for(let item of searchResult.items){
-				if(item.link.includes(`facebook.com/${splitId}`)){
+				if(item.link.includes(`facebook.com/${id}`)){
 					found=true;
 					name=item.title.split("-")[0]
 					break;
