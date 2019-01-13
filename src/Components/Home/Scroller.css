@@ -16,8 +16,13 @@
 	display: grid;
 	grid-template-columns: repeat(auto-fill,minmax(400px, 410px));
 }
-@media (hover: none)  or (max-width: 200px) and (max-width: 400px){
+@media (hover: none) {
 	.grid{
-	grid-template-columns: repeat(auto-fill,minmax(1fr));
+	grid-template-columns: repeat(auto-fill,minmax(270px,280px));
+	}
 }
+@media (max-width: 500px){
+	.grid{
+	grid-template-columns: repeat(auto-fill,minmax(270px,280px));
+	}
 }

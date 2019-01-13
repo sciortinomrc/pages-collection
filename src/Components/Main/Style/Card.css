@@ -16,6 +16,9 @@
 .card-width{
 	width:400px;
 }
+#card a{
+	padding-left: 40px;
+}
 .top{
 	height:100%;
 	margin-left:30%;
@@ -90,9 +93,23 @@
 	.wrapper{
 		width: 320px;
 	}
+	.word-wrap{
+		margin-bottom: 0px;
+		font-size: 13px;
+	}
 }
-@media (max-width: 320px){
+@media (max-width: 500px){
+	.photo{
+		width: 80px!important;
+		height: 80px!important;
+		left: 2%;
+		top:37%;
+	}
 	.wrapper{
 		width: 260px;
+	}
+	.word-wrap{
+		margin-bottom: 0px;
+		font-size: 13px;
 	}
 }
