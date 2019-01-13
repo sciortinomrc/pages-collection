@@ -1,10 +1,10 @@
-import React,  {useState, Suspense} from 'react';
+import React from 'react';
 import PagesList from '../Main/PagesList';
 import _ from 'lodash';
 import "./Scroller.css";
 import ErrorBoundary from '../ErrorBoundary';
 const Home=({...props})=>{
-	const [w,setW] = useState(0); 
+	//const [w,setW] = useState(0); 
 	const filteredPages= _.uniqBy(props.db, 'category');
 	const filteredCategories= filteredPages.map(category=>category.category).sort()
 	return (
@@ -13,7 +13,7 @@ const Home=({...props})=>{
 				let calcWidth=props.db.filter(card=>card.category===category).length;
 				calcWidth=(calcWidth>4)?4:calcWidth
 				const c=window.innerWidth;
-				const w=(c<=450)?235:416;
+				const w=(c<=450)?200:416;
 				return(
 
 					<fieldset key={category} className="b m-3 pt-0 ">

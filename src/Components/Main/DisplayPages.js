@@ -101,8 +101,8 @@ dropdown=(event)=>{
 		const {database}=this.props;
 		return(
 			<div id="display-pages">
-				<div className="d-inline-flex w-75 justify-content-center">
-					<input type="search" id="searchField" placeholder="Filter by Name" className="rounded w-25 text-center" onChange={this.nameSearch}/>
+				<div id="filterButtons" className="justify-content-center">
+					<input type="search" id="searchField" placeholder="Filter by Name" className="rounded w-auto text-center" onChange={this.nameSearch}/>
 					<div className="p-0 m-0 set-height btn-width">
 				  		<button id="filter-country"  className=" text-center btn-width" title="Filter By Country" onClick={(event)=>this.expandSelection(event.target,'filter-country')}>Country<i className="fas fa-filter"></i></button>
 				  		{this.countrySelect()}
@@ -113,9 +113,9 @@ dropdown=(event)=>{
 			  		</div>
 			  	<input type="button" value="Remove All" onClick={this.removeFilters}/>
 			  	</div>
-			  	{
-				window.addEventListener('click', this.dropdown)
-				}
+				  	{
+					window.addEventListener('click', this.dropdown)
+					}
 				<hr className="mt-2 mb-5"/>
 				{
 					this.props.userFavourites===undefined?

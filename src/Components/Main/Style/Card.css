@@ -88,6 +88,11 @@
 		top:40%;
 	}
 	.wrapper{
-		width: 210px;
+		width: 320px;
+	}
+}
+@media (max-width: 320px){
+	.wrapper{
+		width: 260px;
 	}
 }
