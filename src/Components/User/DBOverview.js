@@ -89,19 +89,18 @@ class DBOverview extends React.Component{
 	render(){
 		return(
 		<div id="overview">
-		{(this.state.visits)?
-			(<React.Fragment>
-			<div id="users">
-			{this.usersPanel()}
-			</div>
-			<div id="database">
-			{this.databasePanel()}
-			</div>
-			<div id="visits">
-			{this.visitsPanel()}
-			</div>
-			</React.Fragment>):
-			""
+		{(this.state.visits.length)?
+			<React.Fragment>
+				<div id="users">
+				{this.usersPanel()}
+				</div>
+				<div id="database">
+				{this.databasePanel()}
+				</div>
+				<div id="visits">
+				{this.visitsPanel()}
+				</div>
+			</React.Fragment>:""
 		}
 		</div>
 		)
