@@ -14,15 +14,15 @@
 }
 .grid{
 	display: grid;
-	grid-template-columns: repeat(auto-fill,minmax(400px, 410px));
+	grid-template-columns: repeat(auto-fill,minmax(420px, 430px));
 }
 @media (hover: none) {
 	.grid{
-	grid-template-columns: repeat(auto-fill,minmax(270px,280px));
+	grid-template-columns: repeat(auto-fill,minmax(280px,300px));
 	}
 }
 @media (max-width: 500px){
 	.grid{
-	grid-template-columns: repeat(auto-fill,minmax(270px,280px));
+	grid-template-columns: repeat(auto-fill,minmax(280px,300px));
 	}
 }
