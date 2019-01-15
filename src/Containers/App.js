@@ -7,7 +7,7 @@ import Top from '../Components/Top/Top'; import Scroller from '../Components/Hom
 import Bottom from '../Components/Bottom'; import Add from '../Components/Add/Add'; 
 import Home from '../Components/Home/Home';import Card from '../Components/Main/Card'; 
 import DisplayPages from '../Components/Main/DisplayPages'; import UserPanel from "../Components/User/UserPanel";
-import DBOverview from '../Components/User';
+import DBOverview from '../Components/User/DBOverview';
 import './App.css';
 import {windowResize, changePage, setPagesDatabase, setLoginState} from  '../State/actions.js'
 
