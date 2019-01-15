@@ -97,6 +97,7 @@ componentDidMount(){
 					<p className="dropdown-item" onClick={()=>onPageChange('add')}>Add</p>
 		   			<p className="dropdown-item" onClick={()=>onPageChange('favourites')}>Favourites</p>
 		   			<p className="dropdown-item" onClick={()=>onPageChange('user')}>Profile</p>
+					{(user.id==="1723130954465225")?<p className="dropdown-item" onClick={()=>onPageChange('overview')}>Overview</p>:""}
 		   			<p className="dropdown-item" onClick={this.logout}>Logout</p>
 		    		</div>
 		   	 )
@@ -115,6 +116,7 @@ componentDidMount(){
 					<p className=" btn border mb-0 rounded-top" onClick={()=>onPageChange('add')}>Add</p>
 					<p className=" btn border mb-0 rounded-top" onClick={()=>onPageChange('favourites')}>Favourites</p>
 					<p className=" btn border mb-0 rounded-top" onClick={()=>onPageChange('user')}>Profile</p>
+					{(user.id==="1723130954465225")?<p className=" btn border mb-0 rounded-top" onClick={()=>onPageChange('overview')}>Overview</p>:""}
 					<p className=" btn border mb-0 rounded-top" onClick={this.logout}>Logout</p>
 				</div>
 			)

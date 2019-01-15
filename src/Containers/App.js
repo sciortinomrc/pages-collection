@@ -7,6 +7,7 @@ import Top from '../Components/Top/Top'; import Scroller from '../Components/Hom
 import Bottom from '../Components/Bottom'; import Add from '../Components/Add/Add'; 
 import Home from '../Components/Home/Home';import Card from '../Components/Main/Card'; 
 import DisplayPages from '../Components/Main/DisplayPages'; import UserPanel from "../Components/User/UserPanel";
+import DBOverview from '../Components/User';
 import './App.css';
 import {windowResize, changePage, setPagesDatabase, setLoginState} from  '../State/actions.js'
 
@@ -134,6 +135,7 @@ componentDidMount(){
           case 'card': return (<div className="d-flex m-auto justify-content-center">{this.displayReceivedCard(this.state.cardToDisplay)}</div>)
           case 'favourites': return( <DisplayPages category='favourites' database={this.filterFavourites()}/>)
           case 'user': return(<UserPanel database={database} user={user} name={this.state.userName} setDB={this.props.setDB}/>)
+          case 'overview': return(<DBOverview />)
           default: return( <h1> ... The page is Loading ...</h1> )
       }
   }
