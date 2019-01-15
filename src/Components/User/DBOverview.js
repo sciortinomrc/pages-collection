@@ -23,24 +23,24 @@ class DBOverview extends React.Component{
 	}
 	usersPanel=()=>{
 		return(
-			<React.Fragment>
+			<div>
 			<div><div>USER ID</div>
 			<div>USER FAVOURITES COUNT</div></div>
 				{
 					this.state.users.map(user=>{
 						return(
 							<div>
-								<div> user.id </div>
-								<div> user.fav.length </div>
+								<div> {user.id} </div>
+								<div> {user.fav.length} </div>
 							</div>
 						)
 					})
 				}
-			</React.Fragment>)
+			</div>)
 	}
 	databasePanel=()=>{
 		return(
-			<React.Fragment>
+			<div>
 			<div><div>PAGE ID</div>
 			<div>PAGE NAME</div>
 			<div>PAGE PICTURE</div>
@@ -54,37 +54,37 @@ class DBOverview extends React.Component{
 					this.state.database.map(page=>{
 						return(
 							<div>
-								<div> page.id </div>
-								<div> page.name </div>
+								<div> {page.id} </div>
+								<div> {page.name} </div>
 								<div><img src={page.picture} alt /> </div>
 								<div> <a href={page.url} target="_blank">LINK</a></div>
-								<div> page.favourite</div>
-								<div> page.country</div>
-								<div> page.category</div>
-								<div> page.createdby</div>
-								<div> page.flag</div>
+								<div> {page.favourite}</div>
+								<div> {page.country}</div>
+								<div> {page.category}</div>
+								<div> {page.createdby}</div>
+								<div> {page.flag}</div>
 							</div>
 						)
 					})
 				}
-			</React.Fragment>)
+			</div>)
 	}
 	visitsPanel=()=>{
 		return(
-			<React.Fragment>
+			<div>
 			<div><div>DATE</div>
 			<div>VISITORS</div></div>
 				{
 					this.state.visits.map(visit=>{
 						return(
 							<div>
-								<div> visit.date </div>
-								<div> visit.visit </div>
+								<div> {visit.date} </div>
+								<div> {visit.visit} </div>
 							</div>
 						)
 					})
 				}
-			</React.Fragment>)
+			</div>)
 	}
 	render(){
 		return(

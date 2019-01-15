@@ -1,8 +1,9 @@
-#overview{
+#overview, #overview div{
 	display: flex;
 	flex-direction: column;
 }
-#overview div{
+
+#overview div div{
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(300px,1fr));
 	border: 1px solid black;
