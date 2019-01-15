@@ -90,8 +90,8 @@ class DBOverview extends React.Component{
 		return(
 		<div id="overview">
 		{(this.state.visits)?
-			<React.Fragment>
-			(<div id="users">
+			(<React.Fragment>
+			<div id="users">
 			{this.usersPanel()}
 			</div>
 			<div id="database">
