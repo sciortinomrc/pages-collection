@@ -11,4 +11,10 @@
 }
 #database div div{
 	grid-template-columns: repeat(9,1fr);
+	grid-template-rows: 1fr;
+	border: 1px solid dashed;
+}
+#overview img{
+	height: 60px;
+	border-radius: 50%;
 }
