@@ -12,7 +12,7 @@ const Home=({...props})=>{
 			filteredCategories.map((category,i)=>{
 				let calcWidth=props.db.filter(card=>card.category===category).length;
 				calcWidth=(calcWidth>4)?4:calcWidth
-				const c=(window.innerWidth<=500)?286:416;
+				const c=(window.innerWidth<=500)?290:430;
 				if(c!==w) setW(c);
 				return(
 
