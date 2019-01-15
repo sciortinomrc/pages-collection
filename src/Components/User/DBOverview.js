@@ -23,7 +23,7 @@ class DBOverview extends React.Component{
 	}
 	usersPanel=()=>{
 		return(
-			<div>
+			<React.Fragment>
 			<div><div>USER ID</div>
 			<div>USER FAVOURITES COUNT</div></div>
 				{
@@ -36,11 +36,11 @@ class DBOverview extends React.Component{
 						)
 					})
 				}
-			</div>)
+			</React.Fragment>)
 	}
 	databasePanel=()=>{
 		return(
-			<div>
+			<React.Fragment>
 			<div><div>PAGE ID</div>
 			<div>PAGE NAME</div>
 			<div>PAGE PICTURE</div>
@@ -67,11 +67,11 @@ class DBOverview extends React.Component{
 						)
 					})
 				}
-			</div>)
+			</React.Fragment>)
 	}
 	visitsPanel=()=>{
 		return(
-			<div>
+			<React.Fragment>
 			<div><div>DATE</div>
 			<div>VISITORS</div></div>
 				{
@@ -84,7 +84,7 @@ class DBOverview extends React.Component{
 						)
 					})
 				}
-			</div>)
+			</React.Fragment>)
 	}
 	render(){
 		return(
@@ -94,9 +94,11 @@ class DBOverview extends React.Component{
 				<div id="users">
 				{this.usersPanel()}
 				</div>
+				<hr />
 				<div id="database">
 				{this.databasePanel()}
 				</div>
+				<hr />
 				<div id="visits">
 				{this.visitsPanel()}
 				</div>
