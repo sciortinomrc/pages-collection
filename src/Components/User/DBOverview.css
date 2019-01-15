@@ -5,3 +5,10 @@
 #overview div{
 	display: inline-block;
 }
+#overview div div{ display: grid }
+#users div div, #visits div div{
+	grid-template-columns: repeat(2,1fr);
+}
+#database div div{
+	grid-template-columns: repeat(9,1fr);
+}
