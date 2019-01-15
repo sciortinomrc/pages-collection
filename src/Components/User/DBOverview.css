@@ -3,19 +3,30 @@
 	flex-direction: column;
 }
 #overview div{
-	display: inline-block;
-}
-#overview div div{ display: grid }
-#overview div div div
-#users div div, #visits div div{
-	grid-template-columns: repeat(2,1fr);
-}
-#database div div{
-	grid-template-columns: repeat(9,1fr);
-	grid-template-rows: 1fr;
-	border: 1px dashed black;
+	padding: 20px 0px;
 }
 #overview img{
 	height: 60px;
 	border-radius: 50%;
+}
+#overview div div{
+	display: grid;
+	padding: 0px 0px;
+}
+#overview div div div{
+	border: 1px solid black;
+	padding: 5px 0px;
+}
+#overview #users div{
+	grid-template-columns: repeat(9,200px);
+}
+#overview #database div{
+	grid-template-columns: repeat(9,200px);
+	word-break: break-word;
+}
+#overview #visits div{
+	grid-template-columns: repeat(9,200px);
+}
+h1{
+	padding-top: 30px;
 }
