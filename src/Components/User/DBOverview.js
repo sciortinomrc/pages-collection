@@ -90,6 +90,7 @@ class DBOverview extends React.Component{
 		return(
 		<div id="overview">
 		{(this.state.visits)?
+			<React.Fragment>
 			(<div id="users">
 			{this.usersPanel()}
 			</div>
@@ -98,7 +99,8 @@ class DBOverview extends React.Component{
 			</div>
 			<div id="visits">
 			{this.visitsPanel()}
-			</div>):
+			</div>
+			</React.Fragment>):
 			""
 		}
 		</div>
