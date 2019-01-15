@@ -90,7 +90,7 @@ class DBOverview extends React.Component{
 		return(
 		<div id="overview">
 			<div id="users">
-			{this.userPanel()}
+			{this.usersPanel()}
 			</div>
 			<div id="database">
 			{this.databasePanel()}
