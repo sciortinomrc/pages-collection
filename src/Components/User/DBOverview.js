@@ -21,7 +21,7 @@ class DBOverview extends React.Component{
 			})
 		})
 	}
-	const usersPanel=()=>{
+	usersPanel=()=>{
 		return(
 			<React.Fragment>
 			<div><div>USER ID</div>
@@ -38,7 +38,7 @@ class DBOverview extends React.Component{
 				}
 			</React.Fragment>)
 	}
-	const databasePanel=()=>{
+	databasePanel=()=>{
 		return(
 			<React.Fragment>
 			<div><div>PAGE ID</div>
@@ -69,7 +69,7 @@ class DBOverview extends React.Component{
 				}
 			</React.Fragment>)
 	}
-	const visitsPanel=()=>{
+	visitsPanel=()=>{
 		return(
 			<React.Fragment>
 			<div><div>DATE</div>
