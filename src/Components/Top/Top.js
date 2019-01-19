@@ -146,13 +146,13 @@ componentDidMount(){
 		const {onPageChange, displaySingleCard}=this.props;
 		let limit=0;
 		return(
-			<div className="d-flex col pt-3 p-0 justify-content-end dd">	
+			<div className="d-flex col p-0 justify-content-end dd">	
 				{this.props.userName?<p className=" btn mb-0 rounded-right text-center">Welcome back, {this.props.userName}</p>:""}
 				<p className=" btn border mb-0 rounded-top " onClick={()=>onPageChange('home')}>Home</p>
 				<p className=" btn border mb-0 rounded-top " onClick={()=>onPageChange('display','all')}>Pages</p> 
 				{this.loggedXL()}
 				<div className="p-0 m-0 set-height ">
-			  		<input id="search" type="search"  className=" btn mb-0 rounded-right search text-center" placeholder="Search..." onChange={this.searchPage}/>
+			  		<input id="search" type="search"  className=" btn mb-0 search text-center" placeholder="Search..." onChange={this.searchPage}/>
 			  		<div id="hidden" className="d-none p-absolute set-width">
 			  			{	
 			  				this.state.cards.map(card=>{
@@ -172,18 +172,19 @@ componentDidMount(){
 		const {size, onPageChange, displaySingleCard}=this.props;
 		if(size[0]<1000){
 			return (
-			<div className=" dropdown d-flex col pt-3 p-0 justify-content-end navbar-light" >
-				<div className="p-0 m-0 set-height ">
+			<div id="main-navigation" className=" dropdown d-flex col p-0 justify-content-end navbar-light" >
+				<div id="small-navigation" className="p-0 m-0 set-height ">
 					{this.props.userName?<p className=" btn mb-0 rounded-right text-center">Welcome back, {this.props.userName}</p>:""}
-			  		<input id="search" type="search" className=" btn mb-0 rounded-right search text-center" placeholder="Search..." onChange={this.searchPage} />
-			  		<div id="hidden" className="d-none p-absolute set-width">
-			  			{	
-			  				this.state.cards.map(card=>{
-			  				if(limit>4) return undefined;
-			  				limit ++;
-							return <p key={card.id} onClick={()=>{onPageChange('card');displaySingleCard(card.id,card.name,card.url,card.picture,card.country, card.category, card.favourite);}} className="plain-link">{card.name}</p>
-							})	
-			  			}
+			  		<div><input id="search" type="search" className=" btn mb-0 search text-center" placeholder="Search..." onChange={this.searchPage} />
+				  		<div id="hidden" className="d-none p-absolute set-width">
+				  			{	
+				  				this.state.cards.map(card=>{
+				  				if(limit>4) return undefined;
+				  				limit ++;
+								return <p key={card.id} onClick={()=>{onPageChange('card');displaySingleCard(card.id,card.name,card.url,card.picture,card.country, card.category, card.favourite);}} className="plain-link">{card.name}</p>
+								})	
+				  			}
+				  		</div>
 			  		</div>
 		  		</div>
 		  		<div className="h-100">
@@ -201,7 +202,7 @@ componentDidMount(){
 	//definition and rendering
 	render(){
 			return(
-				<div className="container header pt-5 box-shadow">
+				<div className="container header box-shadow">
 					<div className="d-inline-flex w-100">
 						<div id="logo" className="shadow">P</div>
 						{this.displayResponsiveTop()}
