@@ -172,9 +172,9 @@ componentDidMount(){
 		const {size, onPageChange, displaySingleCard}=this.props;
 		if(size[0]<1000){
 			return (
-			<div id="main-navigation" className=" dropdown d-flex col p-0 justify-content-end navbar-light" >
+			<div id="main-navigation" >
+				{this.props.userName?<p className=" btn mb-0 rounded-right text-center">Welcome back, {this.props.userName}</p>:""}
 				<div id="small-navigation" className="p-0 m-0 set-height ">
-					{this.props.userName?<p className=" btn mb-0 rounded-right text-center">Welcome back, {this.props.userName}</p>:""}
 			  		<div><input id="search" type="search" className=" btn mb-0 search text-center" placeholder="Search..." onChange={this.searchPage} />
 				  		<div id="hidden" className="d-none p-absolute set-width">
 				  			{	
@@ -186,11 +186,11 @@ componentDidMount(){
 				  			}
 				  		</div>
 			  		</div>
+			  		<div>
+					  <button id="dropdown" className=" dropdown navbar-light bg-light btn border mb-0 p-0 rounded-right bg h-100" onClick={this.dropdown}><i className="fas fa-bars pl-3 pr-3"></i> </button>
+					  {this.show()}
+					 </div>
 		  		</div>
-		  		<div className="h-100">
-				  <button id="dropdown" className="bg-light btn border mb-0 p-0 rounded-right bg h-100" onClick={this.dropdown}><i className="fas fa-bars pl-3 pr-3"></i> </button>
-				  {this.show()}
-				 </div>
 			</div>
 			)
 		}else{
