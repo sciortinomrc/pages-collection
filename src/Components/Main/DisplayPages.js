@@ -25,11 +25,17 @@ const mapDispatchToProps=dispatch=>{
 
 
 class DisplayPages extends React.Component{
+	constructor(){
+		super()
+		this.state={
+			firstRender: true
+		}
+	}
 //set filter
 	setFilter=(event,filter)=>{
 		switch(event.target.parentNode.id){
-			case 'hidden-country': {this.props.setCountryFilter(filter); event.target.parentNode.classList.toggle('d-none'); break;}
-			case 'hidden-category': {this.props.setCategoryFilter(filter); event.target.parentNode.classList.toggle('d-none'); break;}
+			case 'hidden-country': {this.props.setCountryFilter(filter); event.target.parentNode.style.display=""; break;}
+			case 'hidden-category': {this.props.setCategoryFilter(filter); event.target.parentNode.style.display=""; break;}
 			default: break;
 		}
 	}
@@ -40,7 +46,7 @@ class DisplayPages extends React.Component{
 			<p key="nofilter" id="nofilter" onClick={(event)=>this.setFilter(event,"")}>No Filter</p>
 			  	{
 					this.props.filters.countryFilters.map((country,i)=>{
-						return<p key={country+i} id={country} onClick={(event)=>this.setFilter(event,country)}>{country}</p>
+						return<p key={country+i} id={country.replace(" ","_")} onClick={(event)=>this.setFilter(event,country)}>{country}</p>
 					})					
 			  	}
 		  	</div>
@@ -54,7 +60,7 @@ class DisplayPages extends React.Component{
 				<p key="nocateogory" id="noCategory"  onClick={(event)=>this.setFilter(event,'')}>No filter</p>
 			  	{
 					this.props.filters.categoryFilters.map((category,i)=>{
-						return<p key={category+i} id={category}  onClick={(event)=>this.setFilter(event,category)}>{category}</p>
+						return<p key={category+i} id={category.replace(" ","_")}  onClick={(event)=>this.setFilter(event,category)}>{category}</p>
 					})					
 			  	}
 		  	</div>
@@ -65,31 +71,37 @@ class DisplayPages extends React.Component{
 		const hiddenCategory=document.getElementById('hidden-category');
 		const hiddenCountry=document.getElementById('hidden-country');
 		const button=event.tagName==='I'?event.parentNode:event
-		if(button.id==='filter-country')hiddenCategory.classList.add('d-none')
-		if(button.id==='filter-category')hiddenCountry.classList.add('d-none')
-		button.parentNode.children[1].classList.contains('d-none')?
-			button.parentNode.children[1].classList.remove('d-none'):
-			button.parentNode.children[1].classList.add('d-none')
+		if(button.id==='filter-country'){
+			hiddenCategory.style.display="";
+			hiddenCountry.style.display="flex"
+		}
+		if(button.id==='filter-category'){
+			hiddenCountry.style.display="";
+			hiddenCategory.style.display="flex";
+		}
+		button.parentNode.children[1].style.display===""?
+			button.parentNode.children[1].style.display="flex":
+			button.parentNode.children[1].style.display="";
 	}
 
 	nameSearch=(event)=>{
 		this.props.setSearchfield(event.target.value)
 	}
 dropdown=(event)=>{
-					if(document.getElementById('display-pages')){		
-						const hiddenCategory=document.getElementById('hidden-category');
-						const hiddenCountry=document.getElementById('hidden-country');
-						if(
-							event.target.id!==hiddenCategory.id &&
-							event.target.id!==hiddenCountry.id &&
-							event.target.id!=='filter-country' && 
-							event.target.id!=='filter-category' && event.target.tagName!=='I')
-							{
-								hiddenCountry.classList.add('d-none');
-								hiddenCategory.classList.add('d-none')
-						}
-					}
-				}
+	if(document.getElementById('display-pages')){		
+		const hiddenCategory=document.getElementById('hidden-category');
+		const hiddenCountry=document.getElementById('hidden-country');
+		if(
+			event.target.id!==hiddenCategory.id &&
+			event.target.id!==hiddenCountry.id &&
+			event.target.id!=='filter-country' && 
+			event.target.id!=='filter-category' && event.target.tagName!=='I')
+			{
+				hiddenCountry.style.display="";
+				hiddenCategory.style.display="";
+		}
+	}
+}
 	removeFilters=()=>{
 		this.props.setCategoryFilter("");
 		this.props.setCountryFilter("");
@@ -98,7 +110,13 @@ dropdown=(event)=>{
 		search.value=""
 	}
 	render(){
-		const {database}=this.props;
+		const {database, category}=this.props;
+		let cat=category;
+		if(cat && this.state.firstRender===true){
+			this.props.setCategoryFilter(cat,"");
+			this.setState({firstRender: false})
+		}
+		else cat="";
 		return(
 			<div id="display-pages">
 				<div id="filter-buttons" >
@@ -139,7 +157,7 @@ dropdown=(event)=>{
 						</ErrorBoundary>)
 				}
 			</div>
-			)
+		)
 	}
 }
 export default connect(mapStateToProps,mapDispatchToProps)(DisplayPages);
