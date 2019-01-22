@@ -156,7 +156,7 @@ componentDidMount(){
 		const {onPageChange, displaySingleCard}=this.props;
 		return(
 		<div id="main-navigation" >
-			{this.props.userName?<p id="show-name">Welcome back, {this.props.userName}</p>:<p id="show-name">Welcome back, Marco </p>}
+			{this.props.userName?<p id="show-name">Welcome back, {this.props.userName}</p>:""}
 			<div id="small-navigation" >
 		  		<div>
 					{this.showXL()}
@@ -181,6 +181,11 @@ componentDidMount(){
 	}
 	//definition and rendering
 	render(){
+		const item=document.getElementById("large-nav");
+		if(props.user){
+			item.lastChild.firstChild.style.borderRadius="0px";
+		}
+		else item.lastChild.firstChild.style.borderRadius="";
 		return(
 			<div id="container">
 				<div id="logo"><p>P</p></div>
