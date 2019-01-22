@@ -182,7 +182,7 @@ componentDidMount(){
 	//definition and rendering
 	render(){
 		const item=document.getElementById("large-nav");
-		if(props.user){
+		if(this.props.user){
 			item.lastChild.firstChild.style.borderRadius="0px";
 		}
 		else item.lastChild.firstChild.style.borderRadius="";
