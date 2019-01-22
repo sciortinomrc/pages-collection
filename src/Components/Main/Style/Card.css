@@ -53,6 +53,9 @@
 	text-decoration: none;
 	color: white;
 }
+#star{
+	cursor: pointer;
+}
 #card #favs{
 	background-color: white;
 	color: #4267b2;

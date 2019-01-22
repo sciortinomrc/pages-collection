@@ -46,7 +46,7 @@ class Card extends Component{
 						</React.Fragment>
 				 		)
 				 	:
-						<React.Fragment><p id="star" >&#9733;</p><p >{favourites}</p></React.Fragment>
+						<React.Fragment><p id="star" style={{cursor:"default"}}>&#9733;</p><p >{favourites}</p></React.Fragment>
 				 }
 				 
 				</div>

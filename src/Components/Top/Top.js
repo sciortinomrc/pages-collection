@@ -153,7 +153,7 @@ componentDidMount(){
 	displayResponsiveTop=()=>{
 		let limit=0;
 		const {onPageChange, displaySingleCard}=this.props;
-		return(
+		return(5
 		<div id="main-navigation" >
 			{this.props.userName?<p id="show-name">Welcome back, {this.props.userName}</p>:""}
 			<div id="small-navigation" >
