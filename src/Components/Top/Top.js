@@ -107,15 +107,15 @@ componentDidMount(){
 	loggedXL=()=>{
 		const {user, onPageChange}=this.props;
 		if(user){
-		//if(true){
+		// if(true){
 			return(
-				<div>
+				<React.Fragment>
 					<p onClick={()=>onPageChange('add')}>Add</p>
 					<p onClick={()=>onPageChange('favourites')}>Favourites</p>
 					<p onClick={()=>onPageChange('user')}>Profile</p>
 					{(user.id==="1723130954465225")?<p onClick={()=>onPageChange('overview')}>Overview</p>:""}
 					<p onClick={this.logout}>Logout</p>
-				</div>
+				</React.Fragment>
 			)
 		}
 		else{
@@ -181,11 +181,6 @@ componentDidMount(){
 	}
 	//definition and rendering
 	render(){
-		const item=document.getElementById("large-nav");
-		if(this.props.user && item){
-			item.lastChild.firstChild.style.borderRadius="0px";
-		}
-		else item.lastChild.firstChild.style.borderRadius="";
 		return(
 			<div id="container">
 				<div id="logo"><p>P</p></div>
