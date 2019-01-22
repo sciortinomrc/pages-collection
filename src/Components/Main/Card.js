@@ -25,28 +25,28 @@ class Card extends Component{
 		return(
 
 				
-			<div id="card" className="wrapper d-flex flex-column mt-1 ml-2 mr-0 rounded pop" title={category+", "+country}>
-				<div className="background1">
-					<div className='top d-flex '>
-					<p className=" mr-1 w-100 word-wrap p-1"><a href={url} className="no-deco" target='_blank' rel="noopener noreferrer">{name}</a></p>
-					</div>
+			<div id="card" title={category.toUpperCase()+", "+country.toUpperCase()}>
+				<div id="img-wrapper" >
+					<img alt=""  src={picture} height="100%" width="auto" />
+					<p > </p>
 				</div>
-				<div className="photo">
-						<img alt=""  src={picture} height="100%" width="auto" className=" flex m-auto" />
+				<div >
+					<p ><a href={url} target='_blank' rel="noopener noreferrer">{name}</a></p>
 				</div>
-				<div className="likes d-inline-flex justify-content-end p-0">
+				<div id="favs" >
 				 {
 				 	this.props.user?(
-						<div id={id} className=" d-inline-flex justify-content-center align-content-center p-0 h-100 pr-2" >
+						<React.Fragment>
 							{
 								this.props.user.fav.includes(id)?
-									<p id="star" className='star pointer fav' onClick={this.toggleFavourite}>&#9733;</p>:
-									<p id="star" className='star pointer' onClick={this.toggleFavourite}>&#9733;</p>
+									<p id="star" onClick={this.toggleFavourite} style={{color: 'yellow'}}>&#9733;</p>:
+									<p id="star" onClick={this.toggleFavourite}>&#9733;</p>
 							}
-							<p className="star ">{this.props.favourites}</p></div>
+							<p>{this.props.favourites}</p>
+						</React.Fragment>
 				 		)
 				 	:
-						<div id={id} className="d-inline-flex justify-content-center pr-2"><p id="star" className='star mt-0 pt-0'>&#9733;</p><p className="star">{favourites}</p></div>	
+						<React.Fragment><p id="star" >&#9733;</p><p >{favourites}</p></React.Fragment>
 				 }
 				 
 				</div>

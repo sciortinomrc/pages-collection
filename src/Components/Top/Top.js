@@ -37,7 +37,7 @@ componentDidMount(){
 			const element=event.target;
 			if(element.id==="logout" || (element!==dropdownDiv && 
 				element.id!=="dropdown" && element.parentNode.id!=="dropdown"))
-				dropdownDiv.classList.add('d-none')
+				dropdownDiv.style.display="";
 		}
 	})
 	document.addEventListener('click',(eventClick)=>{
@@ -50,14 +50,11 @@ componentDidMount(){
 //open dropdown menu
 	dropdown=(event)=>{
 		const dropdownDiv=document.getElementById('dropdown-div');
-		const button=event.target.tagName==='I'?event.target.parentNode:event.target
+		const button=event.target.tagName==='I'?event.target.parentNode:event.target;
 		if(button.id==='dropdown'){
-			if(dropdownDiv.classList.contains('d-none'))	dropdownDiv.classList.add('d-none')
-			else dropdownDiv.classList.remove('d-none')
+			if(dropdownDiv.style.display==="")dropdownDiv.style.display='flex'
+			else dropdownDiv.style.display=''
 		}
-		button.parentNode.children[1].classList.contains('d-none')?
-			button.parentNode.children[1].classList.remove('d-none'):
-			button.parentNode.children[1].classList.add('d-none')
 	}
 //searchPage
 	searchPage=(event)=>{
@@ -112,17 +109,17 @@ componentDidMount(){
 		if(user){
 		//if(true){
 			return(
-				<div className=" p-0 m-0">
-					<p className=" btn border mb-0 rounded-top" onClick={()=>onPageChange('add')}>Add</p>
-					<p className=" btn border mb-0 rounded-top" onClick={()=>onPageChange('favourites')}>Favourites</p>
-					<p className=" btn border mb-0 rounded-top" onClick={()=>onPageChange('user')}>Profile</p>
-					{(user.id==="1723130954465225")?<p className=" btn border mb-0 rounded-top" onClick={()=>onPageChange('overview')}>Overview</p>:""}
-					<p className=" btn border mb-0 rounded-top" onClick={this.logout}>Logout</p>
+				<div>
+					<p onClick={()=>onPageChange('add')}>Add</p>
+					<p onClick={()=>onPageChange('favourites')}>Favourites</p>
+					<p onClick={()=>onPageChange('user')}>Profile</p>
+					{(user.id==="1723130954465225")?<p onClick={()=>onPageChange('overview')}>Overview</p>:""}
+					<p onClick={this.logout}>Logout</p>
 				</div>
 			)
 		}
 		else{
-			return <p className=" btn border mb-0 rounded-top" onClick={this.props.fblogin}><img id="fb" src={fbwhite} alt="Facebook Logo"/>Login with Facebook</p>
+			return <p onClick={this.props.fblogin}><img id="fb" src={fbwhite} alt="Facebook Logo"/>Login with Facebook</p>
 		}
 			
 	}
@@ -130,7 +127,7 @@ componentDidMount(){
 	show=()=>{
 		const {onPageChange}=this.props;
 		return(
-			<div id="dropdown-div" className="position-absolute d-none">
+			<div id="dropdown-div" >
 		 		    <p className="dropdown-item" onClick={()=>onPageChange('home')}>Home</p>
 		 		    <p className="dropdown-item" onClick={()=>onPageChange('display','all')}>All Pages</p>
 		 		    <div className="dropdown-divider"></div>
@@ -143,17 +140,28 @@ componentDidMount(){
 		this.props.fblogin()
 	}
 	showXL=()=>{
-		const {onPageChange, displaySingleCard}=this.props;
-		let limit=0;
+		const {onPageChange}=this.props;
 		return(
-			<div className="d-flex col p-0 justify-content-end dd">	
-				{this.props.userName?<p className=" btn mb-0 rounded-right text-center">Welcome back, {this.props.userName}</p>:""}
-				<p className=" btn border mb-0 rounded-top " onClick={()=>onPageChange('home')}>Home</p>
-				<p className=" btn border mb-0 rounded-top " onClick={()=>onPageChange('display','all')}>Pages</p> 
+			<div id="large-nav">	
+				{this.props.userName?<p >Welcome back, {this.props.userName}</p>:""}
+				<p onClick={()=>onPageChange('home')}>Home</p>
+				<p onClick={()=>onPageChange('display','all')}>Pages</p> 
 				{this.loggedXL()}
-				<div className="p-0 m-0 set-height ">
-			  		<input id="search" type="search"  className=" btn mb-0 search text-center" placeholder="Search..." onChange={this.searchPage}/>
-			  		<div id="hidden" className="d-none p-absolute set-width">
+			</div>
+			)
+	}
+	//responsive function
+	displayResponsiveTop=()=>{
+		let limit=0;
+		const {onPageChange, displaySingleCard}=this.props;
+		return(
+		<div id="main-navigation" >
+			{this.props.userName?<p id="show-name">Welcome back, {this.props.userName}</p>:<p id="show-name">Welcome back, Marco </p>}
+			<div id="small-navigation" >
+		  		<div>
+					{this.showXL()}
+					<input id="search" type="search" className="" placeholder="Search..." onChange={this.searchPage} />
+			  		<div id="hidden" className="">
 			  			{	
 			  				this.state.cards.map(card=>{
 			  				if(limit>4) return undefined;
@@ -163,53 +171,23 @@ componentDidMount(){
 			  			}
 			  		</div>
 		  		</div>
-			</div>
-			)
-	}
-	//responsive function
-	displayResponsiveTop=()=>{
-		let limit=0;
-		const {size, onPageChange, displaySingleCard}=this.props;
-		if(size[0]<1000){
-			return (
-			<div id="main-navigation" >
-				{this.props.userName?<p className=" btn mb-0 rounded-right text-center">Welcome back, {this.props.userName}</p>:""}
-				<div id="small-navigation" className="p-0 m-0 set-height ">
-			  		<div><input id="search" type="search" className=" btn mb-0 search text-center" placeholder="Search..." onChange={this.searchPage} />
-				  		<div id="hidden" className="d-none p-absolute set-width">
-				  			{	
-				  				this.state.cards.map(card=>{
-				  				if(limit>4) return undefined;
-				  				limit ++;
-								return <p key={card.id} onClick={()=>{onPageChange('card');displaySingleCard(card.id,card.name,card.url,card.picture,card.country, card.category, card.favourite);}} className="plain-link">{card.name}</p>
-								})	
-				  			}
-				  		</div>
-			  		</div>
-			  		<div>
-					  <button id="dropdown" className=" dropdown navbar-light bg-light btn border mb-0 p-0 rounded-right bg h-100" onClick={this.dropdown}><i className="fas fa-bars pl-3 pr-3"></i> </button>
-					  {this.show()}
-					 </div>
-		  		</div>
-			</div>
-			)
-		}else{
-			return(
-				this.showXL()
-			)
-		}
+		  		<div>
+				  <button id="dropdown" className=" dropdown navbar-light bg-light" onClick={this.dropdown}><i className="fas fa-bars"></i> </button>
+				  {this.show()}
+				 </div>
+	  		</div>
+		</div>
+		)
 	}
 	//definition and rendering
 	render(){
-			return(
-				<div className="container header box-shadow">
-					<div className="d-inline-flex w-100">
-						<div id="logo" className="shadow">P</div>
-						{this.displayResponsiveTop()}
-					</div>
-				</div>
-			)
-		}	
+		return(
+			<div id="container">
+				<div id="logo"><p>P</p></div>
+				{this.displayResponsiveTop()}
+			</div>
+		)
+	}	
 }
 //export default Top;
 export default connect(mapStateToProps, mapDispatchToProps)(Top);

@@ -1,3 +1,9 @@
+#user-panel{
+	position: relative;
+	overflow: hidden;
+	padding: 10px;
+}
+
 .profileSmallCard{
 	display: grid;
 	align-items: center;
@@ -5,6 +11,7 @@
 	cursor: pointer;
 }
 .commands{
+	text-align: center;
 	display: none;
 	grid-template-columns: 1fr 1fr;
 	grid-column-gap: 0px;
@@ -27,7 +34,7 @@
 	width: 180px;
 	z-index: 0;
 }
-.profileSmallCard img, #userPic{
+.profileSmallCard img, #user-pic{
 	height:100px;
 	border-radius: 100%;
 	border: 1px solid white;
@@ -40,7 +47,7 @@
 
 .description{
 	position: relative;
-	border: 3px solid #4267b2;
+	border: 2px solid #4267b2;
 	left:-50px;
 	display: flex;
 	flex-direction: column;

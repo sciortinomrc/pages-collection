@@ -136,7 +136,7 @@ componentDidMount(){
           case 'home':  return ( <Home category='categories' db={database} user={user} onPageChange={onPageChange}/>);
           case 'add': return( <Add readMessage={readStateMessage}/>)
           case 'display': return ( <DisplayPages category={category} database={database}/> )
-          case 'card': return (<div className="d-flex m-auto justify-content-center">{this.displayReceivedCard(this.state.cardToDisplay)}</div>)
+          case 'card': return (<div id="single-card">{this.displayReceivedCard(this.state.cardToDisplay)}</div>)
           case 'favourites': return( <DisplayPages category='favourites' database={this.filterFavourites()}/>)
           case 'user': return(<UserPanel database={database} user={user} name={this.state.userName} setDB={this.props.setDB}/>)
           case 'overview': return(<DBOverview />)
@@ -147,25 +147,23 @@ componentDidMount(){
 //render method
   render() {
     return(
-      <div className="App d-block w-100 m-0 p-0">
+      <div id="main">
         <Top fblogin={this.fbLogin} userName={this.state.userName} reset={this.resetState} />
-          <div className="d-flex flex-column pt">
-            {
-              (this.props.database.length)?
-              (
-               <ErrorBoundary>  
-                <Scroller>
+        {
+          (this.props.database.length)?
+          (
+            <Scroller>
+              <ErrorBoundary>
                 {this.returnSwitch()}
-                </Scroller>
-               </ErrorBoundary>
-                ):
-              (<div id="loading" className="display-flex full-screen">
-                <i className="fab icon-spin5 animate-spin margin-auto"></i>
-                <h1>Getting data from Facebook</h1>
-              </div>)
-            }  
-              <Bottom height={this.props.size[1]} />
-          </div>
+              </ErrorBoundary>
+            </Scroller>
+            ):
+          (<div id="loading" >
+            <i className="fab icon-spin5 animate-spin"></i>
+            <h1>Getting data from Facebook</h1>
+          </div>)
+        }  
+        <Bottom height={this.props.size[1]} />
       </div>
     )
   }

@@ -7,18 +7,14 @@ class ErrorBoundary extends Component{
 			hasError: false
 		}
 	}
-
-	static getDerivedStateFromError(error) {
-    return { hasError: true };
-  }
-
   componentDidCatch(error, info) {
-    console.log(error, info);
+  	this.setState({hasError:true})
+	console.log(error, info);
   }
 	render(){
 		if(this.state.hasError){
 			return(
-			<div className="d-flex m-auto w-75 text-center">
+			<div id="error">
 				<h1>Oooops... Something went wrong</h1><hr />
 				<p>If you are using IE, IE Mobile, Opera or Blackberry Browser this website might not work.</p><br />
 				<p>Try using a different browser. Thanks </p>

@@ -41,7 +41,8 @@ class PagesList extends React.Component{
 
 		if(!limit)this.returnFilters(filteredRecords)
 		return(
-			<div className=" height m-auto align-content-center grid">
+			<div id="pages-wrapper">
+			<div id="pages-list" style={{width: this.props.style}}>
 			{
 				filteredRecords.map(card=>{
 					return (
@@ -73,6 +74,7 @@ class PagesList extends React.Component{
 					)
 				})
 			}
+			</div>
 			</div>
 		)
 	}

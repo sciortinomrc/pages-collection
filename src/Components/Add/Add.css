@@ -1,27 +1,44 @@
-.wid{
-	width:100%;
+#add-wrapper{
+	width:85%!important;
+	margin:auto;
+	text-align: center;
+	margin-bottom:50px;
 }
-hr {
-	margin: 0.1px;
-    border: 0;
-    height: 1px;
-    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
-}
-.h-0{
-	height:10px;
-}
-.spacing{
+#add div{
+	display: flex;
+	flex-direction: column;
+	width: 50%;
 	margin: auto;
-	margin-top:5px;
+}
+#add div div{
+	width:100%;
+	border-radius:10px;
+	box-shadow: -4px 12px 12px rgba(0,0,0,0.1),4px 12px 12px rgba(0,0,0,0.1);
+}
+#add div input, #add div select{
+	text-align: center;
+	padding: 3px 0px;
+	border: none;
+	border-right: 1px solid rgba(0,0,0,0.4);
+	border-bottom: 1px solid rgba(0,0,0,0.4);
 }
 
-.w-15{
-	width: 15%;
+#add div :nth-child(1) :nth-child(1){
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
 }
+#add div :nth-child(2) input{
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+	background-color: #4267b2;
+	color: white;
+}
+
+
 select {
 	text-align-last: center;
-   text-align: center;
-   -ms-text-align-last: center;
-   -moz-text-align-last: center;
+	text-align: center;
+	-ms-text-align-last: center;
+	-moz-text-align-last: center;
 	background-color: white;
 }

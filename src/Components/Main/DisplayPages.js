@@ -2,7 +2,7 @@ import React from 'react';
 import PagesList from './PagesList';
 import {connect} from 'react-redux';
 import { setSearchfield, setCountryFilter, setCategoryFilter, setFilters } from '../../State/actions';
-import './Style/Scroller.css';
+import './../Home/Scroller.css';
 import ErrorBoundary from '../ErrorBoundary';
 const mapStateToProps=state=>{
 	return{
@@ -36,11 +36,11 @@ class DisplayPages extends React.Component{
 //country select filter
 	countrySelect=()=>{
 		return(
-			<div id="hidden-country" className="d-none p-absolute set-width border on-top">
-			<p key="nofilter" id="nofilter" className="link m-0 p-2 border" onClick={(event)=>this.setFilter(event,"")}>No Filter</p>
+			<div id="hidden-country" >
+			<p key="nofilter" id="nofilter" onClick={(event)=>this.setFilter(event,"")}>No Filter</p>
 			  	{
 					this.props.filters.countryFilters.map((country,i)=>{
-						return<p key={country+i} id={country} className="link m-0 p-2 border" onClick={(event)=>this.setFilter(event,country)}>{country}</p>
+						return<p key={country+i} id={country} onClick={(event)=>this.setFilter(event,country)}>{country}</p>
 					})					
 			  	}
 		  	</div>
@@ -50,11 +50,11 @@ class DisplayPages extends React.Component{
 //category select flter
 	categorySelect=()=>{
 		return(
-			<div id="hidden-category" className="d-none p-absolute border set-width on-top">
-				<p key="nocateogory" id="noCategory" className="link m-0 p-2 border" onClick={(event)=>this.setFilter(event,'')}>No filter</p>
+			<div id="hidden-category" >
+				<p key="nocateogory" id="noCategory"  onClick={(event)=>this.setFilter(event,'')}>No filter</p>
 			  	{
 					this.props.filters.categoryFilters.map((category,i)=>{
-						return<p key={category+i} id={category} className="link m-0 p-2 border" onClick={(event)=>this.setFilter(event,category)}>{category}</p>
+						return<p key={category+i} id={category}  onClick={(event)=>this.setFilter(event,category)}>{category}</p>
 					})					
 			  	}
 		  	</div>
@@ -101,22 +101,22 @@ dropdown=(event)=>{
 		const {database}=this.props;
 		return(
 			<div id="display-pages">
-				<div id="filterButtons" className="justify-content-center">
-					<input type="search" id="searchField" placeholder="Filter by Name" className="rounded w-auto text-center" onChange={this.nameSearch}/>
-					<div className="p-0 m-0 set-height btn-width">
-				  		<button id="filter-country"  className=" text-center btn-width" title="Filter By Country" onClick={(event)=>this.expandSelection(event.target,'filter-country')}>Country<i className="fas fa-filter"></i></button>
+				<div id="filter-buttons" >
+					<input type="search" id="searchField" placeholder="Filter by Name" onChange={this.nameSearch}/>
+					<React.Fragment>
+				  		<button id="filter-country"  title="Filter By Country" onClick={(event)=>this.expandSelection(event.target,'filter-country')}>Country<i className="fas fa-filter"></i></button>
 				  		{this.countrySelect()}
-			  		</div>
-			  		<div className="p-0 m-0 set-height btn-width">
-				  		<button id="filter-category"  className=" text-center btn-width" title="Filter By Category"  onClick={(event)=>this.expandSelection(event.target,'filter-country')}>Category<i className="fas fa-filter"></i></button>
+			  		</React.Fragment>
+			  		<React.Fragment>
+				  		<button id="filter-category"  title="Filter By Category"  onClick={(event)=>this.expandSelection(event.target,'filter-country')}>Category<i className="fas fa-filter"></i></button>
 				  		{this.categorySelect()}
-			  		</div>
-			  	<input type="button" value="Remove All" onClick={this.removeFilters}/>
+			  		</React.Fragment>
+			  		<input type="button" value="Remove All" onClick={this.removeFilters}/>
 			  	</div>
 				  	{
 					window.addEventListener('click', this.dropdown)
 					}
-				<hr className="mt-2 mb-5"/>
+				<hr />
 				{
 					this.props.userFavourites===undefined?
 						(
