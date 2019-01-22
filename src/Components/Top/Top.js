@@ -143,7 +143,6 @@ componentDidMount(){
 		const {onPageChange}=this.props;
 		return(
 			<div id="large-nav">	
-				{this.props.userName?<p >Welcome back, {this.props.userName}</p>:""}
 				<p onClick={()=>onPageChange('home')}>Home</p>
 				<p onClick={()=>onPageChange('display','all')}>Pages</p> 
 				{this.loggedXL()}
