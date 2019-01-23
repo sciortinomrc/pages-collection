@@ -36,8 +36,8 @@ componentDidMount(){
 			const dropdownDiv=document.getElementById("dropdown-div");
 			const element=event.target;
 			console.log(element)
-			if(element && (element.id==="logout" || (element!==dropdownDiv && 
-				element.id!=="dropdown" && element.parentNode.id!=="dropdown")))
+			if(element && element!==dropdownDiv && element.parentNode.id!=="dropdown"
+				&& element.id!=="dropdown" )
 				dropdownDiv.style.display="";
 		}
 	})
