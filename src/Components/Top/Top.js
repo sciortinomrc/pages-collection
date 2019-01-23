@@ -35,8 +35,7 @@ componentDidMount(){
 		if(document.getElementById("dropdown-div")){
 			const dropdownDiv=document.getElementById("dropdown-div");
 			const element=event.target;
-			console.log(element)
-			if(element && element!==dropdownDiv && element.parentNode.id!=="dropdown"
+			if(element && dropdownDiv.style.display.length && element!==dropdownDiv && element.parentNode.id!=="dropdown"
 				&& element.id!=="dropdown" )
 				dropdownDiv.style.display="";
 		}
@@ -84,6 +83,7 @@ componentDidMount(){
  		this.props.onLoginChange();
  		this.props.onPageChange('home')
  		window.FB.logout();
+ 		this.setState({user: null})
  	}
 
 //conditional rendering small responsive
