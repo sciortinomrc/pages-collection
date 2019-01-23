@@ -35,6 +35,7 @@ componentDidMount(){
 		if(document.getElementById("dropdown-div")){
 			const dropdownDiv=document.getElementById("dropdown-div");
 			const element=event.target;
+			console.log(element)
 			if(element && (element.id==="logout" || (element!==dropdownDiv && 
 				element.id!=="dropdown" && element.parentNode.id!=="dropdown")))
 				dropdownDiv.style.display="";
@@ -79,10 +80,10 @@ componentDidMount(){
 
 //logout
  	logout=()=>{
- 		window.FB.logout();
  		this.props.reset();
  		this.props.onLoginChange();
  		this.props.onPageChange('home')
+ 		window.FB.logout();
  	}
 
 //conditional rendering small responsive
