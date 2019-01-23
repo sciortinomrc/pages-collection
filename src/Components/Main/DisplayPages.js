@@ -25,12 +25,7 @@ const mapDispatchToProps=dispatch=>{
 
 
 class DisplayPages extends React.Component{
-	constructor(){
-		super()
-		this.state={
-			firstRender: true
-		}
-	}
+
 //set filter
 	setFilter=(event,filter)=>{
 		switch(event.target.parentNode.id){
@@ -107,16 +102,14 @@ dropdown=(event)=>{
 		this.props.setCountryFilter("");
 		this.props.setSearchfield("");
 		const search=document.getElementById('searchField');
-		search.value=""
-	}
+		if(search)search.value=""
+		}
 	render(){
 		const {database, category}=this.props;
-		let cat=category;
-		if(cat && this.state.firstRender===true){
-			this.props.setCategoryFilter(cat,"");
-			this.setState({firstRender: false})
+		if(category!=="all"){
+			this.props.setCategoryFilter(category);
 		}
-		else cat="";
+		else this.removeFilters()
 		return(
 			<div id="display-pages">
 				<div id="filter-buttons" >

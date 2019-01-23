@@ -34,7 +34,7 @@ componentDidMount(){
 	document.addEventListener('click',(event)=>{
 		if(document.getElementById("dropdown-div")){
 			const dropdownDiv=document.getElementById("dropdown-div");
-			const element=(event.target.tagName==="P")?event.target.parentNode:event.target;
+			const element=event.target;
 			if(element && (element.id==="logout" || (element!==dropdownDiv && 
 				element.id!=="dropdown" && element.parentNode.id!=="dropdown")))
 				dropdownDiv.style.display="";

@@ -50,6 +50,9 @@ fieldset legend p{
 	background-color: white;
 	padding: 0px 15px;
 }
+fieldset>div>div{
+	justify-content: flex-start!important;
+}
 /*CARDS DISPLAY*/
 #pages-wrapper{
 	overflow-x: scroll;
@@ -88,6 +91,10 @@ fieldset legend p{
 }
 #filter-buttons div p:hover{
 	background-color: #bbb;
+}
+#filter-buttons:nth-child(1){
+	border-top-left-radius: 15px;
+	border-bottom-left-radius: 15px;
 }
 @media (max-width: 490px){
 	#pages-list{
