@@ -91,7 +91,7 @@ componentDidMount(){
 		const {user, onPageChange}=this.props;
 		if(user){
 			return (
-				<div>
+				<div id="dropdown-logged">
 					<p className="dropdown-item" onClick={()=>onPageChange('add')}>Add</p>
 		   			<p className="dropdown-item" onClick={()=>onPageChange('favourites')}>Favourites</p>
 		   			<p className="dropdown-item" onClick={()=>onPageChange('user')}>Profile</p>

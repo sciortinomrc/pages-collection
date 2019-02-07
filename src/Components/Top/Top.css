@@ -83,7 +83,8 @@
 	height: auto;
 	background-color: #eeeeee;
 }
-#dropdown-div div{
+#dropdown-logged{
+	height:auto;
 	display:flex;
 	flex-direction: column;
 }
