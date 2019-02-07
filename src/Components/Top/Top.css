@@ -90,6 +90,7 @@
 .dropdown-item{
 	margin-top:1px;
 	margin-bottom: 1px;
+	height: 30px;
 }
 .dropdown-divider{
 	height:2px!important;
