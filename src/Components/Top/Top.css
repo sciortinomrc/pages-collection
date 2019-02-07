@@ -82,7 +82,10 @@
 	right:12px;
 	height: auto;
 	background-color: #eeeeee;
-	
+}
+#dropdown-div div div{
+	display:flex;
+	flex-direction: column;
 }
 .dropdown-item{
 	margin-top:1px;
