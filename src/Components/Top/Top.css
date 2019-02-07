@@ -83,7 +83,7 @@
 	height: auto;
 	background-color: #eeeeee;
 }
-#dropdown-div div div{
+#dropdown-div div{
 	display:flex;
 	flex-direction: column;
 }
