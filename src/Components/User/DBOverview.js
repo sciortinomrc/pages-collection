@@ -1,5 +1,6 @@
 import React from 'react';
 import "./DBOverview.css";
+import MyChart from "./Chart.js"
 
 class DBOverview extends React.Component{
 	constructor(){
@@ -74,29 +75,14 @@ class DBOverview extends React.Component{
 				}
 			</React.Fragment>)
 	}
-	visitsPanel=()=>{
-		return(
-			<React.Fragment>
-			<div>
-				<div>DATE</div>
-				<div>VISITORS</div></div>
-				{
-					this.state.visits.map(visit=>{
-						return(
-							<div key={visit.date}>
-								<div> {visit.date} </div>
-								<div> {visit.visit} </div>
-							</div>
-						)
-					})
-				}
-			</React.Fragment>)
-	}
 	render(){
+		if(this.state.visits.length)this.state.visits.sort((a,b)=>Date.parse(a.date)-Date.parse(b.date))
 		return(
 		<div id="overview">
 		{(this.state.visits.length)?
 			<React.Fragment>
+				<h1>VISITS</h1>
+				<MyChart data={this.state.visits} />
 				<h1>USERS</h1>
 				<div id="users">
 				{this.usersPanel()}
@@ -107,10 +93,6 @@ class DBOverview extends React.Component{
 				{this.databasePanel()}
 				</div>
 				<hr />
-				<h1>VISITS</h1>
-				<div id="visits">
-				{this.visitsPanel()}
-				</div>
 			</React.Fragment>:""
 		}
 		</div>

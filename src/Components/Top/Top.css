@@ -33,6 +33,7 @@
 #large-nav p{
 	padding: 11px;
 	margin:0px;
+	cursor: pointer;
 	border:1px solid white
 }
 #large-nav p:hover{

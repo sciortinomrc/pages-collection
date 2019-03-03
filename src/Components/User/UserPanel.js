@@ -71,13 +71,13 @@ const UserPanel=(props)=>{
 	const db=database.filter(card=>card.createdby===user.id)
 	const userPictureURL=`https://graph.facebook.com/${user.id}/picture?type=large`
 	return(
-		<div id="user-panel">
-		<h1>Your pages</h1>
+		<React.Fragment>
 		<h2>
-		<img id="user-pic" src={userPictureURL} alt=""/>
+		<img id="userPic" src={userPictureURL} alt=""/>
 		{name}</h2>
 		{(db.length)?
 			<React.Fragment>
+			Here's the list of all your pages.
 			<hr />
 			<div id="list">
 			{
@@ -113,7 +113,7 @@ const UserPanel=(props)=>{
 			</div>
 			: ""
 		}
-		 </div>
+		 </React.Fragment>
 		)
 }
 export default UserPanel;
