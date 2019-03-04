@@ -2,23 +2,34 @@ import React from "react";
 import {useState} from "react";
 import './UserPanel.css';
 
-const expand=(id)=>{
-	const pic=document.getElementById(id+"picture");
-	const picDescription=document.getElementById(id+"description");
-	pic.style.transform="scale(1.2)";
-	pic.style.border="3px solid #4267b2"
-	picDescription.style.width="400px";
-	picDescription.style.paddingLeft="50px";
-}
-const reduce=(id)=>{
-	const pic=document.getElementById(id+"picture");
-	const picDescription=document.getElementById(id+"description");
-	const com=document.getElementById(id+"commands");
-	com.style.display="";
-	pic.style.transform="";
-	pic.style.border="";
-	picDescription.style.width="";
-	picDescription.style.paddingLeft="";
+const expand=(id, activeListener, setListenerState)=>{
+	if(!activeListener){
+		setListenerState(true);
+		const pic=document.getElementById(id+"picture");
+		const picDescription=document.getElementById(id+"description");
+		pic.style.transform="scale(1.2)";
+		pic.style.border="3px solid #4267b2"
+		pic.parentNode.style.gridColumn="1/span-1";
+		pic.parentNode.style.order="-1";
+		picDescription.style.width="600px";
+		picDescription.style.paddingLeft="50px";
+			setTimeout(()=>{
+				pic.parentNode.addEventListener("mouseleave",()=>{
+					const com=document.getElementById(id+"commands");
+					com.style.display="";
+					pic.style.transform="";
+					pic.style.border="";
+					setTimeout(()=>{
+						pic.parentNode.style.gridColumn="";
+						pic.parentNode.style.order="";
+					},1000)
+					picDescription.style.width="";
+					picDescription.style.paddingLeft="";
+					pic.parentNode.removeEventListener("mouseleave",()=>{});
+					setListenerState(false);
+				})
+			},1000)
+	}
 }
 const showCommands=(event,id)=>{
 	const com=document.getElementById(id+"commands");
@@ -66,14 +77,15 @@ const resetLight=(event)=>{
 
 
 const UserPanel=(props)=>{
-	const {database,user,name,setDB} = props;
+	const {database,name,user,setDB} = props;
 	const [pageId, setPageId] = useState("");
+	const [activeListener, setListenerState] = useState(false)
 	const db=database.filter(card=>card.createdby===user.id)
 	const userPictureURL=`https://graph.facebook.com/${user.id}/picture?type=large`
 	return(
 		<React.Fragment>
 		<h2>
-		<img id="userPic" src={userPictureURL} alt=""/>
+		<img id="user-pic" src={userPictureURL} alt=""/>
 		{name}</h2>
 		{(db.length)?
 			<React.Fragment>
@@ -83,8 +95,8 @@ const UserPanel=(props)=>{
 			{
 				db.map(card=>{
 					return(	
-					<div key={card.id} id={card.id} className="profileSmallCard" onClick={(e)=>{showCommands(e,card.id)}}  onMouseLeave={()=>reduce(card.id)}>
-						<img id={`${card.id}picture`} className="picture" src={card.picture} alt="" onMouseOver={()=>expand(card.id)}/>
+					<div key={card.id} id={card.id} className="profileSmallCard" onClick={(e)=>{showCommands(e,card.id)}} >
+						<img id={`${card.id}picture`} className="picture" src={card.picture} alt="" onMouseOver={()=>expand(card.id,activeListener, setListenerState)}/>
 						<div>
 							<div id={`${card.id}description`} className="description">
 								<p>Name: {card.name}</p>

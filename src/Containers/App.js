@@ -44,7 +44,7 @@ constructor(){
 componentWillMount(){
   if (window.location.protocol !== 'https:')
 {
- //window.location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+ // window.location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
 }
 const APPID="899425356926402";
   window.fbAsyncInit = function() {
@@ -121,11 +121,9 @@ componentDidMount(){
   
 //filter favourites from database
   filterFavourites=()=>{
-       return(
-         this.props.database.filter(record=>{
-            return this.props.user.fav.some(fav=>fav===record.id)
-            })
-        ) 
+    this.props.database.filter(record=>{
+      return this.props.user.fav.some(fav=>fav===record.id)
+    })
   }
 
 

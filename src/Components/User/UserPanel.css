@@ -18,7 +18,7 @@
 	position: relative;
 	margin-top:-90px;
 	height: 90px;
-	width: 360px;
+	width:600px;
 	left: -10px;
 	z-index: 0;
 	overflow: hidden;
@@ -31,7 +31,7 @@
 	padding: 0px;
 	background-color: #4267b2;
 	color: white;
-	width: 180px;
+	width:300px;
 	z-index: 0;
 }
 .profileSmallCard img, #user-pic{
@@ -40,6 +40,9 @@
 	border: 1px solid white;
 	position: relative;
 	z-index: 1;
+}
+#user-pic{
+	height:250px;
 }
 .profileSmallCard img{
 	transition: transform 0.3s ease-in;
