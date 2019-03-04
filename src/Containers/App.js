@@ -44,7 +44,7 @@ constructor(){
 componentWillMount(){
   if (window.location.protocol !== 'https:')
 {
- // window.location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+ window.location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
 }
 const APPID="899425356926402";
   window.fbAsyncInit = function() {
@@ -121,7 +121,7 @@ componentDidMount(){
   
 //filter favourites from database
   filterFavourites=()=>{
-    this.props.database.filter(record=>{
+   return this.props.database.filter(record=>{
       return this.props.user.fav.some(fav=>fav===record.id)
     })
   }
@@ -135,7 +135,7 @@ componentDidMount(){
           case 'add': return( <Add readMessage={readStateMessage}/>)
           case 'display': return ( <DisplayPages category={category} database={database}/> )
           case 'card': return (<div id="single-card">{this.displayReceivedCard(this.state.cardToDisplay)}</div>)
-          case 'favourites': return( <DisplayPages category='favourites' database={this.filterFavourites()}/>)
+          case 'favourites': return( <DisplayPages category='all' database={this.filterFavourites()}/>)
           case 'user': return(<UserPanel database={database} user={user} name={this.state.userName} setDB={this.props.setDB}/>)
           case 'overview': return(<DBOverview />)
           default: return( <h1> ... The page is Loading ...</h1> )
