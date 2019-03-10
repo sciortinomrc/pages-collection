@@ -60,7 +60,7 @@
 #card div a:hover{
 	font-weight: bold;
 }
-#card div a p, #favs{
+#card div a, #favs{
 	padding-right: 30px;
 }
 #star{

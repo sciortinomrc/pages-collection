@@ -60,12 +60,14 @@ componentDidMount(){
 	searchPage=(event)=>{
 		const hidden= document.getElementById('hidden');
 			this.setState({search: event.target.value},()=>{
-				this.state.search.length?
-					hidden.style.display="flex":
-					hidden.style.display="";
-				const filterCards=this.props.database.filter(card=>{
-					return card.name.toLowerCase().includes(this.state.search.toLowerCase());
-				})
+				let filterCards=[];
+				if(this.state.search.length){
+					hidden.style.display="flex"
+					filterCards=this.props.database.filter(card=>{
+						return card.name.toLowerCase().includes(this.state.search.toLowerCase());
+					})
+				}
+				else	hidden.style.display="";
 				this.setState({cards: filterCards});
 			})
 	}
