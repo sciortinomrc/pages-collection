@@ -24,7 +24,6 @@
 	display: flex;
 	justify-content: flex-end;
 	align-items: flex-end;
-	padding-right: 50px;
 }
 #img-wrapper{
 	padding:0px!important;
@@ -49,9 +48,20 @@
 	margin:0px;
 	z-index:2
 }
-#card div p a{
+#card div a{
+	display: flex;
+	align-items: flex-end;
+	justify-content: flex-end;
 	text-decoration: none;
 	color: white;
+	height: 100%;
+	width: 100%;
+}
+#card div a:hover{
+	font-weight: bold;
+}
+#card div a p, #favs{
+	padding-right: 30px;
 }
 #star{
 	cursor: pointer;

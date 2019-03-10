@@ -5,9 +5,9 @@ import '../css/fontello.css';
 import '../css/animation.css';
 import Top from '../Components/Top/Top'; import Scroller from '../Components/Home/Scroller'; 
 import Bottom from '../Components/Bottom'; import Add from '../Components/Add/Add'; 
-import Home from '../Components/Home/Home';import Card from '../Components/Main/Card'; 
+import Home from '../Components/Home/Home';import Card from '../Components/Main/Card';
 import DisplayPages from '../Components/Main/DisplayPages'; import UserPanel from "../Components/User/UserPanel";
-import DBOverview from '../Components/User/DBOverview';
+import DBOverview from '../Components/User/DBOverview'; import About from "../Components/About/About.js";
 import './App.css';
 import {windowResize, changePage, setPagesDatabase, setLoginState} from  '../State/actions.js'
 
@@ -44,7 +44,7 @@ constructor(){
 componentWillMount(){
   if (window.location.protocol !== 'https:')
 {
- window.location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+ // window.location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
 }
 const APPID="899425356926402";
   window.fbAsyncInit = function() {
@@ -131,14 +131,15 @@ componentDidMount(){
   returnSwitch=()=>{
     const {open, database, onPageChange, readStateMessage, user, category} = this.props;
       switch(open){
-          case 'home':  return ( <Home category='categories' db={database} user={user} onPageChange={onPageChange}/>);
-          case 'add': return( <Add readMessage={readStateMessage}/>)
-          case 'display': return ( <DisplayPages category={category} database={database}/> )
-          case 'card': return (<div id="single-card">{this.displayReceivedCard(this.state.cardToDisplay)}</div>)
-          case 'favourites': return( <DisplayPages category='all' database={this.filterFavourites()}/>)
-          case 'user': return(<UserPanel database={database} user={user} name={this.state.userName} setDB={this.props.setDB}/>)
-          case 'overview': return(<DBOverview />)
-          default: return( <h1> ... The page is Loading ...</h1> )
+          case 'home':  return <Home category='categories' db={database} user={user} onPageChange={onPageChange}/>
+          case 'add': return <Add readMessage={readStateMessage}/>
+          case 'about': return <About />
+          case 'display': return  <DisplayPages category={category} database={database}/> 
+          case 'card': return <div id="single-card">{this.displayReceivedCard(this.state.cardToDisplay)}</div>
+          case 'favourites': return <DisplayPages category='all' database={this.filterFavourites()}/>
+          case 'user': return<UserPanel database={database} user={user} name={this.state.userName} setDB={this.props.setDB}/>
+          case 'overview': return<DBOverview />
+          default: return <h1> ... The page is Loading ...</h1> 
       }
   }
 

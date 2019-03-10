@@ -31,7 +31,7 @@ class Card extends Component{
 					<p > </p>
 				</div>
 				<div >
-					<p ><a href={url} target='_blank' rel="noopener noreferrer">{name}</a></p>
+					<a href={url} target='_blank' rel="noopener noreferrer"><p >{name}</p></a>
 				</div>
 				<div id="favs" >
 				 {

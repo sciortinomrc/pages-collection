@@ -1,0 +1,10 @@
+#about-wrapper {
+	width: 75%;
+	margin: auto;
+}
+#about-wrapper div{
+	padding: 60px 0px;
+}
+#about-wrapper h2{
+	text-align: center;
+}

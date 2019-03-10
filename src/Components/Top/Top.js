@@ -59,16 +59,15 @@ componentDidMount(){
 //searchPage
 	searchPage=(event)=>{
 		const hidden= document.getElementById('hidden');
-		this.setState({search: event.target.value},()=>{
-				!this.state.search.length?
-					hidden.classList.style.display="" :
-					hidden.classList.style.display="flex";
+			this.setState({search: event.target.value},()=>{
+				this.state.search.length?
+					hidden.style.display="flex":
+					hidden.style.display="";
 				const filterCards=this.props.database.filter(card=>{
 					return card.name.toLowerCase().includes(this.state.search.toLowerCase());
 				})
 				this.setState({cards: filterCards});
 			})
-		
 	}
 //resetState onFocusOut
 	 resetState=()=>{
@@ -131,6 +130,7 @@ componentDidMount(){
 			<div id="dropdown-div" >
 		 		    <p className="dropdown-item" onClick={()=>onPageChange('home')}>Home</p>
 		 		    <p className="dropdown-item" onClick={()=>onPageChange('display','all')}>All Pages</p>
+		 		    <p className="dropdown-item" onClick={()=>onPageChange('about')}>About</p>
 		 		    <div className="dropdown-divider"></div>
 		 		    { this.loggedSmall()}
 			</div>		
@@ -146,6 +146,7 @@ componentDidMount(){
 			<div id="large-nav">	
 				<p onClick={()=>onPageChange('home')}>Home</p>
 				<p onClick={()=>onPageChange('display','all')}>Pages</p> 
+				<p onClick={()=>onPageChange('about')}>About</p> 
 				{this.loggedXL()}
 			</div>
 			)
@@ -183,7 +184,7 @@ componentDidMount(){
 	render(){
 		return(
 			<div id="container">
-				<div id="logo"><p>P</p></div>
+				<div id="logo" onClick={()=>this.props.onPageChange("home")}><p>P</p></div>
 				{this.displayResponsiveTop()}
 			</div>
 		)

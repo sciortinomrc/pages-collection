@@ -26,6 +26,8 @@
 	font-weight: bold;
 	margin:auto;
 	text-align: center;
+	user-select: none;
+	cursor: pointer;
 }
 #small-navigation,#large-nav{
 	display: inline-flex;
@@ -34,7 +36,8 @@
 	padding: 11px;
 	margin:0px;
 	cursor: pointer;
-	border:1px solid white
+	border:1px solid white;
+	transition: background-color 0.3s ease-in-out;
 }
 #large-nav p:hover{
 	background-color: rgba(255,255,255,0.2)
@@ -119,6 +122,18 @@
 #main-navigation p, #main-navigation input,#main-navigation button{
 	border: none;
 	box-shadow: inset 0px 8px 5px -4px rgba(0,0,0,0.5)
+}
+.plain-link{
+	width: 100%;
+	height: auto;
+	cursor: pointer;
+	transition: background-color 0.2s ease-out;
+	box-shadow: none!important;
+	justify-content: center;
+	text-align: center;
+}
+.plain-link:hover{
+	background-color: #fff4;
 }
 @media (max-width: 1000px){
 	#large-nav{
