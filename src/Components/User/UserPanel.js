@@ -106,10 +106,10 @@ const UserPanel=(props)=>{
 								<div id="F" title="Flag an error with the page" onClick={()=>flag(card.id)} onMouseOver={light} onMouseLeave={resetLight}>FLAG ERROR</div>
 								<div id="X" title="Delete this page" onClick={()=>{
 									setPageId(card.id)
-									document.addEventListener("keypress",(e)=>{
+									document.addEventListener("keydown",(e)=>{
 										console.log(e)
 										if(e.key==="Escape") setPageId("");
-										document.removeEventListener("keypress",()=>{});
+										document.removeEventListener("keydown",()=>{});
 										})
 									}
 								}
