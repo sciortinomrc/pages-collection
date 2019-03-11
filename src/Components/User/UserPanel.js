@@ -107,7 +107,6 @@ const UserPanel=(props)=>{
 								<div id="X" title="Delete this page" onClick={()=>{
 									setPageId(card.id)
 									document.addEventListener("keydown",(e)=>{
-										console.log(e)
 										if(e.key==="Escape") setPageId("");
 										document.removeEventListener("keydown",()=>{});
 										})
@@ -128,7 +127,7 @@ const UserPanel=(props)=>{
 			<div id="fullpage">
 				<div id="popup">
 					<h3>Do you really want to delete this page?</h3>
-					<h6>Changed your mind? Just press SPACE</h6>
+					<h6>Changed your mind? Just press ESC</h6>
 					<input type="text" placeholder="Write DELETE and press enter" onKeyPress={(event)=>delPage(event,pageId,setPageId,setDB)}/>
 				</div>
 			</div>
