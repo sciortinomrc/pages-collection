@@ -36,3 +36,8 @@ input:focus, div:focus, p:focus, button:focus, select:focus{
 	grid-template-columns: 100%;
 	grid-template-rows: 150px auto 80px;
 }
+#single-card{
+	display: flex;
+	margin: auto;
+	padding-top:50px;
+}
