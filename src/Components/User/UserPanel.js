@@ -109,9 +109,8 @@ const UserPanel=(props)=>{
 									window.addEventListener("keypress",(e)=>{
 										if(event.key==="Escape") setPageId("");
 										window.removeEventListener("keypress",()=>{});
-
 										})
-									})
+									}
 								}
 								onMouseOver={light} onMouseLeave={resetLight}>DELETE</div>
 							</div>
