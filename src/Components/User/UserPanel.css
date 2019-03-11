@@ -88,11 +88,15 @@
 #popup{
 	margin: auto;
 	background-color: white;
-	padding-top: 100px;
+	padding: 50px 5px;
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	align-items: center;
 	border-radius: 50px;
 	width: 350px;
 }
 #popup input{
 	width: 250px;
-	border-radius: 5px;
+	border-radius: 15px;
 }
