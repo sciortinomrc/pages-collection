@@ -107,7 +107,7 @@ const UserPanel=(props)=>{
 								<div id="X" title="Delete this page" onClick={()=>{
 									setPageId(card.id)
 									window.addEventListener("keypress",(e)=>{
-										if(event.key==="Escape") setPageId("");
+										if(e.key==="Escape") setPageId("");
 										window.removeEventListener("keypress",()=>{});
 										})
 									}
