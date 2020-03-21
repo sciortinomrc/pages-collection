@@ -2,14 +2,13 @@ import React, {Component} from 'react';
 import './Top.css';
 import {connect} from 'react-redux';
 import {setLoginState, windowResize, 
-  changePage, displayCard} from '../../State/actions.js';
+  displayCard} from '../../State/actions.js';
  import fbwhite from '../../f-Logo_Assets/F_Logo_Online_09_2018/White/SVG/flogo-HexRBG-Wht-58.svg'
  import fbblack from '../../f-Logo_Assets/F_Logo_Online_09_2018/Black/SVG/flogo-RGB-HEX-Blk-58.svg'
 
 const mapStateToProps=state=>{
 	return{
 		user: state.onLogin.loggedUser,
-		open: state.onPageChange.open,
 		size: state.onWindowResize.size,
 		database: state.addNewPage.database,
 		card: state.displaySingleCard.card
@@ -19,7 +18,6 @@ const mapStateToProps=state=>{
 const mapDispatchToProps=dispatch=>{
 	return{
 		onLoginChange: (userId)=> dispatch(setLoginState(userId)),
-		onPageChange: (page,category)=>dispatch (changePage(page,category)),
 		onWindowResize: (size)=>dispatch(windowResize (size)),
 		displaySingleCard: (id,name,url,picture,favourite, category, country)=>dispatch( displayCard(id,name,url,picture,favourite, category, country))
 	}
@@ -89,16 +87,24 @@ componentDidMount(){
 
 //conditional rendering small responsive
 	loggedSmall=()=>{
-		const {user, onPageChange}=this.props;
+		const {user}=this.props;
 		if(user){
 			return (
 				<div id="dropdown-logged">
-					<p className="dropdown-item" onClick={()=>onPageChange('add')}>Add</p>
-		   			<p className="dropdown-item" onClick={()=>onPageChange('favourites')}>Favourites</p>
-		   			<p className="dropdown-item" onClick={()=>onPageChange('user')}>Profile</p>
-					{(user.id==="1723130954465225")?<p className="dropdown-item" onClick={()=>onPageChange('overview')}>Overview</p>:""}
-		   			<p className="dropdown-item" onClick={this.logout}>Logout</p>
-		    		</div>
+					<Link to="/add">
+						<p className="dropdown-item">Add</p>
+					</Link>
+					<Link to="/favourites">
+			   			<p className="dropdown-item">Favourites</p>
+					</Link>
+					<Link to="/user">
+		   				<p className="dropdown-item">Profile</p>
+					</Link>
+					{(user.admin)?<Link to="/overview"><p className="dropdown-item">Overview</p></Link>:""}
+		   			<Link to="/">
+					   <p className="dropdown-item" onClick={this.logout}>Logout</p>
+					</Link>
+				</div>
 		   	 )
 		}
 		else{
@@ -112,11 +118,19 @@ componentDidMount(){
 		// if(true){
 			return(
 				<React.Fragment>
-					<p onClick={()=>onPageChange('add')}>Add</p>
-					<p onClick={()=>onPageChange('favourites')}>Favourites</p>
-					<p onClick={()=>onPageChange('user')}>Profile</p>
-					{(user.id==="1723130954465225")?<p onClick={()=>onPageChange('overview')}>Overview</p>:""}
-					<p onClick={this.logout}>Logout</p>
+					<Link to="/add">
+						<p>Add</p>
+					</Link>
+					<Link to="/favourites">
+			   			<p>Favourites</p>
+					</Link>
+					<Link to="/user">
+		   				<p>Profile</p>
+					</Link>
+					{(user.admin)?<Link to="/overview"><p>Overview</p></Link>:""}
+		   			<Link to="/">
+					   <p onClick={this.logout}>Logout</p>
+					</Link>
 				</React.Fragment>
 			)
 		}
@@ -130,9 +144,15 @@ componentDidMount(){
 		const {onPageChange}=this.props;
 		return(
 			<div id="dropdown-div" >
-		 		    <p className="dropdown-item" onClick={()=>onPageChange('home')}>Home</p>
-		 		    <p className="dropdown-item" onClick={()=>onPageChange('display','all')}>All Pages</p>
-		 		    <p className="dropdown-item" onClick={()=>onPageChange('about')}>About</p>
+				<Link to="/">
+		 		    <p className="dropdown-item" >Home</p>
+				</Link>
+				<Link to="/display">
+		 		    <p className="dropdown-item" >All Pages</p>
+				</Link>
+				<Link to="/about">
+		 		    <p className="dropdown-item" >About</p>
+				</Link>
 		 		    <div className="dropdown-divider"></div>
 		 		    { this.loggedSmall()}
 			</div>		
@@ -146,9 +166,15 @@ componentDidMount(){
 		const {onPageChange}=this.props;
 		return(
 			<div id="large-nav">	
-				<p onClick={()=>onPageChange('home')}>Home</p>
-				<p onClick={()=>onPageChange('display','all')}>Pages</p> 
-				<p onClick={()=>onPageChange('about')}>About</p> 
+				<Link to="/">
+		 		    <p >Home</p>
+				</Link>
+				<Link to="/display">
+		 		    <p >All Pages</p>
+				</Link>
+				<Link to="/about">
+		 		    <p >About</p>
+				</Link>
 				{this.loggedXL()}
 			</div>
 			)
@@ -186,7 +212,9 @@ componentDidMount(){
 	render(){
 		return(
 			<div id="container">
-				<div id="logo" onClick={()=>this.props.onPageChange("home")}><p>P</p></div>
+				<Link to="/">
+					<div id="logo"><p>P</p></div>
+				</Link>
 				{this.displayResponsiveTop()}
 			</div>
 		)

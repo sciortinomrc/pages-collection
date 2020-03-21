@@ -81,7 +81,7 @@ export const setLoginState=(userId="")=>(dispatch)=>{
 			dispatch({type:LOGIN_FAILED, payload:'Unable to Login"'})
 		}
 		else{
-			fetch('https://peaceful-everglades-81846.herokuapp.com/login', {
+			fetch('/login', {
 			method: 'post',
 			headers: {'Content-Type':'application/json'},
 			body: JSON.stringify({ userId: userId.id })
@@ -97,7 +97,7 @@ export const setLoginState=(userId="")=>(dispatch)=>{
 
 export const updateFavourites=(id,user)=>dispatch=>{
 	dispatch({type: LOGIN_PENDING, payload:true})
-	fetch('https://peaceful-everglades-81846.herokuapp.com/updatefavs', {
+	fetch('/updatefavs', {
 		method: 'post',
 		headers: {'Content-Type':'application/json'},
 		body:JSON.stringify({
