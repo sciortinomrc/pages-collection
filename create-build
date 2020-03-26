@@ -1,5 +1,7 @@
 npm install
 
+mkdir -p ~/meterian
+
 METERIAN_PATH=~/meterian/meterian-cli.jar
 if [ ! -f "$METERIAN_PATH" ]
 then wget http://meterian.com/downloads/meterian-cli.jar -O $METERIAN_PATH
