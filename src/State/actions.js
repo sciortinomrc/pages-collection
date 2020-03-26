@@ -14,9 +14,9 @@ const visits = new Visits();
 
 export const handlePages=async()=>{
 	try{
-		// await pages.all();
-		// const allPages = pages.getAll();
-		const allPages = [{id:"vespucciakabaudo",name:"TEST PAGE",likes:472, favourites:14, category:"Ignoranza", country:"Italy",type:"Arcade",url:"gadag",picture:"none"}];
+		await pages.all();
+		const allPages = pages.getAll();
+		// const allPages = [{id:"vespucciakabaudo",name:"TEST PAGE",likes:472, favourites:14, category:"Ignoranza", country:"Italy",type:"Arcade",url:"gadag",picture:"none"}];
 		return{
 			type: SET_PAGES_SUCCESS, payload: allPages
 		}

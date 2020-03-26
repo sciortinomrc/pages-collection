@@ -51,7 +51,7 @@ export const handleVisits = (state = visitsState, action={})=>{
 }
 
 const loginState = {
-	user: {id: "ME", favourites:[], name: "Marco"}
+	user: {}
 }
 export const login = (state=loginState, action={})=>{
 	if(action.type==LOGGED_USER_SUCCESS)
