@@ -45,8 +45,8 @@
 #small-navigation{
 	height:39px;
 }
-#large-nav :nth-child(1){
-	border-top-left-radius: 20px;
+#large-nav :nth-child(1) p{
+	border-top-left-radius: 10px;
 }
 #small-navigation img, #large-nav p img{ 
 	width: 20px;
@@ -69,7 +69,7 @@
 }
 #dropdown{
 	display: none;
-	border-top-right-radius: 20px;
+	border-top-right-radius: 10px;
 }
 #dropdown-div p{
 	box-shadow: none!important;
@@ -117,7 +117,7 @@
 }
 #search{
 	text-align: center;
-	border-top-right-radius: 20px;
+	border-top-right-radius: 10px;
 }
 #main-navigation p, #main-navigation input,#main-navigation button{
 	border: none;
@@ -144,7 +144,7 @@
 	}
 	#search{
 		border-top-right-radius: 0px;
-		border-top-left-radius: 20px;
+		border-top-left-radius: 10px;
 	}
 }
 @media (max-width: 576px){

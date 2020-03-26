@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {updateFavourites} from '../../State/actions';
 
 const mapStateToProps=state=>({
-	user: state.onLogin.loggedUser
+	user: state.login.user
 })
 const mapDispatchToProps=dispatch=>{
 	return {
@@ -21,32 +21,27 @@ class Card extends Component{
 	}
 
 	render(){
-		const {id,category,name,url,picture,favourites,country} =this.props;
+		const {id,type,likes,category,name,url,picture,favourites,country} =this.props;
+		console.log()
 		return(
 
 				
 			<div id="card" title={category.toUpperCase()+", "+country.toUpperCase()}>
 				<div id="img-wrapper" >
-					<img alt=""  src={picture} height="100%" width="auto" />
+					<img alt=""  src={`http://graph.facebook.com/v6.0/${id}/picture?height=200`} height="100%" width="auto" />
 					<p > </p>
 				</div>
-				<div >
+				<div className="d-flex flex-column">
 					<a href={url} target='_blank' rel="noopener noreferrer"><p >{name}</p></a>
+					<p>{type}</p>
 				</div>
 				<div id="favs" >
-				 {
-				 	this.props.user?(
-						<React.Fragment>
-							{
-								this.props.user.fav.includes(id)?
-									<p id="star" onClick={this.toggleFavourite} style={{color: 'yellow'}}>&#9733;</p>:
-									<p id="star" onClick={this.toggleFavourite}>&#9733;</p>
-							}
-							<p>{this.props.favourites}</p>
-						</React.Fragment>
-				 		)
-				 	:
-						<React.Fragment><p id="star" style={{cursor:"default"}}>&#9733;</p><p >{favourites}</p></React.Fragment>
+					<p id="thumb" style={{cursor: "default"}}><span className="fas fa-thumbs-up"></span> {likes}</p>
+				 {	
+				 	this.props.user.id?
+						<p id="star"><span onClick={this.toggleFavourite} style={{color: this.props.user.favourites.includes(id)?'yellow':''}}>&#9733;</span>{favourites}</p>
+				 		:
+						<p id="star" style={{cursor:"default"}}><span>&#9733;</span>{favourites}</p>
 				 }
 				 
 				</div>

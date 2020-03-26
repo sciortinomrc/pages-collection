@@ -1,115 +1,112 @@
-import {REQUEST_PAGE_SUCCESS, SET_DATABASE,
-		WINDOW_RESIZE,
-		CHANGE_PAGE, CATEGORY_CHOICE, ADD_PAGE_FAILED, 
-		ADD_PAGE_SUCCESS, DISPLAY_CARD,
-		SET_SEARCH_FIELD, SET_COUNTRY_FILTER, SET_CATEGORY_FILTER,
-		FILTERS, LOGIN_SUCCESS, LOGIN_FAILED, LOGIN_PENDING,
-		LOGOUT, UPDATE_FAVOURITES,
-		UPDATE_USERS_FAVOURITES} from './constants';
+import {SET_PAGES_SUCCESS, SET_PAGES_FAILED,
+SET_USERS_SUCCESS, SET_USERS_FAILED, SET_VISITS_SUCCESS,
+SET_VISITS_FAILED, LOGGED_USER_SUCCESS, LOGGED_USER_FAILED,
+ADD_NEW_PAGE_SUCCESS, ADD_NEW_PAGE_FAILED, WINDOW_RESIZE,
+UPDATE_FAVOURITES_SUCCESS, UPDATE_FAVOURITES_FAILED,
+LOGOUT_SUCCESS, LOGOUT_FAILED } from './constants';
 
-export const setPagesDatabase=(database)=>({
-	type: SET_DATABASE, payload: database
-})
+import Pages from '../classes/pages';
+import Users from '../classes/users';
+import Visits from '../classes/visits';
+const pages = new Pages();
+const users = new Users();
+const visits = new Visits();
 
-export const getPageFromAPI=(cards)=>({
-	type: REQUEST_PAGE_SUCCESS,
-	payload: cards
-})
+export const handlePages=async()=>{
+	try{
+		// await pages.all();
+		// const allPages = pages.getAll();
+		const allPages = [{id:"vespucciakabaudo",name:"TEST PAGE",likes:472, favourites:14, category:"Ignoranza", country:"Italy",type:"Arcade",url:"gadag",picture:"none"}];
+		return{
+			type: SET_PAGES_SUCCESS, payload: allPages
+		}
+	}
+	catch(e){
+		return{
+			type: SET_PAGES_FAILED, payload: [] 
+		}
+	}
+}
+export const handleUsers=async()=>{
+	try{
+		await users.all();
+		const allUsers = users.getAll();
+		return{
+			type: SET_USERS_SUCCESS, payload: allUsers
+		}
+	}
+	catch(e){
+		return{
+			type: SET_USERS_FAILED, payload: []
+		}
+	}
+}
+export const handleVisits=async()=>{
+	try{
+		await visits.all();
+		const allVisits = visits.getAll();
+		return{
+			type: SET_VISITS_SUCCESS, payload: allVisits
+		}
+	}
+	catch(e){
+		return{
+			type: SET_VISITS_FAILED, payload:[]
+		}
+	}
+}
+
+export const login=async()=>{
+	try{
+		const user = await users.login();
+		return{
+			type: LOGGED_USER_SUCCESS, payload: user
+		}
+	}
+	catch(e){
+		return{type: LOGGED_USER_FAILED, payload: null}
+	}
+}
+
+export const logout = async()=>{
+	try{
+		const user = user.logout();
+		return{
+			type: LOGOUT_SUCCESS, payload:user
+		}
+	}
+	catch(e){
+		return{type: LOGOUT_FAILED, payload: null}
+	}
+}
+
+export const addNewPage = async(pageInfo) => {
+	try{
+		await pages.create(pageInfo);
+		return {
+			type: ADD_NEW_PAGE_SUCCESS, payload: true
+		}
+	}
+	catch(e){
+		return{
+			type: ADD_NEW_PAGE_FAILED, payload: false
+		}
+	}
+}
 
 export const windowResize = (windowSize) => ({type: WINDOW_RESIZE, payload: windowSize})
-export const changePage = (page,chosen_category="")=> {
-		if(chosen_category.length){
-			return{
-				type: CATEGORY_CHOICE,
-				payload: {page,chosen_category}	
-			}
-		}else{
-			return{
-			type: CHANGE_PAGE,
-			payload: page
-			}
-		}
-}
-export const newPage=(db,message)=>dispatch=>{
-	if(db)
-	{
-		dispatch({
-			type: REQUEST_PAGE_SUCCESS,
-			payload: db
-		})
-		dispatch({
-			type: ADD_PAGE_SUCCESS,
-			payload: {db, message}
-		})
-	}
-	else{
-		dispatch({
-			type: ADD_PAGE_FAILED,
-			payload: message
-		})
-	}
-}
 
-export const displayCard=(id,name,url,picture,country,category, favourite)=>({
-	type: DISPLAY_CARD,
-	payload: {id,name,url,picture,country, category, favourite}
-})
-
-export const setSearchfield=(text="")=>({
-	type: SET_SEARCH_FIELD,
-	payload: text
-})
-
-export const setCountryFilter=(filter="")=>({
-	type: SET_COUNTRY_FILTER,
-	payload: filter
-})
-export const setCategoryFilter=(filter="")=>({
-	type: SET_CATEGORY_FILTER,
-	payload: filter
-})
-export const setFilters=(categoryFilters,countryFilters)=>({
-	type: FILTERS,
-	payload: {categoryFilters,countryFilters}
-})
-
-export const setLoginState=(userId="")=>(dispatch)=>{
-	if(userId==="") dispatch({ type: LOGOUT, payload: 'Logged out'})
-	else{
-
-		if(!userId.id){
-			dispatch({type:LOGIN_FAILED, payload:'Unable to Login"'})
-		}
-		else{
-			fetch('/login', {
-			method: 'post',
-			headers: {'Content-Type':'application/json'},
-			body: JSON.stringify({ userId: userId.id })
-			})
-			.then(resp=>resp.json())
-			.then(user=>{
-				dispatch({type:LOGIN_SUCCESS, payload:user})
-			})
+export const updateFavourites=async(id,user,direction)=>{
+	try{
+		await pages.updateFavourites(id,direction);
+		await users.updateFavourites(user,id);
+		return {
+			type: UPDATE_FAVOURITES_SUCCESS, payload: true
 		}
 	}
-}
-
-
-export const updateFavourites=(id,user)=>dispatch=>{
-	dispatch({type: LOGIN_PENDING, payload:true})
-	fetch('/updatefavs', {
-		method: 'post',
-		headers: {'Content-Type':'application/json'},
-		body:JSON.stringify({
-			id,user
-		})
-	})
-	.then(response=>response.json())
-	.then(data=>{
-		if(data.update){
-			dispatch({type: UPDATE_FAVOURITES, payload:data.pagesDatabase})
-			dispatch({type: UPDATE_USERS_FAVOURITES, payload: data.userToSend})
-		}	
-	})
-	.catch(err=>console.log(err))
+	catch(e){
+		return {
+			type: UPDATE_FAVOURITES_FAILED, payload: false
+		}
+	}
 }

@@ -3,9 +3,7 @@ import { Provider } from 'react-redux';
 import {createStore,applyMiddleware ,combineReducers} from 'redux';
 // import {createLogger} from 'redux-logger';
 import {
-	onLogin, fbApiCall, onWindowResize, 
-	onPageChange, addNewPage,
-	displaySingleCard, addFilter,
+	handlePages, handleUsers, handleVisits, login, logout, onWindowResize, addNewPage
 } from './State/reducer.js';
 import thunkMiddleware from 'redux-thunk';
 import ReactDOM from 'react-dom';
@@ -16,8 +14,8 @@ import registerServiceWorker from './registerServiceWorker';
 
 // const logger=createLogger();
 const rootReducer=combineReducers({
-	onLogin, fbApiCall, onWindowResize, onPageChange, addNewPage,
-	displaySingleCard, addFilter})
+	handlePages, handleUsers, handleVisits, login, logout, onWindowResize, addNewPage
+})
 const store=createStore(rootReducer,applyMiddleware(thunkMiddleware)); /*logger*/
 
 ReactDOM.render(

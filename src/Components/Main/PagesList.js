@@ -1,76 +1,57 @@
 import React from 'react';
 import Card from './Card';
-import {connect} from 'react-redux';
-import {setFilters} from '../../State/actions';
-import _ from 'lodash';
-const mapStateToProps=state=>{
-	return{
-		searchField: state.addFilter.searchField,
-		filters: state.addFilter.filters
-	}
-}
-const mapDispatchToProps=dispatch=>{
-	return{
-	setFilters: (categoryFilters, countryFilters)=> dispatch(setFilters(categoryFilters, countryFilters))
-	}
-}
+
 class PagesList extends React.Component{
-	returnFilters=(records)=>{
-		
-		const filteredPagesCategory= _.uniqBy(records, 'category');
-		const categoryFilters= filteredPagesCategory.map(record=>record.category);
-		const filteredPagesCountry= _.uniqBy(records, 'country');
-		const countryFilters= filteredPagesCountry.map(record=>record.country);
-		if(this.props.filters.countryFilters.length!==countryFilters.length || this.props.filters.categoryFilters.length!==categoryFilters.length)
-			this.props.setFilters(categoryFilters, countryFilters)
+	constructor(){
+		super();
+		this.filters={
+			category:'',
+			country:'',
+			name:''
+		}
 	}
+
+
+	applyFilters=(pages,limit=9999999)=>{
+		if(!pages) return [];
+		return pages.filter(page=>!this.filters.category.length || page.category==this.filters.category)
+			.filter(page=>!this.filters.country.length || page.country==this.filters.country)
+			.filter(page=>page.name.includes(this.filters.name))
+			.map((page,i)=>{if(i<limit) return page})
+			.filter(page=>page);
+	}
+	setFilters=()=>{
+		this.filters={
+			category: this.props.categoryFilter,
+			country: this.props.countryFilter,
+			name: this.props.nameFilter
+		}
+	}
+
+
 	render(){
-		const {categoryFilter,countryFilter,limit,database,userFavourites} =this.props
-		let lim=0;
-		let filteredRecords=database.filter(record=>{
-			return record.name.toLowerCase().includes(this.props.searchField.toLowerCase()) && (categoryFilter==="" || record.category===categoryFilter)
-		})
-		filteredRecords=filteredRecords.filter(record=>{
-			lim++
-			if(limit && lim>limit){
-				return undefined
-			}
-			return countryFilter==="" || record.country===countryFilter
-		})
-
-
-		if(!limit)this.returnFilters(filteredRecords)
+		const {limit,pages,userFavourites} =this.props
+		this.setFilters();
+		const filteredRecords = this.applyFilters(pages,limit);
 		return(
 			<div id="pages-wrapper">
 			<div id="pages-list" style={{width: this.props.style}}>
 			{
 				filteredRecords.map(card=>{
 					return (
-						(userFavourites && userFavourites.includes(card.id)?(
-							<Card
-								key={card.id}
-								id={card.id}
-								name={card.name}
-								picture={card.picture}
-								url={card.url}
-								favourites={card.favourite}
-								category={card.category}
-								country={card.country}
-								favToggle={true}
-							/>)	
-						:(
-							<Card
-								key={card.id}
-								id={card.id}
-								name={card.name}
-								picture={card.picture}
-								url={card.url}
-								favourites={card.favourite}
-								category={card.category}
-								country={card.country}
-								favToggle={false}
-							/>)	
-						)
+						<Card
+							key={card.id}
+							type={card.type}
+							likes={card.likes}
+							id={card.id}
+							name={card.name}
+							picture={card.picture}
+							url={card.url}
+							favourites={card.favourites}
+							category={card.category}
+							country={card.country}
+							favToggle={userFavourites && userFavourites.includes(card.id)}
+						/>
 					)
 				})
 			}
@@ -79,4 +60,4 @@ class PagesList extends React.Component{
 		)
 	}
 }
-export default connect(mapStateToProps, mapDispatchToProps)(PagesList);
+export default PagesList;

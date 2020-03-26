@@ -7,6 +7,17 @@ div{
 	margin: 0px;
 	padding:0px;
 }
+a{
+	color: white;
+	transition: transform .2 linear;
+
+}
+a:hover, a:active, a:focus{
+	color: white;
+	font-weight: bold;
+	text-decoration: none;
+	transform: scale(1.02);
+}
 #error{
 	display: flex;
 	flex-direction: column;

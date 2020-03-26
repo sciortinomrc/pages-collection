@@ -1,47 +1,47 @@
-import React from 'react'; 
+import React,{createRef} from 'react'; 
 import PagesList from './PagesList';
 import {connect} from 'react-redux';
-import { setSearchfield, setCountryFilter, setCategoryFilter, setFilters } from '../../State/actions';
 import './../Home/Scroller.css';
 import ErrorBoundary from '../ErrorBoundary';
-const mapStateToProps=state=>{
-	return{
-		userFavourites: state.onLogin.loggedUser,
-		searchField: state.addFilter.searchField,
-		countryFilter: state.addFilter.countryFilter,
-		categoryFilter: state.addFilter.categoryFilter,
-		filters: state.addFilter.filters
-	}
-}
-
-const mapDispatchToProps=dispatch=>{
-	return{
-	setSearchfield: (text)=> dispatch(setSearchfield(text)),
-	setCategoryFilter: (filter)=> dispatch(setCategoryFilter(filter)),
-	setCountryFilter: (filter)=> dispatch(setCountryFilter(filter)),
-	setFilters: (categoryFilters,countryFilters)=> dispatch(setFilters(categoryFilters,countryFilters))
-	}
-}
 
 
 class DisplayPages extends React.Component{
+	constructor(){
+		super();
+		this.state={
+			country:"",
+			category:"",
+			name:""
+		}
+		this.namefieldTimeout = null;
+		this.nameField = createRef();
+	}
+
+	getFilters=(pages,type)=>{
+		return pages.reduce((acc,page)=>{
+			if(!acc.includes(page[type]))
+				acc.push(page[type]);
+			return acc;
+		},[])
+	}
+	componentWillMount(){
+		this.categories = this.getFilters(this.props.pages,"category");
+		this.countries = this.getFilters(this.props.pages,"country");
+	}
 
 //set filter
-	setFilter=(event,filter)=>{
-		switch(event.target.parentNode.id){
-			case 'hidden-country': {this.props.setCountryFilter(filter); event.target.parentNode.style.display=""; break;}
-			case 'hidden-category': {this.props.setCategoryFilter(filter); event.target.parentNode.style.display=""; break;}
-			default: break;
-		}
+	setFilter=(type,filter)=>{
+		
+		this.setState({[type]:filter, showCountryFilters: false, showCountryFilters: false})
 	}
 //country select filter
 	countrySelect=()=>{
 		return(
-			<div id="hidden-country" >
-			<p key="nofilter" id="nofilter" onClick={(event)=>this.setFilter(event,"")}>No Filter</p>
+			<div id="hidden-country"  data-scope="country-dropdown" style={{display: this.state.showCountryFilters?"flex":""}}>
+			<p key="nofilter" id="nofilter" onClick={()=>this.setFilter("country","")} data-scope="country-dropdown">No Filter</p>
 			  	{
-					this.props.filters.countryFilters.map((country,i)=>{
-						return<p key={country+i} id={country.replace(" ","_")} onClick={(event)=>this.setFilter(event,country)}>{country}</p>
+					this.countries.map((country,i)=>{
+						return<p key={country+i} id={country.replace(" ","_")} onClick={()=>this.setFilter("country",country)} data-scope="country-dropdown">{country}</p>
 					})					
 			  	}
 		  	</div>
@@ -51,106 +51,105 @@ class DisplayPages extends React.Component{
 //category select flter
 	categorySelect=()=>{
 		return(
-			<div id="hidden-category" >
-				<p key="nocateogory" id="noCategory"  onClick={(event)=>this.setFilter(event,'')}>No filter</p>
+			<div id="hidden-category"  data-scope="category-dropdown" style={{display: this.state.showCategoryFilters?"flex":""}}>
+				<p key="nocateogory" id="noCategory"  onClick={()=>this.setFilter("category",'')} data-scope="category-dropdown">No filter</p>
 			  	{
-					this.props.filters.categoryFilters.map((category,i)=>{
-						return<p key={category+i} id={category.replace(" ","_")}  onClick={(event)=>this.setFilter(event,category)}>{category}</p>
+					this.categories.map((category,i)=>{
+						return<p key={category+i} id={category.replace(" ","_")}  onClick={()=>this.setFilter("category",category)} data-scope="category-dropdown">{category}</p>
 					})					
 			  	}
 		  	</div>
 			)
 	}
 //searchPage
-	expandSelection=(event,type)=>{
-		const hiddenCategory=document.getElementById('hidden-category');
-		const hiddenCountry=document.getElementById('hidden-country');
-		const button=event.tagName==='I'?event.parentNode:event
-		if(button.id==='filter-country'){
-			hiddenCategory.style.display="";
-			hiddenCountry.style.display="flex"
+	expandSelection=(target)=>{
+		const trigger=target.dataset.trigger;
+		if(trigger==='dropdown-country'){
+			this.setState({showCategoryFilters:false, showCountryFilters: true})
 		}
-		if(button.id==='filter-category'){
-			hiddenCountry.style.display="";
-			hiddenCategory.style.display="flex";
+		if(trigger==='dropdown-category'){
+			this.setState({showCategoryFilters:true, showCountryFilters: false})
+
+
 		}
-		button.parentNode.children[1].style.display===""?
-			button.parentNode.children[1].style.display="flex":
-			button.parentNode.children[1].style.display="";
 	}
 
-	nameSearch=(event)=>{
-		this.props.setSearchfield(event.target.value)
+	onNameSearch=(event)=>{
+		const value = event.target.value
+		clearTimeout(this.namefieldTimeout)
+		this.namefieldTimeout = setTimeout(()=>{
+			this.setState({name:value})
+		},1000);
 	}
-dropdown=(event)=>{
-	if(document.getElementById('display-pages')){		
-		const hiddenCategory=document.getElementById('hidden-category');
-		const hiddenCountry=document.getElementById('hidden-country');
-		if(
-			event.target.id!==hiddenCategory.id &&
-			event.target.id!==hiddenCountry.id &&
-			event.target.id!=='filter-country' && 
-			event.target.id!=='filter-category' && event.target.tagName!=='I')
-			{
-				hiddenCountry.style.display="";
-				hiddenCategory.style.display="";
+
+	dropdown=(event)=>{
+		if(event.target.dataset.scope!="dropdown-country" && event.target.dataset.trigger!="dropdown-country"){
+			this.setState({showCountryFilters: false})
+		}
+		if(event.target.dataset.scope!="dropdown-category" && event.target.dataset.trigger!="dropdown-category"){
+			this.setState({showCategoryFilters:false})
 		}
 	}
-}
 	removeFilters=()=>{
-		this.props.setCategoryFilter("");
-		this.props.setCountryFilter("");
-		this.props.setSearchfield("");
-		const search=document.getElementById('searchField');
-		if(search)search.value=""
+		this.nameField.current.value='';
+		this.setState({
+			category:'',
+			country:'',
+			name:''
+		})
+	}
+	componentDidMount(){
+		if(window.location.search.length){
+			let category;
+			const search = window.location.search.replace("?","").split("&");
+			for(const current of search){
+				if(current.includes("category")){
+					category=current.split("=")[1].toLowerCase();
+					break;
+				}
+			}
+
+			this.setState({category})
 		}
+	}
+	displayFilters=()=>{
+		if(window.location.search.includes("category")) return null;
+		window.addEventListener('click', this.dropdown);
+		return(
+			<div id="filter-buttons" >
+				<input type="search" ref={this.nameField} id="searchField" placeholder="Filter by Name" onChange={this.onNameSearch}/>
+				<React.Fragment>
+					<button id="filter-country"  title="Filter By Country" onClick={(event)=>this.expandSelection(event.target,'filter-country')} data-trigger="dropdown-country">Country<i className="fas fa-filter" data-trigger="dropdown-country"></i></button>
+					{this.countrySelect()}
+				</React.Fragment>
+				<React.Fragment>
+					<button id="filter-category"  title="Filter By Category"  onClick={(event)=>this.expandSelection(event.target,'filter-category')} data-trigger="dropdown-category">Category<i className="fas fa-filter" data-trigger="dropdown-category"></i></button>
+					{this.categorySelect()}
+				</React.Fragment>
+				<input type="button" value="Remove All" onClick={this.removeFilters}/>
+			</div>
+		)
+	}
 	render(){
-		const {database, category}=this.props;
-		if(category!=="all"){
-			this.props.setCategoryFilter(category);
-		}
-		else this.removeFilters()
+		const {pages}=this.props;
 		return(
 			<div id="display-pages">
-				<div id="filter-buttons" >
-					<input type="search" id="searchField" placeholder="Filter by Name" onChange={this.nameSearch}/>
-					<React.Fragment>
-				  		<button id="filter-country"  title="Filter By Country" onClick={(event)=>this.expandSelection(event.target,'filter-country')}>Country<i className="fas fa-filter"></i></button>
-				  		{this.countrySelect()}
-			  		</React.Fragment>
-			  		<React.Fragment>
-				  		<button id="filter-category"  title="Filter By Category"  onClick={(event)=>this.expandSelection(event.target,'filter-country')}>Category<i className="fas fa-filter"></i></button>
-				  		{this.categorySelect()}
-			  		</React.Fragment>
-			  		<input type="button" value="Remove All" onClick={this.removeFilters}/>
-			  	</div>
-				  	{
-					window.addEventListener('click', this.dropdown)
-					}
-				<hr />
 				{
-					this.props.userFavourites===undefined?
-						(
-						<ErrorBoundary>
-						<PagesList
-							database={database}
-							countryFilter={this.props.countryFilter}
-							categoryFilter={this.props.categoryFilter}
-							previousFilters={this.props.filters}
-							userFavourites={[]}
-						/>
-						</ErrorBoundary>):(
-						<ErrorBoundary><PagesList
-							database={database}
-							countryFilter={this.props.countryFilter}
-							categoryFilter={this.props.categoryFilter}
-							previousFilters={this.props.filters}
-							userFavourites={this.props.userFavourites.fav}
-						/>
-						</ErrorBoundary>)
+					this.displayFilters()
 				}
+				<hr />
+				<ErrorBoundary>
+					<PagesList
+						pages={pages}
+						countryFilter={this.state.country}
+						categoryFilter={this.state.category}
+						nameFilter={this.state.name}
+						userFavourites={this.props.userFavourites?this.props.userFavourites.fav:[]}
+					/>
+				</ErrorBoundary>
+				
 			</div>
 		)
 	}
 }
-export default connect(mapStateToProps,mapDispatchToProps)(DisplayPages);
+export default DisplayPages;

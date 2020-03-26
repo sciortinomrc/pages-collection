@@ -1,29 +1,35 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
+import {Link} from 'react-router-dom';
 import PagesList from '../Main/PagesList';
-import _ from 'lodash';
 import "./Scroller.css";
 import ErrorBoundary from '../ErrorBoundary';
-const Home=({...props})=>{
-	const [w, setW] = useState(0)
-	const filteredPages= _.uniqBy(props.db, 'category');
-	const filteredCategories= filteredPages.map(category=>category.category).sort()
+
+const getCategories = (pages)=>{
+	return pages.reduce((acc,page)=>{
+		if(!acc.includes(page.category)) 
+			acc.push(page.category); 
+		return acc
+	},[])
+}
+const Home = ({pages, user}) => {
+	const [width, setWidth] = useState(0)
+	const categories = getCategories(pages);
 	return (
 		<React.Fragment>{
-			filteredCategories.map((category,i)=>{
-				let calcWidth=props.db.filter(card=>card.category===category).length;
-				calcWidth=(calcWidth>4)?4:calcWidth
-				const c=(window.innerWidth<=490)?315:430;
-				if(c!==w) setW(c);
-				return(
+			categories.map((category, i) => {
+				let calcWidth = pages.filter(card => card.category === category).length;
+				calcWidth = (calcWidth > 4) ? 4 : calcWidth
+				const currentWidth = (window.innerWidth <= 490) ? 315 : 430;
+				if (currentWidth !== width) setWidth(currentWidth);
+				return (
 
 					<fieldset key={category} >
-						<legend onClick={()=>props.onPageChange('display',category)}><p >{category.toUpperCase()}</p></legend>
-				 			{
-				 				!props.user?<ErrorBoundary><PagesList categoryFilter={category} database={props.db} countryFilter="" limit={4} style={calcWidth*w+"px"}/></ErrorBoundary>
-				 				:<ErrorBoundary><PagesList categoryFilter={category} database={props.db} countryFilter="" limit={4} userFavourites={props.user.fav} style={calcWidth*w+"px"}/></ErrorBoundary>
-				 			}
+						<legend><Link to={"/display?category="+category}>{category.toUpperCase()}</Link></legend>
+						<ErrorBoundary>
+							<PagesList categoryFilter={category} pages={pages} countryFilter="" limit={4} userFavourites={user?user.fav:null} style={calcWidth * width + "px"} />
+						</ErrorBoundary>
 					</fieldset>
-					)
+				)
 			})
 		}</React.Fragment>
 	)
