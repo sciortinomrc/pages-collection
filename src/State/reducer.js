@@ -7,7 +7,7 @@ LOGOUT_SUCCESS, LOGOUT_FAILED } from './constants';
 
 
 const pagesState = {
-	pages: []
+	pages: null
 }
 
 export const handlePages = (state=pagesState, action={})=> {

@@ -121,7 +121,7 @@ class App extends Component {
 				<Router>
 					<Top login={this.props.login} logout={this.props.logout} user={this.props.user} pages={this.props.pages} setCardToDisplay={this.setCardToDisplay} />
 					{
-						(this.props.pages.length) ?
+						(this.props.pages) ?
 							<Scroller>
 								<ErrorBoundary>
 									{this.tabsRouter()}
