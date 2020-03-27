@@ -29,7 +29,7 @@ class Pages{
         try{
             const request = await fetch("/api/pages/"+id+"/updateFavourites?increment="+direction,{
                 method:"PUT",
-                header:{
+                headers:{
                     "Content-Type":"application/json"
                 }
             })
@@ -44,7 +44,7 @@ class Pages{
         try{
             const request = await fetch("/api/pages/"+id,{
                 method:"DELETE",
-                header:{
+                headers:{
                     "Content-Type":"application/json"
                 }
             })
@@ -58,9 +58,9 @@ class Pages{
     }
     async create(pageInfo){
         try{
-            const request = await fetch("/api/pages/",{
+            const request = await fetch("/api/pages",{
                 method: "POST",
-                header:{
+                headers:{
                     "Content-Type":"application/json"
                 },
                 body: JSON.stringify(pageInfo)
