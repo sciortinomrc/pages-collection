@@ -37,7 +37,8 @@ class Users{
                 }
             })
             if(userInfo.status!==200) throw new Error();
-            return {...userInfo,...fbuserInfo}
+            const user = await userInfo.json();
+            return {...user,...fbuserInfo}
         }
         catch(e){
             throw userID;
