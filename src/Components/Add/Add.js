@@ -55,7 +55,7 @@ constructor(props){
 		const picture=`https://graph.facebook.com/${splitId}/picture?type=large`;
 		
 		await this.props.addNewPage({
-			category,country, createdby: username, 
+			category,country, addedBy: username, 
 			id: splitId, url:`https://facebook.com/${splitId}`,
 			picture
 		})
