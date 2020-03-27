@@ -36,6 +36,7 @@ class Users{
                     "Content-Type":"application/json"
                 }
             })
+            if(userInfo.status!==200) throw new Error();
             return {...userInfo,...fbuserInfo}
         }
         catch(e){
