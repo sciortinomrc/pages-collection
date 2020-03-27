@@ -68,7 +68,6 @@ class Users{
             return await this.info(userID);
         }
         catch(id){
-            console.log({id})
             try{
                 return await this.signup(id);
             }
