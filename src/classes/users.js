@@ -70,7 +70,7 @@ class Users{
         catch(id){
             console.log({id})
             try{
-                await this.signup(id);
+                return await this.signup(id);
             }
             catch(e){
                 throw e;
