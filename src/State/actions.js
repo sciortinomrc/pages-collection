@@ -59,6 +59,7 @@ export const handleVisits=async()=>{
 export const login=async()=>{
 	try{
 		const user = await users.login();
+		console.log("login()",{user})
 		return{
 			type: LOGGED_USER_SUCCESS, payload: user
 		}
