@@ -8,15 +8,28 @@ div{
 	padding:0px;
 }
 a{
-	color: white;
+	color: black;
 	transition: transform .2 linear;
 
 }
 a:hover, a:active, a:focus{
+	color: black;
+	text-decoration: none;
+	transform: scale(1.02);
+}
+#container a{
+	color: white;
+}
+#container a:hover, #container a:active, #container a:focus{
 	color: white;
 	font-weight: bold;
 	text-decoration: none;
-	transform: scale(1.02);
+}
+legend a{
+	border: 1px solid #777f;
+	background-color: #fff;
+	padding: 0px 5px;
+	box-shadow: 3px 3px 5px #0005, -3px 3px 5px #0005
 }
 #error{
 	display: flex;

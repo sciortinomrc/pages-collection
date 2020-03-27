@@ -22,9 +22,9 @@ class PagesList extends React.Component{
 	}
 	setFilters=()=>{
 		this.filters={
-			category: this.props.categoryFilter,
-			country: this.props.countryFilter,
-			name: this.props.nameFilter
+			category: this.props.categoryFilter || [],
+			country: this.props.countryFilter || [],
+			name: this.props.nameFilter || ""
 		}
 	}
 
