@@ -116,7 +116,6 @@ class App extends Component {
 
 	//render method
 	render() {
-		console.log(this.props.pages)
 		return (
 			<div id="main">
 				<Router>

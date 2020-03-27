@@ -53,6 +53,7 @@ class Users{
                     else reject();
                 })
             })
+            console.log({userID})
             return await this.info(userID);
         }
         catch(e){
