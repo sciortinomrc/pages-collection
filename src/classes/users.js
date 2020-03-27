@@ -39,10 +39,21 @@ class Users{
             return {...userInfo,...fbuserInfo}
         }
         catch(e){
-            throw e;
+            throw userID;
         }
     }
-
+    async signup(id){
+        try{
+            const userReq = await fetch("/api/users/"+id,{
+                method:"POST"
+            })
+            if(userReq.status!==200) throw await userReq.json();
+            return await userReq.json();
+        }
+        catch(e){
+            throw e
+        }
+    }
     async login(){
         try{
             const userID = await new Promise((resolve,reject)=>{
@@ -53,11 +64,15 @@ class Users{
                     else reject();
                 })
             })
-            console.log({userID})
             return await this.info(userID);
         }
-        catch(e){
-            return await this.login();
+        catch(id){
+            try{
+                return await this.signup(id);
+            }
+            catch(e){
+                throw e;
+            }
         }
     }
     logout(){
