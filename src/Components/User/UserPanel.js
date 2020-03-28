@@ -11,9 +11,12 @@ const mapDispatchToProps=dispatch=>({
 	}
 
 })
-const mapStateToProps=state=>({
-	user: state.login.user
-})
+const mapStateToProps=state=>{
+	console.log({state});
+	return{
+		user: state.login.user
+	}
+}
 
 const expand=(id, activeListener, setListenerState)=>{
 	if(!activeListener){
