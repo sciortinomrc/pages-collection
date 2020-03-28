@@ -43,6 +43,7 @@ class App extends Component {
 	}
 
 	waitForFB=async ()=>{
+		console.log(window.FB)
 		if(!window.FB){
 			this.waitForFB();
 			return;
