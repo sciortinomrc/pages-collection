@@ -61,9 +61,9 @@ class Users{
     async login(onLoad=false){
         try{
             console.log("LOGGING IN")
-            console.log({onLoad,ls:window.localStorage})
-            if(onLoad && window.localStorage.userID)
-                return await this.info(window.localStorage.userID);
+            console.log({onLoad,ls:localStorage})
+            if(onLoad && localStorage.userID)
+                return await this.info(localStorage.userID);
 
             const userID =  await new Promise((resolve,reject)=>{
                 window.FB.getLoginStatus(resp=>{
@@ -73,9 +73,9 @@ class Users{
                     else reject();
                 })
             })
-            window.localStorage.setItem("userID",userID)
-            console.log(window.localStorage)
-            return await this.info(window.localStorage.userID);
+            localStorage.setItem("userID",userID)
+            console.log(localStorage)
+            return await this.info(localStorage.userID);
         }
         catch(id){
             try{

@@ -38,7 +38,7 @@ class App extends Component {
 		}
 	}
 	componentWillMount(){
-		if(window.location.pathname.length)
+		if(window.location.pathname.length>1)
 			window.location.pathname="/";
 	}
 
