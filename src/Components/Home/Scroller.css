@@ -30,7 +30,7 @@
 /*HOME PAGE*/
 fieldset{
 	margin: auto;
-	border:1px solid black;
+	border:1px solid #0003;
 	width:90%;
 	border-radius: 5px;
 	overflow: hidden;
@@ -44,18 +44,19 @@ fieldset legend{
 	margin-left:15px;
 	cursor: pointer;
 }
-fieldset legend p{
-	border: 0.5px solid black;
-	border-radius: 5px;
-	background-color: white;
-	padding: 0px 15px;
+fieldset legend a{
+	border: 1px solid #777f;
+	background-color: #fff;
+	padding: 0px 5px;
+	box-shadow: 3px 3px 5px #0005, -3px 3px 5px #0005
 }
+
 fieldset>div>div{
 	justify-content: flex-start!important;
 }
 /*CARDS DISPLAY*/
 #pages-wrapper{
-	overflow-x: scroll;
+	overflow-x: auto;
 }
 #pages-list{
 	display: grid;
