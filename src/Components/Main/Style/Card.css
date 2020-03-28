@@ -19,7 +19,7 @@
 	height: 150px;
 	margin-left:0px;
 }
-#card div{
+#card>div{
 	background-color: #4267b2;
 	color: white;
 	display: flex;
@@ -60,7 +60,7 @@
 }
 
 #card>div>a, #card>div>p{
-	padding-right: 30px;
+	padding-right: 15px;
 }
 #star{
 	cursor: pointer;
@@ -68,7 +68,18 @@
 #card #favs{
 	background-color: white;
 	color: #4267b2;
+	flex-direction:column
 }
+#favs>div{
+	display: flex;
+	justify-content: space-around;
+	width:100%;
+}
+#favs p{
+	margin-bottom:5px;
+	margin-top:0px
+}
+
 
 @media (max-width: 490px){
 	#card{
