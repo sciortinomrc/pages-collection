@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import './UserPanel.css';
 import { deletePage, handlePages } from '../../State/actions'
 
-mapDispatchToProps=dispatch=>({
+const mapDispatchToProps=dispatch=>({
 	delete: async(id)=>{
 		dispatch(await deletePage(id));
 		dispatch(await handlePages());
