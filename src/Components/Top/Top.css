@@ -45,6 +45,9 @@
 #small-navigation{
 	height:39px;
 }
+#small-navigations>:nth-child(2){
+	position: relative;
+}
 #large-nav :nth-child(1) p{
 	border-top-left-radius: 10px;
 }
@@ -79,13 +82,14 @@
 }
 #dropdown-div{
 	z-index: 100;
-	position: absolute;
+	position: relative;
 	display: none;
 	flex-direction: column;
-	top:101px;
-	right:12px;
+	top:40px;
+	right:0px;
 	height: auto;
 	background-color: #eeeeee;
+	min-width: 217px;
 }
 #dropdown-logged{
 	height:auto;

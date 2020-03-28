@@ -58,9 +58,7 @@
 	height: 100%;
 	width: 100%;
 }
-#card div a:hover{
-	font-weight: bold;
-}
+
 #card>div>a, #card>div>p{
 	padding-right: 30px;
 }

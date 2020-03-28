@@ -102,7 +102,7 @@ componentDidMount(){
 			)
 		}
 		return(
-			<div id="download-logger">
+			<div id="dropdown-logged">
 				{this.logged(user.admin, className)}
 			</div>
 		)
