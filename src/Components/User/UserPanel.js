@@ -11,7 +11,7 @@ const mapDispatchToProps=dispatch=>({
 	}
 
 })
-mapStateToProps=state=>({
+const mapStateToProps=state=>({
 	user: state.login.user
 })
 
