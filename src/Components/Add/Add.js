@@ -15,7 +15,7 @@ const mapDispatchToProps=dispatch=>{
 	return{
 		addNewPage: async(pageInfo)=>{
 			dispatch(await addNewPage(pageInfo))
-			dispatch(handlePages());
+			dispatch(await handlePages());
 		} 
 	}
 }
