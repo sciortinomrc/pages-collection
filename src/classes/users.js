@@ -23,6 +23,8 @@ class Users{
         return this.list;
     }
 
+
+
     async info(userID){
         try{
             const fbuserInfo = new Promise(resolve=>{
@@ -56,9 +58,12 @@ class Users{
             throw e
         }
     }
-    async login(){
+    async login(onLoad=false){
         try{
-            const userID = await new Promise((resolve,reject)=>{
+            if(onLoad && window.localStorage.userID)
+                return await this.info(window.localStorage.userID);
+
+            const userID =  await new Promise((resolve,reject)=>{
                 window.FB.getLoginStatus(resp=>{
                     if(resp.status==="connected"){
                         resolve(resp.authResponse.userID)
@@ -66,7 +71,8 @@ class Users{
                     else reject();
                 })
             })
-            return await this.info(userID);
+            window.localStorage.setItem("userID",userID)
+            return await this.info(window.localStorage.userID);
         }
         catch(id){
             try{

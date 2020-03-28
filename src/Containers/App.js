@@ -26,7 +26,7 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		handlePages: async () => dispatch(await handlePages()),
 		onWindowResize: (size) => dispatch(windowResize(size)),
-		login: async () => dispatch(await login()),
+		login: async (onLogin=false) => dispatch(await login(onLogin)),
 		logout: ()=> dispatch( logout())
 	}
 }
@@ -36,6 +36,11 @@ class App extends Component {
 		this.state={
 			cardToDisplay: null
 		}
+	}
+	componentWillMount(){
+		if(window.location.pathname.length)
+			window.location.pathname="/";
+		this.props.login(true);
 	}
 
 	componentDidMount() {
