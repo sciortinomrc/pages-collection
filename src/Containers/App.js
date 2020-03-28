@@ -120,7 +120,7 @@ class App extends Component {
 					<DisplayPages category='all' pages={this.filterFavourites()}/>
 				</Route>
 				<Route exact path="/user">
-					<UserPanel pages={pages} user={user} name={this.state.userName} setDB={this.props.setDB}/>
+					<UserPanel pages={pages} user={user} name={this.state.userName}/>
 				</Route>
 				<Route exact path="/overview">
 				<	DBOverview />

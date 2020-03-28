@@ -1,6 +1,19 @@
 import React from "react";
 import {useState} from "react";
+import { connect } from 'react-redux';
 import './UserPanel.css';
+import { deletePage, handlePages } from '../../State/actions'
+
+mapDispatchToProps=dispatch=>({
+	delete: async(id)=>{
+		dispatch(await deletePage(id));
+		dispatch(await handlePages());
+	}
+
+})
+mapStateToProps=state=>({
+	user: state.login.user
+})
 
 const expand=(id, activeListener, setListenerState)=>{
 	if(!activeListener){
@@ -39,28 +52,11 @@ const showCommands=(event,id)=>{
 			com.style.display="grid"
 	}
 }
-const flag=(pageId)=>{
-	fetch('https://peaceful-everglades-81846.herokuapp.com/flag', {
-		method: 'post',
-		headers: {'Content-Type':'application/json'},
-		body: JSON.stringify({ pageId })
-	})
-	.then(r=>{})
-}
-const delPage=(event,pageId,setPageId,setDB)=>{
+
+const delPage=(event,pageId,setPageId)=>{
 	const popup=document.getElementById("fullpage");
 	if(event.key==="Enter" && event.target.value==="DELETE"){
-		fetch('https://peaceful-everglades-81846.herokuapp.com/delete', {
-			method: 'post',
-			headers: {'Content-Type':'application/json'},
-			body: JSON.stringify({ pageId })
-		})
-		.then(response=>response.json())
-		.then(r=>{
-			setDB(r)
-		})
-		popup.style.display="none";
-		setPageId("");
+		this.props.delete(pageId);
 	}
 	if(event.key===" "){
 		popup.style.display="none"
@@ -77,11 +73,11 @@ const resetLight=(event)=>{
 
 
 const UserPanel=(props)=>{
-	const {database,name,user,setDB} = props;
+	const {pages,name} = props;
 	const [pageId, setPageId] = useState("");
 	const [activeListener, setListenerState] = useState(false)
-	const db=database.filter(card=>card.createdby===user.id)
-	const userPictureURL=`https://graph.facebook.com/${user.id}/picture?type=large`
+	const db=pages.filter(card=>card.createdby===props.user.id)
+	const userPictureURL=`https://graph.facebook.com/${props.user.id}/picture?type=large`
 	return(
 		<React.Fragment>
 		<h2>
@@ -103,7 +99,6 @@ const UserPanel=(props)=>{
 								<p>Favourites: {card.favourite}</p>
 							</div>
 							<div id={`${card.id}commands`} className="commands">
-								<div id="F" title="Flag an error with the page" onClick={()=>flag(card.id)} onMouseOver={light} onMouseLeave={resetLight}>FLAG ERROR</div>
 								<div id="X" title="Delete this page" onClick={()=>{
 									setPageId(card.id)
 									document.addEventListener("keydown",(e)=>{
@@ -128,7 +123,7 @@ const UserPanel=(props)=>{
 				<div id="popup">
 					<h3>Do you really want to delete this page?</h3>
 					<h6>Changed your mind? Just press ESC</h6>
-					<input type="text" placeholder="Write DELETE and press enter" onKeyPress={(event)=>delPage(event,pageId,setPageId,setDB)}/>
+					<input type="text" placeholder="Write DELETE and press enter" onKeyPress={(event)=>delPage(event,pageId,setPageId)}/>
 				</div>
 			</div>
 			: ""
@@ -136,4 +131,4 @@ const UserPanel=(props)=>{
 		 </React.Fragment>
 		)
 }
-export default UserPanel;
+export default connect(mapDispatchToProps, mapStateToProps)(UserPanel);
