@@ -22,7 +22,6 @@ class Card extends Component{
 
 	render(){
 		const {id,type,likes,category,name,url,picture,favourites,country} =this.props;
-		console.log()
 		return(
 
 				
@@ -32,10 +31,10 @@ class Card extends Component{
 					<p > </p>
 				</div>
 				<div className="d-flex flex-column">
-					<a href={url} target='_blank' rel="noopener noreferrer"><p >{name}</p></a>
-					<p>{type}</p>
+					<a href={url} target='_blank' rel="noopener noreferrer"><p>{name}</p></a>
 				</div>
 				<div id="favs" >
+					<p>{type}</p>
 					<p id="thumb" style={{cursor: "default"}}><span className="fas fa-thumbs-up"></span> {likes}</p>
 				 {	
 				 	this.props.user.id?

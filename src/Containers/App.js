@@ -89,7 +89,6 @@ class App extends Component {
 
 	//filter favourites from pages
 	filterFavourites = () => {
-		console.log(this.props.user)
 		if (!this.props.user.id) return this.props.pages;
 		return this.props.pages.filter(record => {
 			return this.props.user.favourites.some(fav => fav === record.id)
@@ -135,7 +134,6 @@ class App extends Component {
 
 	//render method
 	render() {
-		console.log(this.props)
 		return (
 			<div id="main">
 				<Router>
