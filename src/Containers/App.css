@@ -25,12 +25,7 @@ a:hover, a:active, a:focus{
 	font-weight: bold;
 	text-decoration: none;
 }
-legend a{
-	border: 1px solid #777f;
-	background-color: #fff;
-	padding: 0px 5px;
-	box-shadow: 3px 3px 5px #0005, -3px 3px 5px #0005
-}
+
 #error{
 	display: flex;
 	flex-direction: column;

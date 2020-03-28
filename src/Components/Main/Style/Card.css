@@ -74,10 +74,12 @@
 	display: flex;
 	justify-content: space-around;
 	width:100%;
-}
-#favs p{
 	margin-bottom:5px;
 	margin-top:0px
+}
+#favs p{
+	margin-bottom:0px;
+	margin-top:0px;
 }
 
 
