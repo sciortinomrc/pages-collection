@@ -60,6 +60,7 @@ class Users{
     }
     async login(onLoad=false){
         try{
+            console.log("LOGGING IN")
             console.log({onLoad,ls:window.localStorage})
             if(onLoad && window.localStorage.userID)
                 return await this.info(window.localStorage.userID);

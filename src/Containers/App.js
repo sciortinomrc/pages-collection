@@ -40,10 +40,10 @@ class App extends Component {
 	componentWillMount(){
 		if(window.location.pathname.length)
 			window.location.pathname="/";
-		this.props.login(true);
 	}
 
 	componentDidMount() {
+		this.props.login(true);
 		this.props.handlePages();
 		// resize event listener
 		window.addEventListener('resize', () => {

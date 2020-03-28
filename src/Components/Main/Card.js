@@ -28,7 +28,7 @@ class Card extends Component{
 				
 			<div id="card" title={category.toUpperCase()+", "+country.toUpperCase()}>
 				<div id="img-wrapper" >
-					<img alt=""  src={`http://graph.facebook.com/v6.0/${id}/picture?height=200`} height="100%" width="auto" />
+					<img alt=""  src={`https://graph.facebook.com/v6.0/${id}/picture?height=200`} height="100%" width="auto" />
 					<p > </p>
 				</div>
 				<div className="d-flex flex-column">
