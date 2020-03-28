@@ -42,13 +42,18 @@ class App extends Component {
 			window.location.pathname="/";
 	}
 
-	waitForFB=async ()=>{
-		console.log(window.FB)
-		if(!window.FB){
-			this.waitForFB();
-			return;
-		}
-		this.props.login(true);
+	waitForFB=()=>{
+		setTimeout(async ()=>{
+			await new Promise((resolve)=>{
+				if(!window.FB){
+					this.waitForFB();
+					resolve();
+					return;
+				}
+				this.props.login(true);
+				resolve();
+			})
+		},1000)
 	}
 
 	componentDidMount() {
