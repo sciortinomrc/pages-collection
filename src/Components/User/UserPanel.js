@@ -134,4 +134,4 @@ const UserPanel=(props)=>{
 		 </React.Fragment>
 		)
 }
-export default connect(mapDispatchToProps, mapStateToProps)(UserPanel);
+export default connect(mapStateToProps,mapDispatchToProps)(UserPanel);
