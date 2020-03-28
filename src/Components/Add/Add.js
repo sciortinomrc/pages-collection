@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect } from 'react-redux';
-import {addNewPage} from '../../State/actions.js';
+import {addNewPage, handlePages} from '../../State/actions.js';
 import { CountryDropdown } from 'react-country-region-selector';
 import "./Add.css";
 
@@ -13,7 +13,10 @@ const mapStateToProps=state=>{
 }
 const mapDispatchToProps=dispatch=>{
 	return{
-		addNewPage: async(pageInfo)=> dispatch(await addNewPage(pageInfo))
+		addNewPage: async(pageInfo)=>{
+			dispatch(await addNewPage(pageInfo))
+			dispatch(handlePages());
+		} 
 	}
 }
 
