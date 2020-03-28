@@ -61,7 +61,7 @@ class Users{
     async login(onLoad=false){
         try{
             console.log("LOGGING IN")
-            console.log({onLoad,ls:localStorage})
+            console.log({onLoad, ls: localStorage.userID})
             if(onLoad && localStorage.userID)
                 return await this.info(localStorage.userID);
 

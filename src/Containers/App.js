@@ -42,9 +42,17 @@ class App extends Component {
 			window.location.pathname="/";
 	}
 
-	componentDidMount() {
+	waitForFB=async ()=>{
+		if(!window.FB){
+			this.waitForFB();
+			return;
+		}
 		this.props.login(true);
+	}
+
+	componentDidMount() {
 		this.props.handlePages();
+		this.waitForFB();
 		// resize event listener
 		window.addEventListener('resize', () => {
 			this.props.onWindowResize([window.innerWidth, window.innerHeight])
