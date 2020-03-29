@@ -2,6 +2,7 @@ import React from 'react';
 import "./DBOverview.css";
 import MyChart from "./Chart.js"
 
+
 class DBOverview extends React.Component{
 	constructor(){
 		super()

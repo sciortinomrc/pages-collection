@@ -36,7 +36,7 @@
 }
 .profileSmallCard img, #user-pic{
 	height:100px;
-	border-radius: 100%;
+	border-radius:15px;
 	border: 1px solid white;
 	position: relative;
 	z-index: 1;
@@ -44,10 +44,99 @@
 #user-pic{
 	height:250px;
 }
-.profileSmallCard img{
-	transition: transform 0.3s ease-in;
+
+.profileSmallCard{
+	position: relative;
+	height:150px;
+	margin: 0px 50px;
+}
+.profileSmallCard.selected{
+	height:250px
+}
+.profileSmallCard:not(.selected):hover{
+	z-index: 1222;
+}
+.profileSmallCard:before{
+	content: '';
+    display: block;
+    position: absolute;
+    background-color: #fff1;
+    z-index: 1100;
+    width: 100px;
+    height: 100px;
+    box-shadow: inset 0px 5px 10px 5px #fff6, 0px 2px 10px -1px #0005;
+	border-radius: 15px;
+	transition: transform 0.1s ease-in;
 }
 
+.profileSmallCard:hover:before{
+	transform: scale(1.05);
+    background-color: #fff0;
+	box-shadow: inset 0px 5px 10px 5px #fff4, 0px 5px 10px 3px #0009;
+}
+.profileSmallCard:hover img{
+	transform: scale(1.05);
+}
+
+.profileSmallCard>.details{
+	background-color: #fff;
+	color: #4267b2;
+	border: .5px solid #aaa7;
+	border-radius: 5px;
+	height:90px;
+	width:0px;
+	margin-left:90px;
+	overflow: hidden;
+	display:flex;
+	align-items: center;
+	transition: width .2s ease-in-out, margin-left .1s ease-in;
+}
+.profileSmallCard:not(.selected)>.details{
+	position: absolute;
+}
+.profileSmallCard:hover:not(.selected)>.details{
+	padding-left:30px;
+	width: 350px;
+	box-shadow: 3px 15px 20px 3px #0003;
+}
+
+.profileSmallCard img{
+	/* position: absolute; */
+	z-index: 1099;
+	transition: transform 0.1s ease-in;
+}
+
+.selected:before{
+	height:200px;
+	width:200px;
+}
+.selected img{
+	height:200px;
+}
+.selected .details{
+	padding-left:30px;
+	margin-left:-20px;
+	height:150px;
+	width:100%;
+	max-width: 500px;
+	box-shadow: 3px 15px 20px 3px #0003;
+}
+
+.delete{
+	width: 150px;
+	height:150px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	color: white;
+	background-color: red;
+	border-radius:5px;
+	box-shadow: inset 0px 7px 15px #fffc, inset 0px -7px 15px #0005, 0px 10px 15px #0005;
+}
+.delete:active{
+	box-shadow: inset 0px 7px 10px #0005, inset 0px -7px 10px #fff4;
+}
 .description{
 	position: relative;
 	border: 2px solid #4267b2;
@@ -68,9 +157,10 @@
 }
 #list{
 	padding-top: 50px;
-	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(200px, 201px));
-	grid-row-gap: 30px
+	height:100%;
+	display: flex;
+	flex-wrap: wrap;
+	overflow: hidden;
 }
 #fullpage{
 	position: absolute;
@@ -81,22 +171,43 @@
 	height: 100vh;
 	top:0px;
 	left: 0px;
-	background-color: black;
-	opacity:0.7;
-	z-index: 3;
+	background-color: #000c;
+	z-index: 1111;
 }
 #popup{
 	margin: auto;
 	background-color: white;
-	padding: 50px 5px;
+	padding: 150px 20px;
 	display: flex;
 	flex-direction: column;
 	text-align: center;
 	align-items: center;
-	border-radius: 50px;
-	width: 350px;
+	border-radius: 5px;
+	max-width: 500px;
 }
 #popup input{
 	width: 250px;
-	border-radius: 15px;
+	border-radius: 5px;
+	padding-left: 5px;
+}
+@media (max-width: 767px),(hover:none){
+
+	.profileSmallCard{
+		margin: 0px 15px;
+	}
+	.profileSmallCard:hover .details{
+		display: none
+	}
+
+	.selected{
+		display: flex;
+		flex-direction: column;
+		margin: auto;
+		height: auto!important;
+	}
+	.selected .details{
+		height:300px;
+		width: 100%!important;
+		margin:auto;
+	}
 }

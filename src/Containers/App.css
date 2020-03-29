@@ -43,7 +43,6 @@ a:hover, a:active, a:focus{
 	opacity: 0.4;
 }
 input:focus, div:focus, p:focus, button:focus, select:focus{
-	border: none;
 	outline: none;
 }
 #main{

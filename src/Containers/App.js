@@ -38,7 +38,7 @@ class App extends Component {
 		}
 	}
 	componentWillMount(){
-		if(window.location.pathname.length>1)
+		if(window.location.pathname.length>1 && !localStorage.userID)
 			window.location.pathname="/";
 	}
 
@@ -58,7 +58,8 @@ class App extends Component {
 
 	componentDidMount() {
 		this.props.handlePages();
-		this.waitForFB();
+		// this.waitForFB();
+		this.props.login(true)
 		// resize event listener
 		window.addEventListener('resize', () => {
 			this.props.onWindowResize([window.innerWidth, window.innerHeight])

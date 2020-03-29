@@ -14,9 +14,18 @@ const visits = new Visits();
 
 export const handlePages=async()=>{
 	try{
-		await pages.all();
-		const allPages = pages.getAll();
-		// const allPages = [{id:"vespucciakabaudo",name:"Amerigo Vespucci: il Pippo Baudo della nautica",type:"Arcade",category:"ignoranza",likes:1561,favourites:0,createdby:"1723130954465225",country:"Italy",url:"https://facebook.com/vespucciakabaudo",picture:"https://graph.facebook.com/vespucciakabaudo/picture?type=large"}];
+		// await pages.all();
+		// const allPages = pages.getAll();
+		const allPages = [
+			{id:"vespucciakabaudo",name:"Amerigo Vespucci: il Pippo Baudo della nautica",type:"Arcade",category:"ignoranza",likes:1561,favourites:0,createdby:"1723130954465225",country:"Italy",url:"https://facebook.com/vespucciakabaudo",picture:"https://graph.facebook.com/vespucciakabaudo/picture?type=large"},
+			{id:"vespucciakabaudo",name:"Amerigo Vespucci: il Pippo Baudo della nautica",type:"Arcade",category:"ignoranza",likes:1561,favourites:0,createdby:"1723130954465225",country:"Italy",url:"https://facebook.com/vespucciakabaudo",picture:"https://graph.facebook.com/vespucciakabaudo/picture?type=large"},
+			{id:"vespucciakabaudo",name:"Amerigo Vespucci: il Pippo Baudo della nautica",type:"Arcade",category:"ignoranza",likes:1561,favourites:0,createdby:"1723130954465225",country:"Italy",url:"https://facebook.com/vespucciakabaudo",picture:"https://graph.facebook.com/vespucciakabaudo/picture?type=large"},
+			{id:"vespucciakabaudo",name:"Amerigo Vespucci: il Pippo Baudo della nautica",type:"Arcade",category:"ignoranza",likes:1561,favourites:0,createdby:"1723130954465225",country:"Italy",url:"https://facebook.com/vespucciakabaudo",picture:"https://graph.facebook.com/vespucciakabaudo/picture?type=large"},
+			{id:"vespucciakabaudo",name:"Amerigo Vespucci: il Pippo Baudo della nautica",type:"Arcade",category:"ignoranza",likes:1561,favourites:0,createdby:"1723130954465225",country:"Italy",url:"https://facebook.com/vespucciakabaudo",picture:"https://graph.facebook.com/vespucciakabaudo/picture?type=large"},
+			{id:"vespucciakabaudo",name:"Amerigo Vespucci: il Pippo Baudo della nautica",type:"Arcade",category:"ignoranza",likes:1561,favourites:0,createdby:"1723130954465225",country:"Italy",url:"https://facebook.com/vespucciakabaudo",picture:"https://graph.facebook.com/vespucciakabaudo/picture?type=large"},
+			{id:"vespucciakabaudo",name:"Amerigo Vespucci: il Pippo Baudo della nautica",type:"Arcade",category:"ignoranza",likes:1561,favourites:0,createdby:"1723130954465225",country:"Italy",url:"https://facebook.com/vespucciakabaudo",picture:"https://graph.facebook.com/vespucciakabaudo/picture?type=large"},
+			
+		];
 
 		return{
 			type: SET_PAGES_SUCCESS, payload: allPages
@@ -57,9 +66,9 @@ export const handleVisits=async()=>{
 	}
 }
 
-export const login=async()=>{
+export const login=async(onLoad=false)=>{
 	try{
-		const user = await users.login();
+		const user = await users.login(onLoad);
 		return{
 			type: LOGGED_USER_SUCCESS, payload: user
 		}

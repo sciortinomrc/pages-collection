@@ -27,19 +27,21 @@ class Users{
 
     async info(userID){
         try{
-            const fbuserInfo = new Promise(resolve=>{
-               window.FB.api(`/${userID}`,user=>{
-                   resolve(user);
-               })
-            })
-            const userInfo = await fetch("/api/users/"+userID,{
-                method:"GET",
-                headers:{
-                    "Content-Type":"application/json"
-                }
-            })
-            if(userInfo.status!==200) throw new Error();
-            const user = await userInfo.json();
+            // const fbuserInfo = new Promise(resolve=>{
+            //    window.FB.api(`/${userID}`,user=>{
+            //        resolve(user);
+            //    })
+            // })
+            const fbuserInfo = {id:"1723130954465225",name:"Marco Sciortino"}
+            // const userInfo = await fetch("/api/users/"+userID,{
+            //     method:"GET",
+            //     headers:{
+            //         "Content-Type":"application/json"
+            //     }
+            // })
+            // if(userInfo.status!==200) throw new Error();
+            // const user = await userInfo.json();
+            const user = {id:"1723130954465225",favourites:[],admin: true}
             return {...user,...fbuserInfo}
         }
         catch(e){
@@ -60,6 +62,7 @@ class Users{
     }
     async login(onLoad=false){
         try{
+            console.log(onLoad,localStorage.userID)
             if(onLoad && localStorage.userID)
                 return await this.info(localStorage.userID);
 

@@ -1,33 +1,32 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import './Style/Card.css';
-import {connect} from 'react-redux';
-import {updateFavourites} from '../../State/actions';
+import { connect } from 'react-redux';
+import { updateFavourites } from '../../State/actions';
 
-const mapStateToProps=state=>({
+const mapStateToProps = state => ({
 	user: state.login.user
 })
-const mapDispatchToProps=dispatch=>{
+const mapDispatchToProps = dispatch => {
 	return {
-		updateFavourites: (id,user)=> dispatch(updateFavourites(id,user))
+		updateFavourites: async (id, user, direction) => dispatch(await updateFavourites(id, user, direction))
 	}
 }
 
-class Card extends Component{
-	toggleFavourite=(event)=>{
-		const click=event.target;
-		if(click.classList.contains('fav')) click.classList.remove('fav')
-		else click.classList.add('fav')
-		this.props.updateFavourites(this.props.id,this.props.user.id)
+class Card extends Component {
+	toggleFavourite = (event) => {
+		const click = event.target;
+		click.classList.toggle('fav')
+		this.props.updateFavourites(this.props.id, this.props.user, !this.props.user.favourites.includes(this.props.id))
 	}
 
-	render(){
-		const {id,type,likes,category,name,url,picture,favourites,country} =this.props;
-		return(
+	render() {
+		const { id, type, likes, category, name, url, picture, favourites, country } = this.props;
+		return (
 
-				
-			<div id="card" title={category.toUpperCase()+", "+country.toUpperCase()}>
+
+			<div id="card" title={category.toUpperCase() + ", " + country.toUpperCase()}>
 				<div id="img-wrapper" >
-					<img alt=""  src={`https://graph.facebook.com/v6.0/${id}/picture?height=200`} height="100%" width="auto" />
+					<img alt="" src={`https://graph.facebook.com/v6.0/${id}/picture?height=200`} height="100%" width="auto" />
 					<p > </p>
 				</div>
 				<div className="d-flex flex-column">
@@ -36,19 +35,19 @@ class Card extends Component{
 				<div id="favs" >
 					<p>{type}</p>
 					<div>
-						<p id="thumb" style={{cursor: "default"}}><span className="fas fa-thumbs-up"></span> {likes}</p>
-						{	
-							this.props.user.id?
-								<p id="star"><span onClick={this.toggleFavourite} style={{color: this.props.user.favourites.includes(id)?'yellow':''}}>&#9733;</span>{favourites}</p>
+						<p id="thumb" style={{ cursor: "default" }}><span className="fas fa-thumbs-up"></span> {likes}</p>
+						{
+							this.props.user.id ?
+								<p id="star"><span onClick={this.toggleFavourite} style={{ color: this.props.user.favourites.includes(id) ? 'yellow' : '' }}>&#9733;</span>{favourites}</p>
 								:
-								<p id="star" style={{cursor:"default"}}><span>&#9733;</span>{favourites}</p>
+								<p id="star" style={{ cursor: "default" }}><span>&#9733;</span>{favourites}</p>
 						}
 					</div>
-				 
+
 				</div>
 			</div>
-			)
+		)
 	}
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(Card);
+export default connect(mapStateToProps, mapDispatchToProps)(Card);
