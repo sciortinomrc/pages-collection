@@ -6,7 +6,7 @@ METERIAN_PATH=~/meterian/meterian-cli.jar
 
 java -jar $METERIAN_PATH --version
 
-if [ $? == 1 ]
+if [ $? -eq 1 ]
 then rm $METERIAN_PATH
 else echo OK
 fi
