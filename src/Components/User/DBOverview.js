@@ -41,7 +41,7 @@ class DBOverview extends React.Component{
 							<div key={user.id}>
 								<div> <img src={`https://graph.facebook.com/v6.0/${user.id}/picture?height=200`} alt="user pic" /> </div>
 								<div> {user.id} </div>
-								<div> {user.fav.length} </div>
+								<div> {user.favourites.length} </div>
 							</div>
 						)
 					})
