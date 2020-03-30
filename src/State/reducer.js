@@ -2,7 +2,6 @@ import {SET_PAGES_SUCCESS, SET_PAGES_FAILED,
 SET_USERS_SUCCESS, SET_USERS_FAILED, SET_VISITS_SUCCESS,
 SET_VISITS_FAILED, LOGGED_USER_SUCCESS, LOGGED_USER_FAILED,
 ADD_NEW_PAGE_SUCCESS, ADD_NEW_PAGE_FAILED, WINDOW_RESIZE,
-UPDATE_FAVOURITES_SUCCESS, UPDATE_FAVOURITES_FAILED,
 LOGOUT_SUCCESS, LOGOUT_FAILED } from './constants';
 
 
@@ -66,7 +65,7 @@ export const login = (state=loginState, action={})=>{
 export const logout = (state=loginState,action={})=>{
 	if(action.type==LOGOUT_SUCCESS)
 		return{
-			user: null
+			user: {}
 		}
 	if(action.type==LOGOUT_FAILED)
 		return state

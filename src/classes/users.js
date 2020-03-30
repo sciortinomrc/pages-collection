@@ -87,6 +87,7 @@ class Users{
     logout(){
         try{
             window.FB.logout();
+            localStorage.clear();
             return null
         }
         catch(e){

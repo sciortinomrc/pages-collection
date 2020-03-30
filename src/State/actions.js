@@ -82,7 +82,7 @@ export const logout = async()=>{
 	try{
 		const user = user.logout();
 		return{
-			type: LOGOUT_SUCCESS, payload:user
+			type: LOGOUT_SUCCESS, payload: {}
 		}
 	}
 	catch(e){

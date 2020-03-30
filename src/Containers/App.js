@@ -27,7 +27,7 @@ const mapDispatchToProps = (dispatch) => {
 		handlePages: async () => dispatch(await handlePages()),
 		onWindowResize: (size) => dispatch(windowResize(size)),
 		login: async (onLogin=false) => dispatch(await login(onLogin)),
-		logout: ()=> dispatch( logout()),
+		logout: async()=> dispatch( await logout()),
 		newVisit: async ()=> dispatch(await newVisit())
 	}
 }
