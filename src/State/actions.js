@@ -120,9 +120,9 @@ export const deletePage = async(id) => {
 
 export const windowResize = (windowSize) => ({type: WINDOW_RESIZE, payload: windowSize})
 
-export const updateFavourites=async(id,user,direction)=>{
+export const updateFavourites=async(id,user,currentCount,direction)=>{
 	try{
-		await pages.updateFavourites(id,direction);
+		await pages.updateFavourites(id,currentCount,direction);
 		await users.updateFavourites(user,id);
 		return {
 			type: UPDATE_FAVOURITES_SUCCESS, payload: true

@@ -25,9 +25,9 @@ class Pages{
     get(id){
         return this.list.filter(page=>page.id==id)[0];
     }
-    async updateFavourites(id,direction){
+    async updateFavourites(id,count,direction){
         try{
-            const request = await fetch("/api/pages/"+id+"/updateFavourites?increment="+direction,{
+            const request = await fetch("/api/pages/"+id+"/favourites/update?current="+count+"&add="+direction,{
                 method:"PUT",
                 headers:{
                     "Content-Type":"application/json"

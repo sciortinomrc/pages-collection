@@ -58,8 +58,7 @@ class App extends Component {
 
 	componentDidMount() {
 		this.props.handlePages();
-		// this.waitForFB();
-		this.props.login(true)
+		this.waitForFB();
 		// resize event listener
 		window.addEventListener('resize', () => {
 			this.props.onWindowResize([window.innerWidth, window.innerHeight])

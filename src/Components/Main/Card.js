@@ -16,7 +16,7 @@ class Card extends Component {
 	toggleFavourite = (event) => {
 		const click = event.target;
 		click.classList.toggle('fav')
-		this.props.updateFavourites(this.props.id, this.props.user, !this.props.user.favourites.includes(this.props.id))
+		this.props.updateFavourites(this.props.id, this.props.user, this.props.favourites, !this.props.user.favourites.includes(this.props.id))
 	}
 
 	render() {
