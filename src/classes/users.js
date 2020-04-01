@@ -60,7 +60,8 @@ class Users{
     }
     async login(onLoad=false){
         try{
-            console.log(onLoad,localStorage.userID)
+            if(Date.now()>=localStorage.timestamp) localStorage.clear();
+            
             if(onLoad && localStorage.userID)
                 return await this.info(localStorage.userID);
 
@@ -73,6 +74,7 @@ class Users{
                 })
             })
             localStorage.setItem("userID",userID)
+            localStorage.setItem("timestamp",Date.now()+3600000)
             return await this.info(localStorage.userID);
         }
         catch(id){

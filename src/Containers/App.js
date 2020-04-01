@@ -26,9 +26,9 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		handlePages: async () => dispatch(await handlePages()),
 		onWindowResize: (size) => dispatch(windowResize(size)),
-		login: async (onLogin=false) => dispatch(await login(onLogin)),
-		logout: async()=> dispatch( await logout()),
-		newVisit: async ()=> dispatch(await newVisit())
+		login: async(onLogin=false) => dispatch(await login(onLogin)),
+		logout: async()=> dispatch(await logout()),
+		newVisit: async()=> dispatch(await newVisit())
 	}
 }
 class App extends Component {
@@ -59,7 +59,8 @@ class App extends Component {
 
 	componentDidMount() {
 		this.props.handlePages();
-		if(window.location.query!="itsme")
+
+		if(!window.location.search.includes("itsme"))
 			this.props.newVisit();
 			
 		this.waitForFB();

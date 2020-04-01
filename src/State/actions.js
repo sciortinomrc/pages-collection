@@ -138,7 +138,7 @@ export const updateFavourites=async(id,user,currentCount,direction)=>{
 export const newVisit = async()=>{
 	try{
 		await visits.recordVisit();
-		return
+		return { type: ""}
 	}
 	catch(e){
 		return null
