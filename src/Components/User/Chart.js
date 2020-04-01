@@ -9,7 +9,7 @@ const Visits =(props)=>{
   for(let visit of props.data) {
     if(c%step!=0 && c!=last && last+1>10) {c++;continue;}
     c++;
-    chartData.push([{date: visit.date, count: visit.count}])
+    chartData.push([visit.date,visit.count])
   }
   return(
       // A react-chart hyper-responsively and continuusly fills the available

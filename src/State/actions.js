@@ -55,6 +55,7 @@ export const handleVisits=async()=>{
 	try{
 		await visits.all();
 		const allVisits = visits.getAll();
+		// const allVisits = [{"date":"3/21/2020","count":4},{"date":"3/31/2020","count":7},{"date":"4/1/2020","count":14}]
 		return{
 			type: SET_VISITS_SUCCESS, payload: allVisits
 		}
