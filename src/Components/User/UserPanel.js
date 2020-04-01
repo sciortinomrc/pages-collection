@@ -26,7 +26,15 @@ const SmallCard=(props)=>{
 	)
 }
 
+const deleteListener = (select)=>{
+	window.removeEventListener("click",null);
+	window.addEventListener("click",(e)=>{
+		if(e.target.dataset.scope!=="delete") select(null)
+	})
+}
+
 const BigCard = (props)=>{
+	deleteListener(props.select);
 	const {card} = props;
 	return(
 		<div id={"selected"+card.id} data-scope="delete" className="d-flex profileSmallCard selected position-relative">
@@ -38,7 +46,6 @@ const BigCard = (props)=>{
 }
 
 const delPage =(e, id, fn)=>{
-	console.log(e.key)
 	if(e.key=="Enter" && deleteInputRef.value=="DELETE"){
 		fn.delete(id)
 	}
@@ -69,7 +76,7 @@ const UserPanel=(props)=>{
 		{selectedCard?
 		<React.Fragment>
 			<hr />
-			<BigCard card={selectedCard} delete={setDeleting}/>
+			<BigCard card={selectedCard} delete={setDeleting} select={setCard}/>
 		</React.Fragment>:
 			""}
 

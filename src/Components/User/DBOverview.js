@@ -1,6 +1,6 @@
 import React from 'react';
 import "./DBOverview.css";
-import MyChart from "./Chart.js";
+import Visits from "./Chart.js";
 import {connect} from "react-redux";
 import {handlePages,handleUsers,handleVisits} from "../../State/actions";
 
@@ -89,7 +89,7 @@ class DBOverview extends React.Component{
 					(this.props.visits.length)?
 					<React.Fragment>
 					<h1>VISITS</h1>
-					<MyChart data={this.props.visits} />
+					<Visits data={this.props.visits} />
 					</React.Fragment> : ""
 				}
 				<h1>USERS</h1>
