@@ -3,13 +3,13 @@ import { Chart } from "react-charts";
 
 const Visits =(props)=>{
   const chartData=[]
-  const step = Math.truncate(props.data.length/10);
+  const step = Math.trunc(props.data.length/10);
   const last = props.data.length-1;
   let c = 0;
   for(let visit of props.data) {
     if(c%step!=0 && c!=last && last+1>10) {c++;continue;}
     c++;
-    chartData.push([visit.date, visit.count])
+    chartData.push([{date: visit.date, count: visit.count}])
   }
   return(
       // A react-chart hyper-responsively and continuusly fills the available
@@ -23,7 +23,7 @@ const Visits =(props)=>{
         <Chart
           data={[
             {
-              label: "Series 1",
+              label: "Visits",
               data: chartData
             },
 
