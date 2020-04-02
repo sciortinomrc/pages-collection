@@ -79,9 +79,6 @@ class DBOverview extends React.Component{
 		if(this.state.visits.length)this.state.visits.sort((a,b)=>Date.parse(a.date)-Date.parse(b.date))
 		return(
 		<div id="overview">
-
-
-			
 		{(this.state.visits.length)?
 			<React.Fragment>
 				<h1>VISITS</h1>
