@@ -14,10 +14,10 @@ class PagesList extends React.Component{
 
 	applyFilters=(pages,limit=9999999)=>{
 		if(!pages) return [];
-		return pages.filter(page=>!this.filters.category.length || page.category==this.filters.category)
-			.filter(page=>!this.filters.country.length || page.country==this.filters.country)
+		return pages.filter(page=>!this.filters.category.length || page.category===this.filters.category)
+			.filter(page=>!this.filters.country.length || page.country===this.filters.country)
 			.filter(page=>page.name.includes(this.filters.name))
-			.map((page,i)=>{if(i<limit) return page})
+			.map((page,i)=>{if(i<limit) return page;  return null})
 			.filter(page=>page);
 	}
 	setFilters=()=>{

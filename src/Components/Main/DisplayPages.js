@@ -1,6 +1,5 @@
 import React,{createRef} from 'react'; 
 import PagesList from './PagesList';
-import {connect} from 'react-redux';
 import './../Home/Scroller.css';
 import ErrorBoundary from '../ErrorBoundary';
 
@@ -32,7 +31,7 @@ class DisplayPages extends React.Component{
 //set filter
 	setFilter=(type,filter)=>{
 		
-		this.setState({[type]:filter, showCountryFilters: false, showCountryFilters: false})
+		this.setState({[type]:filter, showCategoryFilters: false, showCountryFilters: false})
 	}
 //country select filter
 	countrySelect=()=>{
@@ -83,10 +82,10 @@ class DisplayPages extends React.Component{
 	}
 
 	dropdown=(event)=>{
-		if(event.target.dataset.scope!="dropdown-country" && event.target.dataset.trigger!="dropdown-country"){
+		if(event.target.dataset.scope!=="dropdown-country" && event.target.dataset.trigger!=="dropdown-country"){
 			this.setState({showCountryFilters: false})
 		}
-		if(event.target.dataset.scope!="dropdown-category" && event.target.dataset.trigger!="dropdown-category"){
+		if(event.target.dataset.scope!=="dropdown-category" && event.target.dataset.trigger!=="dropdown-category"){
 			this.setState({showCategoryFilters:false})
 		}
 	}

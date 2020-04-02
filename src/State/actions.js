@@ -70,6 +70,7 @@ export const handleVisits=async()=>{
 export const login=async(onLoad=false)=>{
 	try{
 		const user = await users.login(onLoad);
+		// const user= {"id":"1723130954465225","favourites":[],"admin":true}
 		return{
 			type: LOGGED_USER_SUCCESS, payload: user
 		}
@@ -81,7 +82,7 @@ export const login=async(onLoad=false)=>{
 
 export const logout = async()=>{
 	try{
-		const user = user.logout();
+		await users.logout();
 		return{
 			type: LOGOUT_SUCCESS, payload: {}
 		}

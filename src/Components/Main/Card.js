@@ -20,7 +20,7 @@ class Card extends Component {
 	}
 
 	render() {
-		const { id, type, likes, category, name, url, picture, favourites, country } = this.props;
+		const { id, type, likes, category, name, url, favourites, country } = this.props;
 		return (
 
 

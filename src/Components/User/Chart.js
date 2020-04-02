@@ -7,7 +7,7 @@ const Visits =(props)=>{
   const last = props.data.length-1;
   let c = 0;
   for(let visit of props.data) {
-    if(c%step!=0 && c!=last && last+1>10) {c++;continue;}
+    if(c%step!==0 && c!==last && last+1>10) {c++;continue;}
     c++;
     chartData.push([visit.date,visit.count])
   }

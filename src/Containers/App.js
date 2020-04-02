@@ -103,7 +103,7 @@ class App extends Component {
 
 	//renders the page based on the state
 	tabsRouter = () => {
-		const { open, pages, onPageChange, readStateMessage, user, category } = this.props;
+		const { pages, readStateMessage, user, category } = this.props;
 		return (
 			<Switch>
 				<Route exact path="/">

@@ -10,11 +10,11 @@ const pagesState = {
 }
 
 export const handlePages = (state=pagesState, action={})=> {
-	if(action.type==SET_PAGES_SUCCESS)
+	if(action.type===SET_PAGES_SUCCESS)
 		return {
 			pages: action.payload
 		}
-	if(action.type==SET_PAGES_FAILED)
+	if(action.type===SET_PAGES_FAILED)
 		return state;
 
 	return state;
@@ -24,11 +24,11 @@ const usersState = {
 	users: []
 }
 export const handleUsers = (state=usersState, action={})=>{
-	if(action.type==SET_USERS_SUCCESS)
+	if(action.type===SET_USERS_SUCCESS)
 		return{
 			users: action.payload
 		}
-	if(action.type==SET_USERS_FAILED)
+	if(action.type===SET_USERS_FAILED)
 		return state
 	
 	return state;
@@ -38,11 +38,11 @@ const visitsState = {
 	visits: []
 }
 export const handleVisits = (state = visitsState, action={})=>{
-	if(action.type==SET_VISITS_SUCCESS)
+	if(action.type===SET_VISITS_SUCCESS)
 		return{
 			visits: action.payload
 		}
-	if(action.type == SET_VISITS_FAILED)
+	if(action.type === SET_VISITS_FAILED)
 		return state
 
 	return state;
@@ -53,21 +53,21 @@ const loginState = {
 	user: {}
 }
 export const login = (state=loginState, action={})=>{
-	if(action.type==LOGGED_USER_SUCCESS)
+	if(action.type===LOGGED_USER_SUCCESS)
 		return{
 			user: action.payload
 		}
-	if(action.type==LOGGED_USER_FAILED)
+	if(action.type===LOGGED_USER_FAILED)
 		return state
 
 	return state;
 }
 export const logout = (state=loginState,action={})=>{
-	if(action.type==LOGOUT_SUCCESS)
+	if(action.type===LOGOUT_SUCCESS)
 		return{
 			user: {}
 		}
-	if(action.type==LOGOUT_FAILED)
+	if(action.type===LOGOUT_FAILED)
 		return state
 	
 	return state
@@ -94,12 +94,12 @@ const addnewPageState = {
 }
 
 export const addNewPage = (state=addnewPageState, action={})=>{
-	if(action.type==ADD_NEW_PAGE_SUCCESS){
+	if(action.type===ADD_NEW_PAGE_SUCCESS){
 		return {
 			added: true
 		}
 	}
-	if(action.type==ADD_NEW_PAGE_FAILED){
+	if(action.type===ADD_NEW_PAGE_FAILED){
 		return{
 			added: false
 		}

@@ -23,7 +23,7 @@ class Pages{
         return this.list;
     }
     get(id){
-        return this.list.filter(page=>page.id==id)[0];
+        return this.list.filter(page=>page.id===id)[0];
     }
     async updateFavourites(id,count,direction){
         try{

@@ -26,11 +26,17 @@ const SmallCard=(props)=>{
 	)
 }
 
+
 const deleteListener = (select)=>{
-	window.removeEventListener("click",null);
-	window.addEventListener("click",(e)=>{
-		if(e.target.dataset.scope!=="delete") select(null)
-	})
+	setTimeout(()=>{
+		document.body.addEventListener("click", (e)=>{
+			console.log(e.target.dataset.scope)
+			if(e.target.dataset.scope==="overlay") return;
+			if(e.target.dataset.scope!=="delete" ) {
+				select(null);
+			}
+		})
+	},1000)
 }
 
 const BigCard = (props)=>{
@@ -46,10 +52,10 @@ const BigCard = (props)=>{
 }
 
 const delPage =(e, id, fn)=>{
-	if(e.key=="Enter" && deleteInputRef.value=="DELETE"){
+	if(e.key==="Enter" && deleteInputRef.value==="DELETE"){
 		fn.delete(id)
 	}
-	if(e.key=="Escape" || (e.key=="Enter" && deleteInputRef.value=="DELETE")){
+	if(e.key==="Escape" || (e.key==="Enter" && deleteInputRef.value==="DELETE")){
 		fn.setCard(null);
 		fn.setDeleting(false);
 	}
@@ -83,20 +89,20 @@ const UserPanel=(props)=>{
 		<hr />
 		<div id="list">
 		{
-			db.map(card=>{
+			db.map((card,i)=>{
 				return(	
-					<SmallCard key={"smallKey"+card.id} card={card} selectCard={setCard} onDeleting={setDeleting} />
+					<SmallCard key={"smallKey"+i+card.id} card={card} selectCard={setCard} onDeleting={setDeleting} />
 				)
 			})
 		}
 		</div>
 		{
 		deleting?
-			<div id="fullpage" onKeyDown={(e)=>{delPage(e,selectedCard.id,{setCard, setDeleting, delete: del })}}>
-				<div id="popup">
-					<h3>Do you really want to delete this page?</h3>
-					<h6>Changed your mind? Just press ESC</h6>
-					<input type="text" placeholder="Write DELETE and press enter" ref={ref=>deleteInputRef=ref } />
+			<div id="fullpage" data-scope="overlay" onKeyDown={(e)=>{delPage(e,selectedCard.id,{setCard, setDeleting, delete: del })}}>
+				<div id="popup" data-scope="overlay" >
+					<h3 data-scope="overlay" >Do you really want to delete this page?</h3>
+					<h6 data-scope="overlay" >Changed your mind? Just press ESC</h6>
+					<input type="text" data-scope="overlay"  placeholder="Write DELETE and press enter" ref={ref=>deleteInputRef=ref } />
 				</div>
 			</div>
 			: ""
