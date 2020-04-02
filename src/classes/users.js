@@ -60,7 +60,8 @@ class Users{
     }
     async login(onLoad=false){
         try{
-            if(Date.now()>=localStorage.timestamp) localStorage.clear();
+            console.log(localStorage.timestamp)
+            if(Date.now()>=localStorage.timestamp*1) localStorage.clear();
             
             if(onLoad && localStorage.userID)
                 return await this.info(localStorage.userID);
@@ -73,8 +74,10 @@ class Users{
                     else reject();
                 })
             })
-            localStorage.setItem("userID",userID)
-            localStorage.setItem("timestamp",Date.now()+3600000)
+            localStorage.setItem("userID",userID);
+            localStorage.setItem("timestamp",(Date.now()+3600000).toString());
+            console.log(localStorage.userID, localStorage.timestamp);
+
             return await this.info(localStorage.userID);
         }
         catch(id){
