@@ -37,7 +37,7 @@ class Card extends Component {
 					<div>
 						<p id="thumb" style={{ cursor: "default" }}><span className="fas fa-thumbs-up"></span> {likes}</p>
 						{
-							this.props.user.id ?
+							this.props.user && this.props.user.id ?
 								<p id="star"><span onClick={this.toggleFavourite} style={{ color: this.props.user.favourites.includes(id) ? 'yellow' : '' }}>&#9733;</span>{favourites}</p>
 								:
 								<p id="star" style={{ cursor: "default" }}><span>&#9733;</span>{favourites}</p>
