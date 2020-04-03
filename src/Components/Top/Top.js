@@ -86,7 +86,7 @@ componentDidMount(){
 	loggedWrapper=(full)=>{
 		const {user} = this.props;
 		const className=full?"":"dropdown-item";
-		if(!user.id){
+		if(!user || !user.id){
 			if(full){
 				return <p onClick={this.props.login}><img id="fb" src={fbwhite} alt="Facebook Logo"/>Login with Facebook</p>
 			}

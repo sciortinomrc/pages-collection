@@ -111,17 +111,18 @@ class App extends Component {
 				<Route exact path="/">
 					<Home pages={pages} user={user}/>
 				</Route>
-				<Route exact path="/add">
-					<Add readMessage={readStateMessage}/>
-				</Route>
-				<Route exact path="/about">
-					<About />
-				</Route>
 				<Route exact path="/display">
 					<DisplayPages category={category} pages={pages}/>
 				</Route>
 				<Route exact path="/card">
 					<div id="single-card">{this.state.cardToDisplay?this.displaySingleCard(this.state.cardToDisplay):""}</div>
+				</Route>
+				<Route exact path="/about">
+					<About />
+				</Route>
+				user?<React.Fragment>
+				<Route exact path="/add">
+					<Add readMessage={readStateMessage}/>
 				</Route>
 				<Route exact path="/favourites">
 					<DisplayPages category='all' pages={this.filterFavourites()}/>
@@ -130,8 +131,10 @@ class App extends Component {
 					<UserPanel pages={pages} user={user} name={this.state.userName}/>
 				</Route>
 				<Route exact path="/overview">
-				<	DBOverview />
+				<DBOverview />
 				</Route> 
+				</React.Fragment>:""
+				}
 			</Switch>
 		)
 	}
