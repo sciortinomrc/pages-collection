@@ -27,6 +27,7 @@ class Users{
 
     async info(userID){
         try{
+            console.log("Getting info")
             const fbuserInfo = new Promise(resolve=>{
                window.FB.api(`/${userID}`,user=>{
                    resolve(user);
@@ -60,11 +61,13 @@ class Users{
     }
     async login(onLoad=false){
         try{
+            console.log({onLoad})
             if(onLoad && localStorage.userID && localStorage.timestamp)
                 return await this.info(localStorage.userID);
             
             if(onLoad && !localStorage.timestamp) return;
 
+            console.log("loggin into fb")
             const userID =  await new Promise((resolve,reject)=>{
                 window.FB.getLoginStatus(resp=>{
                     if(resp.status==="connected"){
@@ -79,6 +82,7 @@ class Users{
             return await this.info(localStorage.userID);
         }
         catch(id){
+            console.log({id})
             try{
                 return await this.signup(id);
             }
