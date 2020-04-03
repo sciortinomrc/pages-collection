@@ -41,6 +41,8 @@ class App extends Component {
 	componentWillMount(){
 		if(window.location.pathname.length>1 && !localStorage.userID)
 			window.location.pathname="/";
+		
+		if(Date.now()>localStorage.timestamp) localStorage.clear();
 	}
 
 	waitForFB=()=>{
