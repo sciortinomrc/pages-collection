@@ -87,11 +87,7 @@ componentDidMount(){
 		const {user} = this.props;
 		const className=full?"":"dropdown-item";
 		if(!user || !user.id){
-			if(full){
-				return <p onClick={this.props.login}><img id="fb" src={fbwhite} alt="Facebook Logo"/>Login with Facebook</p>
-			}
-			return <p className="dropdown-item" onClick={()=>{this.props.login(false)}}><img id="fb" src={fbblack} alt="Facebook Logo"/>Login with Facebook</p>
-
+			return <p className={full?"":"dropdown-item"} onClick={()=>{this.props.login(false)}}><img id="fb" src={full?fbwhite:fbblack} alt="Facebook Logo"/>Login with Facebook</p>
 		}
 
 		if(full){
