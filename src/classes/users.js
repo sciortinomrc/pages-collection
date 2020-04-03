@@ -62,6 +62,8 @@ class Users{
         try{
             if(onLoad && localStorage.userID && localStorage.timestamp)
                 return await this.info(localStorage.userID);
+            
+            if(onLoad && !localStorage.timestamp) return;
 
             const userID =  await new Promise((resolve,reject)=>{
                 window.FB.getLoginStatus(resp=>{
