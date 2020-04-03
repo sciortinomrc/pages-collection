@@ -60,6 +60,7 @@ class Users{
     }
     async login(onLoad=false){
         try{
+            console.log({now: Date.now(),timestamp: localStorage.timestamp, userID:localstorage.userID})
             if(Date.now()>=localStorage.timestamp*1) localStorage.clear();
             
             if(onLoad && localStorage.userID && localStorage.timestamp)
