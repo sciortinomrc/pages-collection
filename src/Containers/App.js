@@ -96,7 +96,7 @@ class App extends Component {
 
 	//filter favourites from pages
 	filterFavourites = () => {
-		if (!this.props.user.id) return this.props.pages;
+		if (!this.props.user || !this.props.user.id) return this.props.pages;
 		return this.props.pages.filter(record => {
 			return this.props.user.favourites.some(fav => fav === record.id)
 		})
