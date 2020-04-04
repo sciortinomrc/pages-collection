@@ -26,6 +26,7 @@ class Users{
 
 
     async info(userID){
+        console.log({userID})
         try{
             console.log("Getting info")
             const fbuserInfo = new Promise(resolve=>{
@@ -41,6 +42,7 @@ class Users{
             })
             if(userInfo.status!==200) throw new Error();
             const user = await userInfo.json();
+            console.log({user,fbuserInfo})
             return {...user,...fbuserInfo}
         }
         catch(e){
