@@ -63,9 +63,11 @@ export const loginStatus=(state=loginState,action={})=>{
 
 export const login = (state=null, action={})=>{
 	loginStatus(null,action)
+	return {}
 }
 export const logout = (state=null,action={})=>{
 	loginStatus(null,action)
+	return {}
 }
 
 
