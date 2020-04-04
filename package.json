@@ -31,5 +31,8 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "heroku-run-build-script": true
+  "heroku-run-build-script": true,
+  "dependencies": {
+    "redux-logger": "^3.0.6"
+  }
 }

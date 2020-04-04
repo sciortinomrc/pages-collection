@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import {createStore,applyMiddleware ,combineReducers} from 'redux';
-// import {createLogger} from 'redux-logger';
+import {logger} from 'redux-logger';
 import {
 	handlePages, handleUsers, handleVisits, login, logout, onWindowResize, addNewPage
 } from './State/reducer.js';
@@ -12,11 +12,10 @@ import ErrorBoundary from './Components/ErrorBoundary';
 import App from './Containers/App';
 import registerServiceWorker from './registerServiceWorker';
 
-// const logger=createLogger();
 const rootReducer=combineReducers({
 	handlePages, handleUsers, handleVisits, login, logout, onWindowResize, addNewPage
 })
-const store=createStore(rootReducer,applyMiddleware(thunkMiddleware)); /*logger*/
+const store=createStore(rootReducer,applyMiddleware(thunkMiddleware,logger)); 
 
 ReactDOM.render(
 	<Provider store={store}>
