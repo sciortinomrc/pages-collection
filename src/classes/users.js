@@ -1,3 +1,5 @@
+const {FB} = window;
+
 class Users{
 
     constructor(){
@@ -26,14 +28,8 @@ class Users{
 
 
     async info(userID){
-        console.log({userID})
         try{
             console.log("Getting info")
-            const fbuserInfo = new Promise(resolve=>{
-               window.FB.api(`/${userID}`,user=>{
-                   resolve(user);
-               })
-            })
             const userInfo = await fetch("/api/users/"+userID,{
                 method:"GET",
                 headers:{
@@ -41,14 +37,17 @@ class Users{
                 }
             })
             if(userInfo.status!==200) throw new Error();
-            const user = await userInfo.json();
-            console.log({user,fbuserInfo})
-            return {...user,...fbuserInfo}
+            return await userInfo.json();
         }
         catch(e){
-            throw userID;
+            if(e.status===400){
+                await this.signup(userID);
+                return await this.info(userID);
+            }
+            console.log(e);
         }
     }
+
     async signup(id){
         try{
             const userReq = await fetch("/api/users/"+id,{
@@ -61,42 +60,72 @@ class Users{
             throw e
         }
     }
+
+    async getFacebookLoginStatus(){
+        return new Promise((resolve)=>{
+            FB.getLoginStatus(({authResponse,status})=>{
+                if(status==="connected")
+                    resolve(authResponse.userID);
+                if(status!=="connected")
+                    resolve(null);
+            })
+        })
+    }
+
+    async loginWithFacebook(){
+        return new Promise((resolve,reject)=>{
+            setTimeout(reject,60000)
+            FB.login(({authResponse,status})=>{
+                if(status==="connected")
+                    resolve(authResponse.userID);
+                if(status!=="connected")
+                    reject()
+            })
+        })
+    }
+
+    async getFacebookUserInfo(id){
+        return new Promise(resolve=>{
+            FB.api(`/${id}`,user=>{
+                resolve(user);
+            })
+        })
+    }
+
+    async ensureUserIsConnectedWithFacebook(){
+        const id = await getFacebookUserInfo()
+        if(id) return id;
+        if(!id){
+            await this.loginWithFacebook();
+            return await this.ensureUserIsConnectedWithFacebook();
+        }
+    }
+
     async login(onLoad=false){
         try{
-            console.log({onLoad})
             if(onLoad && localStorage.userID && localStorage.timestamp)
                 return await this.info(localStorage.userID);
             
             if(onLoad && !localStorage.timestamp) return;
 
-            console.log("loggin into fb")
-            const userID =  await new Promise((resolve,reject)=>{
-                window.FB.getLoginStatus(resp=>{
-                    if(resp.status==="connected"){
-                        resolve(resp.authResponse.userID)
-                    }
-                    else reject();
-                })
-            })
-            console.log("after fb",{userID})
+            const userID = await this.ensureUserIsConnectedWithFacebook();
+
             localStorage.setItem("userID",userID);
             localStorage.setItem("timestamp",(Date.now()+3600000).toString());
 
-            return await this.info(localStorage.userID);
+            const pagesifyUserInfo = await this.info(userID);
+            const facebookUserInfo = await this.getFacebookUserInfo(userID);
+
+            return {...pagesifyUserInfo,...facebookUserInfo};
         }
-        catch(id){
-            console.log({id})
-            try{
-                return await this.signup(id);
-            }
-            catch(e){
-                throw e;
-            }
+        catch(e){
+            console.log(e);
         }
     }
+
     logout(){
         try{
-            window.FB.logout();
+            FB.logout();
             localStorage.clear();
             return null
         }
