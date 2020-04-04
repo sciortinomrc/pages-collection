@@ -62,10 +62,10 @@ export const loginStatus=(state=loginState,action={})=>{
 }
 
 export const login = (state=null, action={})=>{
-	this.loginStatus(null,action)
+	loginStatus(null,action)
 }
 export const logout = (state=null,action={})=>{
-	this.loginStatus(null,action)
+	loginStatus(null,action)
 }
 
 
