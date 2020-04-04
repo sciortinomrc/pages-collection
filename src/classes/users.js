@@ -78,6 +78,7 @@ class Users{
                     else reject();
                 })
             })
+            console.log("after fb",{userID})
             localStorage.setItem("userID",userID);
             localStorage.setItem("timestamp",(Date.now()+3600000).toString());
 
