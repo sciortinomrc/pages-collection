@@ -93,7 +93,7 @@ class Users{
     }
 
     async ensureUserIsConnectedWithFacebook(){
-        const id = await getFacebookUserInfo()
+        const id = await this.getFacebookLoginStatus()
         if(id) return id;
         if(!id){
             await this.loginWithFacebook();

@@ -23,7 +23,7 @@ then echo METERIAN SCAN HAS FAILED; exit 1
 fi 
 
 npm run build
-if [ $? != 0]
+if [ $? != 0 ]
 then echo THE BUILD HAS FAILED; exit 1;
 fi
 
