@@ -70,6 +70,7 @@ export const handleVisits=async()=>{
 export const login=async(onLoad=false)=>{
 	try{
 		const user = await users.login(onLoad);
+		if(user===undefined) user=null;
 		// const user= {"id":"1723130954465225","favourites":[],"admin":true}
 		return{
 			type: LOGGED_USER_SUCCESS, payload: user
