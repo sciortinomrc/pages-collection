@@ -144,6 +144,7 @@ class App extends Component {
 
 	//render method
 	render() {
+		console.log(this.props.user)
 		return (
 			<div id="main">
 				<Router>

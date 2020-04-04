@@ -1,5 +1,3 @@
-const {FB} = window;
-
 class Users{
 
     constructor(){
@@ -29,7 +27,6 @@ class Users{
 
     async info(userID){
         try{
-            console.log("Getting info")
             const userInfo = await fetch("/api/users/"+userID,{
                 method:"GET",
                 headers:{
@@ -63,7 +60,7 @@ class Users{
 
     async getFacebookLoginStatus(){
         return new Promise((resolve)=>{
-            FB.getLoginStatus(({authResponse,status})=>{
+            window.FB.getLoginStatus(({authResponse,status})=>{
                 if(status==="connected")
                     resolve(authResponse.userID);
                 if(status!=="connected")
@@ -75,7 +72,7 @@ class Users{
     async loginWithFacebook(){
         return new Promise((resolve,reject)=>{
             setTimeout(reject,60000)
-            FB.login(({authResponse,status})=>{
+            window.FB.login(({authResponse,status})=>{
                 if(status==="connected")
                     resolve(authResponse.userID);
                 if(status!=="connected")
@@ -86,7 +83,7 @@ class Users{
 
     async getFacebookUserInfo(id){
         return new Promise(resolve=>{
-            FB.api(`/${id}`,user=>{
+            window.FB.api(`/${id}`,user=>{
                 resolve(user);
             })
         })
@@ -125,7 +122,7 @@ class Users{
 
     logout(){
         try{
-            FB.logout();
+            window.FB.logout();
             localStorage.clear();
             return null
         }
