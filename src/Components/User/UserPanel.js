@@ -13,7 +13,7 @@ const mapDispatchToProps=dispatch=>({
 })
 const mapStateToProps=state=>{
 	return{
-		user: state.login.user
+		user: state.loginStatus.user
 	}
 }
 const SmallCard=(props)=>{

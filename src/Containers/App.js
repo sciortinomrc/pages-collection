@@ -17,7 +17,7 @@ import { windowResize, handlePages, login, logout, newVisit } from '../State/act
 
 const mapStateToProps = state => {
 	return {
-		user: state.login.user,
+		user: state.loginStatus.user,
 		pages: state.handlePages.pages,
 		size: state.onWindowResize.size
 	}
@@ -144,7 +144,7 @@ class App extends Component {
 
 	//render method
 	render() {
-		console.log(this.props.user)
+		
 		return (
 			<div id="main">
 				<Router>

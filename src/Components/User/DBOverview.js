@@ -8,7 +8,8 @@ const mapStateAsProps=state =>{
 	return{
 		users: state.handleUsers.users,
 		pages: state.handlePages.pages,
-		visits: state.handleVisits.visits
+		visits: state.handleVisits.visits,
+		user: state.loginStatus.user
 	}
 }
 
@@ -82,6 +83,7 @@ class DBOverview extends React.Component{
 			</React.Fragment>)
 	}
 	render(){
+		if(!this.props.user.admin) return ""
 		if(this.props.visits.length)this.props.visits.sort((a,b)=>Date.parse(a.date)-Date.parse(b.date))
 		return(
 			<div id="overview">

@@ -6,7 +6,7 @@ import "./Add.css";
 
 const mapStateToProps=state=>{
 	return{
-		user: state.login.user,
+		user: state.loginStatus.user,
 		pages: state.handlePages.pages,
 		pageAdded: state.addNewPage.added
 	}

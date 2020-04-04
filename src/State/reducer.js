@@ -52,25 +52,20 @@ export const handleVisits = (state = visitsState, action={})=>{
 const loginState = {
 	user: {}
 }
-export const login = (state=loginState, action={})=>{
-	if(action.type===LOGGED_USER_SUCCESS)
-		return{
-			user: action.payload
-		}
-	if(action.type===LOGGED_USER_FAILED)
-		return state
 
+export const loginStatus=(state=loginState,action={})=>{
+	if(action.type===LOGGED_USER_SUCCESS)
+		return action.payload
+	if(action.type===LOGOUT_SUCCESS)
+		return {};
 	return state;
 }
-export const logout = (state=loginState,action={})=>{
-	if(action.type===LOGOUT_SUCCESS)
-		return{
-			user: {}
-		}
-	if(action.type===LOGOUT_FAILED)
-		return state
-	
-	return state
+
+export const login = (state=null, action={})=>{
+	this.loginStatus(null,action)
+}
+export const logout = (state=null,action={})=>{
+	this.loginStatus(null,action)
 }
 
 

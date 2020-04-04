@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { updateFavourites } from '../../State/actions';
 
 const mapStateToProps = state => ({
-	user: state.login.user
+	user: state.loginStatus.user
 })
 const mapDispatchToProps = dispatch => {
 	return {
