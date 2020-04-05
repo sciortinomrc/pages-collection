@@ -40,9 +40,9 @@ class App extends Component {
 		}
 	}
 
-	login=async()=>{
+	login=async(onLoad = false)=>{
 		try{
-			const user = await users.login();
+			const user = await users.login(onLoad);
 			this.props.updateLoginStatus(user);
 		}
 		catch(e){
@@ -75,7 +75,7 @@ class App extends Component {
 					resolve();
 					return;
 				}
-				this.props.login(true);
+				this.login(true);
 				resolve();
 			})
 		},1000)
