@@ -4,8 +4,6 @@ import ErrorBoundary from '../Components/ErrorBoundary';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import Users from '../classes/users';
-const users = new Users();
-
 
 import '../css/fontello.css';
 import '../css/animation.css';
@@ -16,6 +14,8 @@ import DisplayPages from '../Components/Main/DisplayPages'; import UserPanel fro
 import DBOverview from '../Components/User/DBOverview'; import About from "../Components/About/About.js";
 import './App.css';
 import { windowResize, handlePages, updateLoginStatus, newVisit } from '../State/actions.js'
+
+const users = new Users();
 
 const mapStateToProps = state => {
 	return {
