@@ -8,8 +8,8 @@ const mapStateToProps = state => ({
 })
 const mapDispatchToProps = dispatch => {
 	return {
-		updateFavourites: async (id, user, direction) => {
-			dispatch(await updateFavourites(id, user, direction))
+		updateFavourites: async (id, user, count, direction) => {
+			dispatch(await updateFavourites(id, user, count, direction))
 			dispatch(await handlePages())
 		}
 	}
