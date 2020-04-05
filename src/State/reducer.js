@@ -1,8 +1,7 @@
 import {SET_PAGES_SUCCESS, SET_PAGES_FAILED,
 SET_USERS_SUCCESS, SET_USERS_FAILED, SET_VISITS_SUCCESS,
-SET_VISITS_FAILED, LOGGED_USER_SUCCESS, LOGGED_USER_FAILED,
-ADD_NEW_PAGE_SUCCESS, ADD_NEW_PAGE_FAILED, WINDOW_RESIZE,
-LOGOUT_SUCCESS, LOGOUT_FAILED } from './constants';
+SET_VISITS_FAILED, LOGIN_STATUS_SUCCESS, 
+ADD_NEW_PAGE_SUCCESS, ADD_NEW_PAGE_FAILED, WINDOW_RESIZE } from './constants';
 
 
 const pagesState = {
@@ -54,20 +53,10 @@ const loginState = {
 }
 
 export const loginStatus=(state=loginState,action={})=>{
-	if(action.type===LOGGED_USER_SUCCESS)
+	if(action.type===LOGIN_STATUS_SUCCESS)
 		return action.payload
-	if(action.type===LOGOUT_SUCCESS)
-		return {};
-	return state;
-}
 
-export const login = (state=null, action={})=>{
-	loginStatus(null,action)
-	return {}
-}
-export const logout = (state=null,action={})=>{
-	loginStatus(null,action)
-	return {}
+	return state;
 }
 
 

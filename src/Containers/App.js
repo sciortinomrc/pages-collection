@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import ErrorBoundary from '../Components/ErrorBoundary';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
+import {login,logout} from '../classes/users';
 
 
 import '../css/fontello.css';
@@ -13,7 +14,7 @@ import Home from '../Components/Home/Home'; import Card from '../Components/Main
 import DisplayPages from '../Components/Main/DisplayPages'; import UserPanel from "../Components/User/UserPanel";
 import DBOverview from '../Components/User/DBOverview'; import About from "../Components/About/About.js";
 import './App.css';
-import { windowResize, handlePages, login, logout, newVisit } from '../State/actions.js'
+import { windowResize, handlePages, updateLoginStatus, newVisit } from '../State/actions.js'
 
 const mapStateToProps = state => {
 	return {
@@ -26,8 +27,7 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		handlePages: async () => dispatch(await handlePages()),
 		onWindowResize: (size) => dispatch(windowResize(size)),
-		login: async(onLogin=false) => dispatch(await login(onLogin)),
-		logout: async()=> dispatch(await logout()),
+		updateLoginStatus: (user)=>dispatch(updateLoginStatus(user)),
 		newVisit: async()=> dispatch(await newVisit())
 	}
 }
@@ -38,6 +38,27 @@ class App extends Component {
 			cardToDisplay: null
 		}
 	}
+
+	login=()=>{
+		try{
+			const user = await login();
+			this.props.updateLoginStatus(user);
+		}
+		catch(e){
+			this.props.updateLoginStatus(null)
+		}
+	}
+	
+	logout=()=>{
+		try{
+			const user = await logout();
+			this.props.updateLoginStatus(user);
+		}
+		catch(e){
+			this.props.updateLoginStatus(null);
+		}
+	}
+
 	componentWillMount(){
 		if(window.location.pathname.length>1 && !localStorage.userID)
 			window.location.pathname="/";

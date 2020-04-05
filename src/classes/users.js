@@ -117,6 +117,7 @@ class Users{
         }
         catch(e){
             console.log(e);
+            throw e
         }
     }
 
@@ -124,10 +125,10 @@ class Users{
         try{
             window.FB.logout();
             localStorage.clear();
-            return null
+            return {}
         }
         catch(e){
-            throw e
+            throw e;
         }
     }
     async updateFavourites(userInfo,pageId){

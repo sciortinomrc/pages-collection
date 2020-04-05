@@ -1,9 +1,9 @@
 import {SET_PAGES_SUCCESS, SET_PAGES_FAILED,
 SET_USERS_SUCCESS, SET_USERS_FAILED, SET_VISITS_SUCCESS,
-SET_VISITS_FAILED, LOGGED_USER_SUCCESS, LOGGED_USER_FAILED,
+SET_VISITS_FAILED, LOGIN_STATUS_SUCCESS, LOGIN_STATUS_FAILED,
 ADD_NEW_PAGE_SUCCESS, ADD_NEW_PAGE_FAILED, WINDOW_RESIZE,
 UPDATE_FAVOURITES_SUCCESS, UPDATE_FAVOURITES_FAILED,
-LOGOUT_SUCCESS, LOGOUT_FAILED, REMOVE_PAGE_SUCCESS, REMOVE_PAGE_FAILED} from './constants';
+REMOVE_PAGE_SUCCESS, REMOVE_PAGE_FAILED} from './constants';
 
 import Pages from '../classes/pages';
 import Users from '../classes/users';
@@ -67,29 +67,14 @@ export const handleVisits=async()=>{
 	}
 }
 
-export const login=async(onLoad=false)=>{
-	try{
-		const user = await users.login(onLoad);
-		if(user===undefined) user=null;
-		// const user= {"id":"1723130954465225","favourites":[],"admin":true}
-		return{
-			type: LOGGED_USER_SUCCESS, payload: user
-		}
-	}
-	catch(e){
-		return{type: LOGGED_USER_FAILED, payload: null}
-	}
-}
 
-export const logout = async()=>{
-	try{
-		await users.logout();
+export const updateLoginStatus = async(user)=>{
+	if(user)
 		return{
-			type: LOGOUT_SUCCESS, payload: {}
+			type: LOGIN_STATUS_SUCCESS, payload: user
 		}
-	}
-	catch(e){
-		return{type: LOGOUT_FAILED, payload: null}
+	return{
+		type: LOGIN_STATUS_FAILED, payload: null
 	}
 }
 
