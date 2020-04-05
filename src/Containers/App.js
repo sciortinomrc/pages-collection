@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import ErrorBoundary from '../Components/ErrorBoundary';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import {login,logout} from '../classes/users';
+import Users from '../classes/users';
+const users = new Users();
 
 
 import '../css/fontello.css';
@@ -41,7 +42,7 @@ class App extends Component {
 
 	login=async()=>{
 		try{
-			const user = await login();
+			const user = await users.login();
 			this.props.updateLoginStatus(user);
 		}
 		catch(e){
@@ -51,7 +52,7 @@ class App extends Component {
 	
 	logout=async()=>{
 		try{
-			const user = await logout();
+			const user = await users.logout();
 			this.props.updateLoginStatus(user);
 		}
 		catch(e){
