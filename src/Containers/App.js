@@ -39,7 +39,7 @@ class App extends Component {
 		}
 	}
 
-	login=()=>{
+	login=async()=>{
 		try{
 			const user = await login();
 			this.props.updateLoginStatus(user);
@@ -49,7 +49,7 @@ class App extends Component {
 		}
 	}
 	
-	logout=()=>{
+	logout=async()=>{
 		try{
 			const user = await logout();
 			this.props.updateLoginStatus(user);
