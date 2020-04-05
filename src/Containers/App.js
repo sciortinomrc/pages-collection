@@ -170,7 +170,7 @@ class App extends Component {
 		return (
 			<div id="main">
 				<Router>
-					<Top login={this.props.login} logout={this.props.logout} user={this.props.user} pages={this.props.pages} setCardToDisplay={this.setCardToDisplay} />
+					<Top login={this.login} logout={this.logout} user={this.props.user} pages={this.props.pages} setCardToDisplay={this.setCardToDisplay} />
 					{
 						(this.props.pages) ?
 							<Scroller>

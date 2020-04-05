@@ -68,7 +68,7 @@ export const handleVisits=async()=>{
 }
 
 
-export const updateLoginStatus = async(user)=>{
+export const updateLoginStatus = (user)=>{
 	if(user)
 		return{
 			type: LOGIN_STATUS_SUCCESS, payload: user
