@@ -113,6 +113,8 @@ class Users{
             const pagesifyUserInfo = await this.info(userID);
             const facebookUserInfo = await this.getFacebookUserInfo(userID);
 
+            
+
             return {...pagesifyUserInfo,...facebookUserInfo};
         }
         catch(e){

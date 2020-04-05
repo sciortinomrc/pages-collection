@@ -54,7 +54,7 @@ const loginState = {
 
 export const loginStatus=(state=loginState,action={})=>{
 	if(action.type===LOGIN_STATUS_SUCCESS)
-		return action.payload
+		return {user:action.payload}
 
 	return state;
 }
