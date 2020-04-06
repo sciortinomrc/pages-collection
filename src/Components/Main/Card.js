@@ -20,7 +20,7 @@ class Card extends Component {
 		const click = event.target;
 		click.classList.toggle('fav')
 		this.props.updateFavourites(
-			{info:{id: this.props.user.id, favourites: this.props.user.favourites}, pageId: this.props.id},
+			{id: this.props.user.id, favourites: this.props.user.favourites, pageId: this.props.id},
 			{id: this.props.id, count: this.props.favourites.length, direction: !this.props.user.favourites.includes(this.props.id)}
 		)
 	}
