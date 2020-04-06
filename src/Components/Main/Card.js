@@ -8,8 +8,8 @@ const mapStateToProps = state => ({
 })
 const mapDispatchToProps = dispatch => {
 	return {
-		updateFavourites: async (id, user, count, direction) => {
-			dispatch(await updateFavourites(id, user, count, direction))
+		updateFavourites: async (user,page) => {
+			dispatch(await updateFavourites(user,page))
 			dispatch(await handlePages())
 		}
 	}
@@ -19,7 +19,10 @@ class Card extends Component {
 	toggleFavourite = (event) => {
 		const click = event.target;
 		click.classList.toggle('fav')
-		this.props.updateFavourites(this.props.id, this.props.user, this.props.user.favourites, !this.props.user.favourites.includes(this.props.id))
+		this.props.updateFavourites(
+			{info:{id: this.props.user.id, favourites: this.props.user.favourites}, pageId: this.props.id},
+			{id: this.props.id, count: this.props.favourites.length, direction: !this.props.user.favourites.includes(this.props.id)}
+		)
 	}
 
 	render() {
