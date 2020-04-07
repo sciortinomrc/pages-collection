@@ -14,8 +14,8 @@ const mapDispatchToProps = dispatch => {
 		updateFavourites: async (user,page) => {
 			dispatch(await updateFavourites(user,page))
 			dispatch(await handlePages())
-			const user = await users.info(this.props.user.id);
-			dispatch(await updateLoginStatus(user))
+			const userRefreshed = await users.info(this.props.user.id);
+			dispatch(await updateLoginStatus(userRefreshed))
 		}
 	}
 }
