@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import './Style/Card.css';
 import { connect } from 'react-redux';
-import { handlePages,loginStatus, updateFavourites } from '../../State/actions';
+import { handlePages,updateLoginStatus, updateFavourites } from '../../State/actions'
+import Users from '../../classes/users';
+
+const users = new Users();
 
 const mapStateToProps = state => ({
 	user: state.loginStatus.user
@@ -11,7 +14,8 @@ const mapDispatchToProps = dispatch => {
 		updateFavourites: async (user,page) => {
 			dispatch(await updateFavourites(user,page))
 			dispatch(await handlePages())
-			dispatch(await loginStatus())
+			const user = await users.info(this.props.user.id);
+			dispatch(await updateLoginStatus(user))
 		}
 	}
 }
