@@ -110,11 +110,8 @@ export const windowResize = (windowSize) => ({type: WINDOW_RESIZE, payload: wind
 
 export const updateFavourites=async(user,page)=>{
 	try{
-		console.log("updating")
 		await users.updateFavourites(user.info,user.pageId);
-		console.log("users done")
 		await pages.updateFavourites(page.id,page.count,page.direction);
-		console.log("pages,done")
 		return {
 			type: UPDATE_FAVOURITES_SUCCESS, payload: true
 		}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import {createStore,applyMiddleware ,combineReducers} from 'redux';
-import {logger} from 'redux-logger';
+// import {logger} from 'redux-logger';
 import {
 	handlePages, handleUsers, handleVisits, onWindowResize, addNewPage, loginStatus
 } from './State/reducer.js';
@@ -15,7 +15,7 @@ import registerServiceWorker from './registerServiceWorker';
 const rootReducer=combineReducers({
 	handlePages, handleUsers, handleVisits, onWindowResize, addNewPage, loginStatus
 })
-const store=createStore(rootReducer,applyMiddleware(thunkMiddleware,logger)); 
+const store=createStore(rootReducer,applyMiddleware(thunkMiddleware));//,logger)); 
 
 ReactDOM.render(
 	<Provider store={store}>

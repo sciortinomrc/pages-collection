@@ -30,7 +30,6 @@ const SmallCard=(props)=>{
 const deleteListener = (select)=>{
 	setTimeout(()=>{
 		document.body.addEventListener("click", (e)=>{
-			console.log(e.target.dataset.scope)
 			if(e.target.dataset.scope==="overlay") return;
 			if(e.target.dataset.scope!=="delete" ) {
 				select(null);
